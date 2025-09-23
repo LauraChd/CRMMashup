@@ -22,7 +22,7 @@ dependencies {
 compileThrift {
     thriftExecutable "/usr/bin/thrift"
     sourceDir "$projectDir/src/main/thrift"
-    outputDir "$projectDir/src/main/java/org/example/client/thrift"
+    outputDir "$projectDir/generated/java"
     nowarn true
     strict true
     verbose true
@@ -32,7 +32,8 @@ compileThrift {
     generator 'java', 'private-members'
 }
 
-//sourceCompatibility = JavaVersion.VERSION_21
+sourceSets.main.java.srcDirs += ['$projectDir/generated/java']
+
 
 jar {
     manifest {

@@ -15,4 +15,5 @@ service CalculatorService
   int subtraction(1:int a, 2:int b),
   int multiplication(1:int a, 2:int b),
   int division(1:int a, 2:int b) throws (1: ThriftDivisionBy0 e)
+  int abs(1:int a)
 }

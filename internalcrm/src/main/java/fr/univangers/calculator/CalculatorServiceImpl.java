@@ -27,4 +27,10 @@ public class CalculatorServiceImpl implements CalculatorService.Iface{
 
         return a/b;
     }
+
+    @Override
+    public int exp(int a, int b) throws ThriftDivisionBy0, TException {
+        return (int)Math.pow(a,b);
+
+    }
 }
