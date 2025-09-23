@@ -12,8 +12,8 @@ import org.apache.thrift.TException;
 import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
-import org.example.client.org.example.client.thrift.thrift.CalculatorService;
-
+import org.example.client.thrift.CalculatorService;
+import org.example.client.service.ClientMovieService;
 import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

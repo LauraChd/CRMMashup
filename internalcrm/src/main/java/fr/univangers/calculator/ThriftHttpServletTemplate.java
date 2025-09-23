@@ -1,5 +1,4 @@
-package org.calculator;
-
+package fr.univangers.calculator;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

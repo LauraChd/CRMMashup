@@ -1,5 +1,5 @@
 
-namespace java org.calculator.thrift
+namespace java org.example.internalcrm.thrift
 
 
 typedef i32 int

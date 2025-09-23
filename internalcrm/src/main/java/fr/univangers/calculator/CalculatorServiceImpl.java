@@ -1,8 +1,11 @@
-package org.calculator;
+package fr.univangers.calculator;
 import org.apache.thrift.TException;
-import org.calculator.thrift.CalculatorService;
-import org.calculator.thrift.CalculatorService.Iface;
-import org.calculator.thrift.ThriftDivisionBy0;
+//import org.calculator.thrift.CalculatorService;
+//import org.calculator.thrift.CalculatorService.Iface;
+//import org.calculator.thrift.ThriftDivisionBy0;
+import org.example.internalcrm.thrift.CalculatorService;
+//import org.example.internalcrm.thrift.CalculatorService.Iface;
+import org.example.internalcrm.thrift.ThriftDivisionBy0;
 
 public class CalculatorServiceImpl implements CalculatorService.Iface{
     @Override
