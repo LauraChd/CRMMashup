@@ -70,14 +70,14 @@ exception InvalidLeadParameterException {
 }
 
 service InternalCRMService {
-    List<InternalLeadDto> findLeads (
+    list<InternalLeadDto> findLeads (
             1: double lowAnnualRevenue,
             2: double highAnnualRevenue,
             3: string state)
         throws (
             1: InvalidRevenueRangeException e)
 
-    List<InternalLeadDto> findLeadsByDate (
+    list<InternalLeadDto> findLeadsByDate (
             1: long startDate,
             2: long endDate)
         throws (
