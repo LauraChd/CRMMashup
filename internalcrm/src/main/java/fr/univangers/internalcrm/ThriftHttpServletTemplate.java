@@ -1,4 +1,4 @@
-package fr.univangers.calculator;
+package fr.univangers.internalcrm;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
