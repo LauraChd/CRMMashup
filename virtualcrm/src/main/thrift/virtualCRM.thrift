@@ -3,6 +3,21 @@ namespace java org.example.internalcrm.thrift
 typedef i32 int
 typedef i64 long
 
+struct VirtualLeadDto {
+    1: string firstName
+    2: string lastName
+    3: double annualRevenue
+    4: string phone
+    5: string street
+    6: string postalCode
+    7: string city
+    8: string country
+    9: long creationDate
+    10: string company
+    11: string state
+    12: GeographicPointDto geographicPosition
+}
+
 struct InternalLeadDto {
     1: string fullName
     2: double annualRevenue
@@ -14,6 +29,12 @@ struct InternalLeadDto {
     8: long creationDate
     9: string company
     10: string state
+    11: GeographicPointDto geographicPosition
+}
+
+struct GeographicPointDto {
+    1: double latitude
+    2: double longitude
 }
 
 exception InvalidRevenueRangeException {
