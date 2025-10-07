@@ -30,7 +30,7 @@ exception InvalidDateException {
 
 exception LeadNotFoundException {
     1: string message
-    2: InternalLeadDto lead
+    2: int ID
 }
 
 exception LeadDoesNotExistException {
@@ -68,15 +68,17 @@ service InternalCRMService {
             1: LeadNotFoundException e)
 
     void addLead (
-            1: string fullName
-            2: double annualRevenue
-            3: string phone
-            4: string street
-            5: string postalCode
-            6: string city
-            7: string country
-            8: string company
-            9: string state)
+            1:int ID
+            2: string fullName
+            3: double annualRevenue
+            4: string phone
+            5: string street
+            6: string postalCode
+            7: string city
+            8: string country
+            9: long creationDate
+            10: string company
+            11: string state)
         throws (
             1: LeadDoesNotExistException e,
             2: LeadAlreadyExistsException ee,
