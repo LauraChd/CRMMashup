@@ -63,12 +63,20 @@ service InternalCRMService {
             1: InvalidDateException e)
 
     void deleteLead (
-            1: InternalLeadDto lead)
+            1: int ID)
         throws (
             1: LeadNotFoundException e)
 
     void addLead (
-            1: InternalLeadDto lead)
+            1: string fullName
+            2: double annualRevenue
+            3: string phone
+            4: string street
+            5: string postalCode
+            6: string city
+            7: string country
+            8: string company
+            9: string state)
         throws (
             1: LeadDoesNotExistException e,
             2: LeadAlreadyExistsException ee,
