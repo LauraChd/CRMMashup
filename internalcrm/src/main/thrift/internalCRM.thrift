@@ -4,16 +4,17 @@ typedef i32 int
 typedef i64 long
 
 struct InternalLeadDto {
-    1: string fullName
-    2: double annualRevenue
-    3: string phone
-    4: string street
-    5: string postalCode
-    6: string city
-    7: string country
-    8: long creationDate
-    9: string company
-    10: string state
+    1:int id
+    2: string fullName
+    3: double annualRevenue
+    4: string phone
+    5: string street
+    6: string postalCode
+    7: string city
+    8: string country
+    9: long creationDate
+    10: string company
+    11: string state
 }
 
 exception InvalidRevenueRangeException {
@@ -30,7 +31,8 @@ exception InvalidDateException {
 
 exception LeadNotFoundException {
     1: string message
-    2: int ID
+    2: int id
+
 }
 
 exception LeadDoesNotExistException {
@@ -68,17 +70,15 @@ service InternalCRMService {
             1: LeadNotFoundException e)
 
     void addLead (
-            1:int ID
-            2: string fullName
-            3: double annualRevenue
-            4: string phone
-            5: string street
-            6: string postalCode
-            7: string city
-            8: string country
-            9: long creationDate
-            10: string company
-            11: string state)
+            1: string fullName
+            2: double annualRevenue
+            3: string phone
+            4: string street
+            5: string postalCode
+            6: string city
+            7: string country
+            8: string company
+            9: string state)
         throws (
             1: LeadDoesNotExistException e,
             2: LeadAlreadyExistsException ee,
