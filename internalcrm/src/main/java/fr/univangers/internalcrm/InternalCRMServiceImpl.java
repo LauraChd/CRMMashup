@@ -11,6 +11,7 @@ import static java.lang.System.in;
     public class InternalCRMServiceImpl implements InternalCRMService.Iface {
 
         private List<InternalLeadDto> leads = new ArrayList<>();
+        private static int leadcont = 0 ;
 
         @Override
         public List<InternalLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException{
@@ -43,6 +44,30 @@ import static java.lang.System.in;
         }
 
         @Override
+        public void deleteLead(int ID) throws LeadNotFoundException, TException {
+
+        }
+
+        @Override
+        public void addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadDoesNotExistException, LeadAlreadyExistsException, InvalidLeadParameterException, TException {
+            InternalLeadDto lead = new InternalLeadDto();
+
+            leadcont++;
+            lead.setId(leadcont);
+            lead.setFullName(fullName);
+            lead.setAnnualRevenue(annualRevenue);
+            lead.setPhone(phone);
+            lead.setStreet(street);
+            lead.setPostalCode(postalCode);
+            lead.setCity(city);
+            lead.setCountry(country);
+            lead.setCompany(company);
+            lead.setState(state);
+            leads.add(lead);
+
+        }
+
+        /*@Override
         public void deleteLead(InternalLeadDto lead) throws LeadNotFoundException, TException{
             //Vérificiation, voir avec prof ???
             if(!leads.contains(lead)){
@@ -51,9 +76,9 @@ import static java.lang.System.in;
             else {
                 ModelImpl.deleteLead(Utils.toLeadTo(lead));
             }
-        }
+        }*/
 
-        @Override
+        /*@Override
         public void addLead(InternalLeadDto lead) throws LeadDoesNotExistException, LeadAlreadyExistsException, InvalidLeadParameterException, TException{
             //Vérification ?
             if(lead.equals(null)){
@@ -67,7 +92,7 @@ import static java.lang.System.in;
                 ModelImpl.addLead(Utils.toLeadTo(lead));
 
             }
-        }
+        }*/
 
 //TODO Comment le client créé un nouveau lead ?
 
