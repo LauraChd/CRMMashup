@@ -3,6 +3,7 @@ package fr.univangers.internalcrm;
 import org.apache.thrift.TException;
 import org.example.internalcrm.thrift.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +52,10 @@ import static java.lang.System.in;
         @Override
         public void addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadDoesNotExistException, LeadAlreadyExistsException, InvalidLeadParameterException, TException {
             InternalLeadDto lead = new InternalLeadDto();
-
             leadcont++;
+            long time = System.currentTimeMillis();
             lead.setId(leadcont);
+            lead.setCreationDate(time);
             lead.setFullName(fullName);
             lead.setAnnualRevenue(annualRevenue);
             lead.setPhone(phone);
