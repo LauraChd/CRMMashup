@@ -2,9 +2,12 @@ package fr.univangers.internalcrm;
 
 import org.example.internalcrm.thrift.InternalLeadDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utils {
 
-    public static InternalLeadDto toInternalLeadDTO(LeadTo modelTo)
+    public static InternalLeadDto InternalLeadToInternalLeadDTO(ILead modelTo)
     {
         InternalLeadDto internalLeadDto = new InternalLeadDto();
 
@@ -21,10 +24,18 @@ public class Utils {
 
         return internalLeadDto;
     }
-
-    public static LeadTo toLeadTo(InternalLeadDto internalLeadDto)
+    public static List<InternalLeadDto> InternalLeadListToInternalLeadDTOList(List<ILead> lsILeads)
     {
-        LeadTo modelTo = new LeadTo();
+        List<InternalLeadDto> internalLeadDtoList = new ArrayList<>();
+        for(ILead iLead : lsILeads){
+            internalLeadDtoList.add(InternalLeadToInternalLeadDTO(iLead));
+        }
+        return internalLeadDtoList;
+    }
+
+    public static ILead InternalLeadDtoToILead(InternalLeadDto internalLeadDto)
+    {
+        ILead modelTo = new ILead();
 
         String[] nameParts = internalLeadDto.getFullName().split(",");
 
@@ -41,5 +52,28 @@ public class Utils {
         modelTo.setState(internalLeadDto.getState());
 
         return modelTo;
+    }
+
+    public static List<ILead> InternalLeadDtoListToILeadList(List<InternalLeadDto> lsInternalLeadDto)
+    {
+        List<ILead> iLeadList = new ArrayList<>();
+        for (InternalLeadDto internalLeadDto : lsInternalLeadDto) {
+            iLeadList.add(InternalLeadDtoToILead(internalLeadDto));
+        }
+        return iLeadList;
+    }
+
+    public static String[] splitFullName(String fullName) {
+        if (fullName == null || !fullName.contains(",")) {
+            throw new IllegalArgumentException("Le nom complet doit être au format 'Nom, Prénom'");
+        }
+
+        // Découpage sur la virgule
+        String[] parts = fullName.split(",", 2);
+
+        String lastName = parts[0].trim();
+        String firstName = parts[1].trim();
+
+        return new String[] { firstName, lastName };
     }
 }

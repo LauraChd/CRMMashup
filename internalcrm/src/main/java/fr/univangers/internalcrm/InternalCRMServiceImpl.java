@@ -7,11 +7,8 @@ import org.example.internalcrm.thrift.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.System.in;
+public class InternalCRMServiceImpl implements InternalCRMService.Iface {
 
-    public class InternalCRMServiceImpl implements InternalCRMService.Iface {
-
-        private List<InternalLeadDto> leads = new ArrayList<>();
         private static int leadcont = 0 ;
 
         @Override
@@ -19,14 +16,9 @@ import static java.lang.System.in;
             if(lowAnnualRevenue > highAnnualRevenue){
                 throw new InvalidRevenueRangeException("Le revenu minimum est supérieur au revenu maximum", lowAnnualRevenue, highAnnualRevenue);
             }
-            List<InternalLeadDto> leadsReturn = new ArrayList<>(); // liste à retourner au client
-            List<LeadTo> leadsModel = ModelImpl.findLeads(lowAnnualRevenue, highAnnualRevenue, state); // = BDD
-            for (LeadTo l : leadsModel) {
-                if(l.getAnnualRevenue() >= lowAnnualRevenue && l.getAnnualRevenue() <= highAnnualRevenue && l.getState().equals(state)){
-                    leadsReturn.add(Utils.toInternalLeadDTO(l));
-                }
-            }
-            return leadsReturn;
+            List<ILead> leadsModel = ModelImpl.getInstance().findLeads(lowAnnualRevenue, highAnnualRevenue, state);
+
+            return Utils.InternalLeadListToInternalLeadDTOList(leadsModel);
         }
 
         @Override
@@ -34,14 +26,9 @@ import static java.lang.System.in;
             if(startDate > endDate){
                 throw new InvalidDateException("La date de début est supérieure à la date de fin", startDate, endDate);
             }
-            List<InternalLeadDto> leadsReturn = new ArrayList<>(); // liste à retourner au client
-            List<LeadTo> leadsModel = ModelImpl.findLeadsByDate(startDate, endDate);
-            for (LeadTo l : leadsModel) {
-                if(l.getCreationDate() >= startDate && l.getCreationDate() <= endDate){
-                    leadsReturn.add(Utils.toInternalLeadDTO(l));
-                }
-            }
-            return leadsReturn;
+            List<ILead> leadsModel = ModelImpl.getInstance().findLeadsByDate(startDate, endDate);
+
+            return Utils.InternalLeadListToInternalLeadDTOList(leadsModel);
         }
 
         @Override
@@ -51,22 +38,12 @@ import static java.lang.System.in;
 
         @Override
         public void addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadDoesNotExistException, LeadAlreadyExistsException, InvalidLeadParameterException, TException {
-            InternalLeadDto lead = new InternalLeadDto();
-            leadcont++;
-            long time = System.currentTimeMillis();
-            lead.setId(leadcont);
-            lead.setCreationDate(time);
-            lead.setFullName(fullName);
-            lead.setAnnualRevenue(annualRevenue);
-            lead.setPhone(phone);
-            lead.setStreet(street);
-            lead.setPostalCode(postalCode);
-            lead.setCity(city);
-            lead.setCountry(country);
-            lead.setCompany(company);
-            lead.setState(state);
-            leads.add(lead);
+            ModelImpl.getInstance().addLead(fullName, annualRevenue, phone, street, postalCode, city, country, company, state);
+        }
 
+        @Override
+        public List<InternalLeadDto> getLeads() throws TException {
+            return Utils.InternalLeadListToInternalLeadDTOList(ModelImpl.getInstance().getAllLeads());
         }
 
         /*@Override

@@ -12,8 +12,11 @@ import org.apache.thrift.TException;
 import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
-import org.example.client.thrift.CalculatorService;
+//import org.example.client.thrift.CalculatorService;
 import org.example.client.service.ClientMovieService;
+import org.example.internalcrm.thrift.InternalCRMService;
+import org.example.internalcrm.thrift.InternalLeadDto;
+
 import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -27,58 +30,99 @@ public class Main {
     }
 
 
-    private static boolean executeThriftClient(String [] args){
-        if (args.length != 3)
+    private static boolean executeThriftClient(String[] args) {
+        if (args.length < 1)
             return false;
 
-        CalculatorService.Client client = getClient();
+        // 1️⃣Création du client Thrift
+        InternalCRMService.Client client = getClient();
         TTransport transport = client.getInputProtocol().getTransport();
 
-        try { transport.open();}
-        catch (TTransportException e) {throw new RuntimeException(e);}
-        TProtocol protocol = new  TBinaryProtocol(transport);
-
-        int o1=Integer.parseInt(args[1]);
-        int o2=Integer.parseInt(args[2]);
-
-        try{
-            if (args[0].equals("add")) {
-                System.out.println(args[1] + "+" + args[2] + "=" +client.addition(o1,o2));
-                transport.close();
-                return true;
-            }
-            else if(args[0].equals("sub")) {
-                System.out.println(args[1] + "-" + args[2] + "=" +client.subtraction(o1,o2));
-                transport.close();
-                return true;
-            }
-            else if (args[0].equals("mult")) {
-                System.out.println(args[1] + "*" + args[2] + "=" +client.multiplication(o1,o2));
-                transport.close();
-                return true;
-            }
-            else if (args[0].equals("div")){
-                System.out.println(args[1] + "/" + args[2] + "=" +client.division(o1,o2));
-                transport.close();
-                return true;
-            }
-            else return false;
+        try {
+            transport.open();
+        } catch (TTransportException e) {
+            throw new RuntimeException(e);
         }
-        catch (TException e){
-            System.out.println(e.getMessage());
+
+        try {
+            String command = args[0];
+            System.out.println(args[0]);
+            switch (command) {
+                case "addLead":
+                    if (args.length !=10) {
+                        System.out.println("Usage: addLead \"Nom, Prénom\" revenue phone street postalcode city country company state");
+                        transport.close();
+                        return true;
+                    }
+
+                    String fullName = args[1];
+                    double revenue = Double.parseDouble(args[2]);
+                    String phone = args[3];
+                    String street = args[4];
+                    String postalcode = args[5];
+                    String city = args[6];
+                    String country = args[7];
+                    String company = args[8];
+                    String state = args[9];
+
+                    client.addLead(fullName, revenue, phone, street, postalcode, city, country, company, state);
+                    System.out.println("Lead ajouté avec succès !");
+                    transport.close();
+                    return true;
+
+                case "findLeads" :
+                    if (args.length !=4) {
+                        System.out.println("Usage: findLeads lowAnnualRevenue highAnnualRevenue state");
+                        transport.close();
+                        return true;
+                    }
+
+                    double lowAnnualRevenue = Double.parseDouble(args[1]);
+                    double highAnnualRevenue = Double.parseDouble(args[2]);
+                    String state2 = args[3];
+
+
+                    List<InternalLeadDto> res = client.findLeads(lowAnnualRevenue, highAnnualRevenue, state2);
+                    System.out.println("Leads cherchés avec succès !");
+                    for(InternalLeadDto lead : res) {
+                        System.out.println(lead.toString());
+                    }
+                    transport.close();
+                    return true;
+
+                case "getLeads" :
+
+                    List<InternalLeadDto> res2 = client.getLeads();
+                    System.out.println("Taille : " + res2.size());
+                    System.out.println("Affichage des Leads");
+                    for(InternalLeadDto lead : res2) {
+                        System.out.println(lead.toString());
+                    }
+                    transport.close();
+                    return true;
+
+                // Tu peux ajouter findLead, deleteLead ici TODO
+                default:
+                    System.out.println("Commande inconnue : " + command);
+                    transport.close();
+                    return true;
+            }
+
+        } catch (TException e) {
             e.printStackTrace();
             return true;
         }
     }
 
 
-    private static CalculatorService.Client getClient() {
+
+    private static InternalCRMService.Client getClient() {
 
         try {
             TTransport transport = new THttpClient("http://localhost:8080/internalcrm/internalcrm");
             TProtocol protocol = new TBinaryProtocol(transport);
 
-            return new CalculatorService.Client(protocol);
+            return new InternalCRMService.Client(protocol);
 
         } catch (TTransportException e) {
             throw new RuntimeException(e);

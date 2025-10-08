@@ -1,6 +1,7 @@
 package fr.univangers.internalcrm;
 
-public class LeadTo {
+public class ILead {
+    int ID;
     String firstName;
     String lastName;
     double annualRevenue;
@@ -13,9 +14,9 @@ public class LeadTo {
     String company;
     String state;
 
-    public LeadTo(String firstName, String lastName, double annualRevenue, String phone, String street,
-        String postalCode, String city, String country, long creationDate, String company, String state){
-
+    public ILead(int ID, String firstName, String lastName, double annualRevenue, String phone, String street,
+                 String postalCode, String city, String country, long creationDate, String company, String state){
+        this.ID = ID;
         this.firstName = firstName;
         this.annualRevenue = annualRevenue;
         this.phone = phone;
@@ -29,7 +30,7 @@ public class LeadTo {
 
     }
 
-    public LeadTo(){}
+    public ILead(){}
 
     public String getFirstName() {
         return firstName;
@@ -117,5 +118,13 @@ public class LeadTo {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }
