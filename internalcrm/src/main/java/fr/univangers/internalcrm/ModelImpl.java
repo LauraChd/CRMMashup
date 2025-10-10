@@ -74,6 +74,7 @@ public class ModelImpl {
         String[] splitFullName = Utils.splitFullName(fullName);
         ILead newLead = new ILead(leadCpt, splitFullName[0], splitFullName[1], annualRevenue, phone, street,
                 postalCode, city, country, System.currentTimeMillis(), company, state);
+        leadsModel.add(newLead);
 
     }
 
