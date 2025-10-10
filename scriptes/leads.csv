@@ -1,0 +1,11 @@
+FirstName,LastName,Company,Phone,Street,PostalCode,City,Country,AnnualRevenue,State
+Camille,Dupont,TechNova,612345678,12 Rue de la République,75001,Paris,France,450000,Île-de-France
+Julien,Morel,WebFusion,623456789,5 Avenue Victor Hugo,69006,Lyon,France,320000,Auvergne-Rhône-Alpes
+Claire,Lemoine,CodePlus,634567890,18 Rue Nationale,33000,Bordeaux,France,275000,Nouvelle-Aquitaine
+Thomas,Martinez,DigitalForce,645678901,3 Rue des Lilas,31000,Toulouse,France,380000,Occitanie
+Sophie,Petit,SmartWeb,656789012,27 Rue Alsace Lorraine,67000,Strasbourg,France,410000,Grand Est
+Lucas,Garcia,Innova,667890123,8 Rue Sainte-Catherine,44000,Nantes,France,295000,Pays de la Loire
+Emma,Roux,DevEdge,678901234,10 Rue du Faubourg Saint-Antoine,75011,Paris,France,360000,Île-de-France
+Nicolas,Blanc,DataZen,689012345,22 Rue Faidherbe,59000,Lille,France,330000,Hauts-de-France
+Chloé,Renard,Cloudify,690123456,14 Rue Saint-Nicolas,80000,Amiens,France,310000,Hauts-de-France
+Hugo,Chevalier,CyberSpace,611121314,7 Rue de la République,13001,Marseille,France,490000,Provence-Alpes-Côte d'Azur
