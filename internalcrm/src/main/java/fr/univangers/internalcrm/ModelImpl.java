@@ -67,11 +67,22 @@ public class ModelImpl {
     public void addLead(String fullName, double annualRevenue, String phone,
             String street, String postalCode, String city, String country, String company, String state)
             throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
-
-        /*TODO if (leadsModel.contains(lead)) {
-            throw new LeadAlreadyExistsException("Lead already exists");
-        }*/
         String[] splitFullName = Utils.splitFullName(fullName);
+
+        for (ILead iLead : leadsModel) {
+            if (iLead.getAnnualRevenue() == annualRevenue
+                    && iLead.getFirstName() != null && iLead.getFirstName().equalsIgnoreCase(splitFullName[0])
+                    && iLead.getLastName() != null && iLead.getLastName().equalsIgnoreCase(splitFullName[1])
+                    && iLead.getStreet() != null && iLead.getStreet().equalsIgnoreCase(street)
+                    && iLead.getPostalCode() != null && iLead.getPostalCode().equalsIgnoreCase(postalCode)
+                    && iLead.getCountry() != null && iLead.getCountry().equalsIgnoreCase(country)
+                    && iLead.getCompany() != null && iLead.getCompany().equalsIgnoreCase(company)
+                    && iLead.getState() != null && iLead.getState().equalsIgnoreCase(state)
+            ) {
+                throw new LeadAlreadyExistsException("Le lead existe déjà !", null);
+            }
+        }
+
         ILead newLead = new ILead(leadCpt, splitFullName[0], splitFullName[1], annualRevenue, phone, street,
                 postalCode, city, country, System.currentTimeMillis(), company, state);
         leadsModel.add(newLead);

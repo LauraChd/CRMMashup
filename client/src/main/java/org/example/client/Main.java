@@ -89,7 +89,24 @@ public class Main {
                     }
                     transport.close();
                     return true;
+                case "findLeadsByDate":
+                    if (args.length !=3) {
+                        System.out.println("Usage: findLeadsByDate startDate endDate");
+                        transport.close();
+                        return true;
+                    }
 
+                    long startDate = Long.parseLong(args[1]);
+                    long endDate = Long.parseLong(args[2]);
+
+
+                    List<InternalLeadDto> res1 = client.findLeadsByDate(startDate, endDate);
+                    System.out.println("Leads cherchés avec succès !");
+                    for(InternalLeadDto lead : res1) {
+                        System.out.println(lead.toString());
+                    }
+                    transport.close();
+                    return true;
                 case "getLeads" :
 
                     List<InternalLeadDto> res2 = client.getLeads();
