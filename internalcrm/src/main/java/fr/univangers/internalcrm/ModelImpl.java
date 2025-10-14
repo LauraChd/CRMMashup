@@ -11,18 +11,18 @@ public class ModelImpl {
     // Singleton
     private static ModelImpl instance = null;
 
-    //Liste interne des Leads (type interne)
-    private final List<ILead> leadsModel;
+    // Leads list ~= Database
+    private final List<ILead> iLeads;
 
-    //Compteur pour les ID des Leads
-    private int leadCpt = 1 ;
+    // Counts the number of leads and gives their IDs
+    private int leadsCount = 1 ;
 
-    //Constructeur privé
+    // Private constructor because it's a singleton
     private ModelImpl() {
-        this.leadsModel = new ArrayList<>();
+        this.iLeads = new ArrayList<>();
     }
 
-    //Accès global à l’instance unique
+    // Global access to the singleton
     public static synchronized ModelImpl getInstance() {
         if (instance == null) {
             instance = new ModelImpl();
@@ -30,7 +30,18 @@ public class ModelImpl {
         return instance;
     }
 
-    //Recherche par revenu et état
+    // Find leads by revenue and state
+
+    /**
+     *
+     * @param lowAnnualRevenue
+     * @param highAnnualRevenue
+     * @param state in the company (can be an empty string (= ""))
+     * @return the list of the leads that matches the requirements
+     * @throws InvalidRevenueRangeException if lowAnnualRevenue is higher than highannualRevenue
+     * @throws TException
+     */
+
     public List<ILead> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state)
             throws InvalidRevenueRangeException, TException {
 
@@ -38,71 +49,112 @@ public class ModelImpl {
             throw new InvalidRevenueRangeException("Invalid revenue range", lowAnnualRevenue, highAnnualRevenue);
         }
 
-        List<ILead> leadsReturn = new ArrayList<>();
-        for (ILead l : leadsModel) {
+        List<ILead> leadsResult = new ArrayList<>();
+        for (ILead l : iLeads) {
             if (l.getAnnualRevenue() >= lowAnnualRevenue &&
                     l.getAnnualRevenue() <= highAnnualRevenue &&
                     l.getState().equalsIgnoreCase(state)) {
 
-                leadsReturn.add(l);
+                leadsResult.add(l);
             }
         }
-        return leadsReturn;
+        return leadsResult;
     }
 
-    //Recherche par date
+    // Find leads added between two dates
+
+    /**
+     *
+     * @param startDate minimum date when the lead was added
+     * @param endDate maximum date when the lead was added
+     * @return the list of the leads that matches the requirements
+     * @throws InvalidDateException if the startDate is higher than the endDate
+     * @throws TException
+     */
     public List<ILead> findLeadsByDate(long startDate, long endDate)
             throws InvalidDateException, TException {
-        List<ILead> result = new ArrayList<>();
-        // Exemple : à adapter selon ton modèle
-        for (ILead l : leadsModel) {
+        //TODO : comment client fait pour saisir les dates ? Doit prendre dates format 10/10/2025 et convertir dans Virtual ou internal ?
+
+        if(startDate > endDate) {
+            throw new InvalidDateException("Invalid date range", startDate, endDate);
+        }
+
+        List<ILead> leadsResult = new ArrayList<>();
+        for (ILead l : iLeads) {
             if (l.getCreationDate() >= startDate && l.getCreationDate() <= endDate) {
-                result.add(l);
+                leadsResult.add(l);
             }
         }
-        return result;
+        return leadsResult;
     }
 
-    //Ajouter un lead
+    // Add a lead to the list of leads
+
+    /**
+     *
+     * @param fullName as "LastName, FirstName"
+     * @param annualRevenue
+     * @param phone
+     * @param street
+     * @param postalCode
+     * @param city
+     * @param country
+     * @param company
+     * @param state in the company
+     * @return -1 if the creation of lead turned wrong, else the ID of the lead
+     * @throws LeadAlreadyExistsException if a lead already exists with the same parameters
+     * @throws InvalidLeadParameterException if a parameter is not of the right type
+     * @throws TException
+     */
     public int addLead(String fullName, double annualRevenue, String phone,
             String street, String postalCode, String city, String country, String company, String state)
             throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
+
+        // Splits the fullName in both
         String[] splitFullName = Utils.splitFullName(fullName);
-
-        for (ILead iLead : leadsModel) {
-            if (iLead.getAnnualRevenue() == annualRevenue
-                    && iLead.getFirstName() != null && iLead.getFirstName().equalsIgnoreCase(splitFullName[0])
-                    && iLead.getLastName() != null && iLead.getLastName().equalsIgnoreCase(splitFullName[1])
-                    && iLead.getStreet() != null && iLead.getStreet().equalsIgnoreCase(street)
-                    && iLead.getPostalCode() != null && iLead.getPostalCode().equalsIgnoreCase(postalCode)
-                    && iLead.getCountry() != null && iLead.getCountry().equalsIgnoreCase(country)
-                    && iLead.getCompany() != null && iLead.getCompany().equalsIgnoreCase(company)
-                    && iLead.getState() != null && iLead.getState().equalsIgnoreCase(state)
-            ) {
-                throw new LeadAlreadyExistsException("Le lead existe déjà !", null, -1);
-            }
-        }
-
-        int ID = leadCpt;
-        leadCpt++;
+        // Get the number of the lead
+        int ID = leadsCount;
+        // Create a Lead with the parameters
         ILead newLead = new ILead(ID, splitFullName[0], splitFullName[1], annualRevenue, phone, street,
                 postalCode, city, country, System.currentTimeMillis(), company, state);
-        leadsModel.add(newLead);
-
+        // Check is this lead already exists
+        for (ILead iLead : iLeads) {
+            if (iLead.sameAs(newLead)){
+                throw new LeadAlreadyExistsException("Le lead existe déjà !", iLead.getID());
+            }
+        }
+        // If the lead does not already exists, can add it to the list
+        leadsCount++;
+        iLeads.add(newLead);
         return ID;
     }
 
-    //Supprimer un lead
-    public void deleteLead(ILead lead)
+    // Delete a lead from ID
+
+    /**
+     *
+     * @param ID of the lead to delete
+     * @throws LeadNotFoundException if the given ID isn't attributed to a lead
+     * @throws TException
+     */
+    public void deleteLead(int ID)
             throws LeadNotFoundException, TException {
-        /*if (!leadsModel.remove(lead)) {
-            throw new LeadNotFoundException("Lead not found");
-        }*/
-        //TODO
+
+        boolean removed = iLeads.removeIf(l -> l.getID() == ID);
+        if (!removed) {
+            throw new LeadNotFoundException("Le lead n'existe pas", ID);
+        }
     }
 
+    // Get all the leads from the list
+
+    /**
+     *
+     * @return the list of the leads
+     */
     public List<ILead> getAllLeads() {
-        return new ArrayList<>(leadsModel);
+        // Returns a copy
+        return new ArrayList<>(iLeads);
     }
 }
 

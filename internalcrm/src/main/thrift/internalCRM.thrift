@@ -36,8 +36,7 @@ exception LeadNotFoundException {
 
 exception LeadAlreadyExistsException {
     1: string message
-    2: string fullName
-    3: int ID
+    2: int ID
 }
 
 exception InvalidLeadParameterException {

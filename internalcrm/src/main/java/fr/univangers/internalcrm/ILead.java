@@ -127,4 +127,15 @@ public class ILead {
     public void setID(int ID) {
         this.ID = ID;
     }
+
+    public boolean sameAs(ILead l){
+        return this.getAnnualRevenue() == l.getAnnualRevenue()
+                && this.getFirstName().equalsIgnoreCase(l.getFirstName())
+                && this.getLastName().equalsIgnoreCase(l.getLastName())
+                && this.getStreet().equalsIgnoreCase(l.getStreet())
+                && this.getPostalCode().equalsIgnoreCase(l.getPostalCode())
+                && this.getCountry().equalsIgnoreCase(l.getCountry())
+                && this.getCompany().equalsIgnoreCase(l.getCountry())
+                && this.getState().equalsIgnoreCase(l.getState());
+    }
 }
