@@ -79,7 +79,7 @@ public class ModelImpl {
                     && iLead.getCompany() != null && iLead.getCompany().equalsIgnoreCase(company)
                     && iLead.getState() != null && iLead.getState().equalsIgnoreCase(state)
             ) {
-                throw new LeadAlreadyExistsException("Le lead existe déjà !", null);
+                throw new LeadAlreadyExistsException("Le lead existe déjà !", null, -1);
             }
         }
 
