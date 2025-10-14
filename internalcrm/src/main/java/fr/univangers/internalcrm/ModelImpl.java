@@ -64,7 +64,7 @@ public class ModelImpl {
     }
 
     //Ajouter un lead
-    public void addLead(String fullName, double annualRevenue, String phone,
+    public int addLead(String fullName, double annualRevenue, String phone,
             String street, String postalCode, String city, String country, String company, String state)
             throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
         String[] splitFullName = Utils.splitFullName(fullName);
@@ -83,10 +83,13 @@ public class ModelImpl {
             }
         }
 
-        ILead newLead = new ILead(leadCpt, splitFullName[0], splitFullName[1], annualRevenue, phone, street,
+        int ID = leadCpt;
+        leadCpt++;
+        ILead newLead = new ILead(ID, splitFullName[0], splitFullName[1], annualRevenue, phone, street,
                 postalCode, city, country, System.currentTimeMillis(), company, state);
         leadsModel.add(newLead);
 
+        return ID;
     }
 
     //Supprimer un lead

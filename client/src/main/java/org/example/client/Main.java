@@ -89,6 +89,7 @@ public class Main {
                     }
                     transport.close();
                     return true;
+
                 case "findLeadsByDate":
                     if (args.length !=3) {
                         System.out.println("Usage: findLeadsByDate startDate endDate");
@@ -107,6 +108,19 @@ public class Main {
                     }
                     transport.close();
                     return true;
+
+                case "deleteLead":
+                    if (args.length != 2) {
+                        System.out.println("Usage: deleteLead fullName");
+                        transport.close();
+                        return true;
+                    }
+                    int idToDelete = Integer.parseInt(args[1]);
+                    client.deleteLead(idToDelete);
+                    System.out.println("Lead supprimé !");
+                    transport.close();
+                    return true;
+
                 case "getLeads" :
 
                     List<InternalLeadDto> res2 = client.getLeads();

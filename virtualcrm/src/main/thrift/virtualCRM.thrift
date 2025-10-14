@@ -4,32 +4,19 @@ typedef i32 int
 typedef i64 long
 
 struct VirtualLeadDto {
-    1: string firstName
-    2: string lastName
-    3: double annualRevenue
-    4: string phone
-    5: string street
-    6: string postalCode
-    7: string city
-    8: string country
-    9: long creationDate
-    10: string company
-    11: string state
-    12: GeographicPointDto geographicPosition
-}
-
-struct InternalLeadDto {
-    1: string fullName
-    2: double annualRevenue
-    3: string phone
-    4: string street
-    5: string postalCode
-    6: string city
-    7: string country
-    8: long creationDate
-    9: string company
-    10: string state
-    11: GeographicPointDto geographicPosition
+    1: int ID
+    2: string firstName
+    3: string lastName
+    4: double annualRevenue
+    5: string phone
+    6: string street
+    7: string postalCode
+    8: string city
+    9: string country
+    10: long creationDate
+    11: string company
+    12: string state
+    13: GeographicPointDto geographicPosition
 }
 
 struct GeographicPointDto {
@@ -51,47 +38,51 @@ exception InvalidDateException {
 
 exception LeadNotFoundException {
     1: string message
-    2: InternalLeadDto lead
-}
-
-exception LeadDoesNotExistException {
-    1: string message
-    2: InternalLeadDto lead
+    2: int ID
 }
 
 exception LeadAlreadyExistsException {
     1: string message
-    2: InternalLeadDto lead
+    2: string fullName
+    3: int ID
 }
 
 exception InvalidLeadParameterException {
     1: string message
-    2: InternalLeadDto lead
 }
 
-service InternalCRMService {
-    list<InternalLeadDto> findLeads (
+service VirtualCRMService {
+    list<VirtualLeadDto> findLeads (
             1: double lowAnnualRevenue,
             2: double highAnnualRevenue,
             3: string state)
         throws (
             1: InvalidRevenueRangeException e)
 
-    list<InternalLeadDto> findLeadsByDate (
+    list<VirtualLeadDto> findLeadsByDate (
             1: long startDate,
             2: long endDate)
         throws (
             1: InvalidDateException e)
 
     void deleteLead (
-            1: InternalLeadDto lead)
+            1: int ID)
         throws (
             1: LeadNotFoundException e)
 
-    void addLead (
-            1: InternalLeadDto lead)
+    int addLead (
+            1: string fullName
+            2: double annualRevenue
+            3: string phone
+            4: string street
+            5: string postalCode
+            6: string city
+            7: string country
+            8: string company
+            9: string state)
         throws (
-            1: LeadDoesNotExistException e,
-            2: LeadAlreadyExistsException ee,
-            3: InvalidLeadParameterException eee)
+            1: LeadAlreadyExistsException e,
+            2: InvalidLeadParameterException ee)
+
+    list<VirtualLeadDto> getLeads ()
 }

@@ -4,7 +4,7 @@ typedef i32 int
 typedef i64 long
 
 struct InternalLeadDto {
-    1: int id
+    1: int ID
     2: string fullName
     3: double annualRevenue
     4: string phone
@@ -31,23 +31,17 @@ exception InvalidDateException {
 
 exception LeadNotFoundException {
     1: string message
-    2: int id
-
-}
-
-exception LeadDoesNotExistException {
-    1: string message
-    2: InternalLeadDto lead
+    2: int ID
 }
 
 exception LeadAlreadyExistsException {
     1: string message
-    2: InternalLeadDto lead
+    2: string fullName
+    3: int ID
 }
 
 exception InvalidLeadParameterException {
     1: string message
-    2: InternalLeadDto lead
 }
 
 service InternalCRMService {
@@ -69,7 +63,7 @@ service InternalCRMService {
         throws (
             1: LeadNotFoundException e)
 
-    void addLead (
+    int addLead (
             1: string fullName
             2: double annualRevenue
             3: string phone
@@ -80,9 +74,8 @@ service InternalCRMService {
             8: string company
             9: string state)
         throws (
-            1: LeadDoesNotExistException e,
-            2: LeadAlreadyExistsException ee,
-            3: InvalidLeadParameterException eee)
+            1: LeadAlreadyExistsException e,
+            2: InvalidLeadParameterException ee)
 
     list<InternalLeadDto> getLeads ()
 }

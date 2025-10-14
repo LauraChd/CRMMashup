@@ -15,12 +15,12 @@ ACCESS_TOKEN=$(echo "$RESPONSE" | grep -o '"access_token":"[^"]*' | cut -d':' -f
 INSTANCE=$(echo "$RESPONSE" | grep -o '"instance_url":"[^"]*' | cut -d':' -f2- | tr -d '"')
 
 if [[ -z "$ACCESS_TOKEN" || -z "$INSTANCE" ]]; then
-  echo "❌ Erreur d'authentification Salesforce."
+  echo "Erreur d'authentification Salesforce."
   echo "Réponse brute : $RESPONSE"
   exit 1
 fi
 
-echo "✅ Authentifié avec succès."
+echo "Authentifié avec succès."
 
 # 2. Générer N leads
 N=5  # nombre de leads à créer
@@ -56,11 +56,11 @@ for i in $(seq 1 $N); do
 EOF
 )
 
-  echo "🔄 Création du Lead $i..."
+  echo "Création du Lead $i..."
   RESPONSE=$(curl -s -X POST "$INSTANCE/services/data/v45.0/sobjects/Lead" \
     -H "Authorization: Bearer $ACCESS_TOKEN" \
     -H "Content-Type: application/json" \
     -d "$JSON_PAYLOAD")
 
-  echo "📩 Réponse : $RESPONSE"
+  echo "Réponse : $RESPONSE"
 done
