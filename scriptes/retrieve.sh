@@ -11,3 +11,4 @@ curl -G "$INSTANCE_URL/services/data/v45.0/query/" \
     --header "Authorization: Bearer $ACCESS_TOKEN" \
     --header "Accept: application/xml" \
     -d "q=SELECT+FirstName,LastName,ConvertedAccountId+FROM+Lead"
+
