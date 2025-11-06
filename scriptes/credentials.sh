@@ -18,3 +18,4 @@ INSTANCE_URL=$(echo "$RESPONSE" | grep -o '"instance_url":"[^"]*' | cut -d':' -f
 # Afficher ou enregistrer les variables pour un usage ultérieur
 echo "ACCESS_TOKEN=$ACCESS_TOKEN"
 echo "INSTANCE_URL=$INSTANCE_URL"
+
