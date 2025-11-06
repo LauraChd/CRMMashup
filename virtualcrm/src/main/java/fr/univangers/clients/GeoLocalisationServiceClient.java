@@ -12,7 +12,7 @@ import fr.univangers.virtualcrm.VirtualLeadDTO;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class GeoLocationServiceClient {
+public class GeoLocalisationServiceClient {
     public GeographicPointDto lookup(VirtualLeadDTO virtualLead) throws IOException {
         GeographicPointDto geographicPoint = null;
 
