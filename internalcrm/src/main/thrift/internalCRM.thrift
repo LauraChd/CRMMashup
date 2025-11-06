@@ -43,6 +43,12 @@ exception InvalidLeadParameterException {
     1: string message
 }
 
+//rajout => capture erreur inattendue côté serveur
+exception InternalErrorException {
+    1: string message
+}
+
+
 service InternalCRMService {
     list<InternalLeadDto> findLeads (
             1: double lowAnnualRevenue,
@@ -57,24 +63,38 @@ service InternalCRMService {
         throws (
             1: InvalidDateException e)
 
+     //accès à un lead par id (pas besoin de parcourir liste)
+    // plus facile pour faire "GET /leads/{id}" (que fera le service REST)
+    InternalLeadDto getLeadById(1: int ID)
+        throws (1: LeadNotFoundException e)
+
+
+
     void deleteLead (
             1: int ID)
         throws (
             1: LeadNotFoundException e)
 
     int addLead (
-            1: string fullName
-            2: double annualRevenue
-            3: string phone
-            4: string street
-            5: string postalCode
-            6: string city
-            7: string country
-            8: string company
-            9: string state)
+            1: string fullName,
+            2: double annualRevenue,
+            3: string phone,
+            4: string street,
+            5: string postalCode,
+            6: string city,
+            7: string country,
+            8: string company,
+            9: string state
+            )
         throws (
             1: LeadAlreadyExistsException e,
             2: InvalidLeadParameterException ee)
 
     list<InternalLeadDto> getLeads ()
+
+
+    //méthode pour nb total lead
+    int countLeads()
+
+
 }
