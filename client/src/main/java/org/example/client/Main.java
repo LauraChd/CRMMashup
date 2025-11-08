@@ -1,3 +1,4 @@
+/*
 package org.example.client;
 import org.example.client.service.ClientMovieService;
 import org.example.client.service.ClientMovieServiceFactory;
@@ -319,3 +320,4 @@ public class Main {
     }
 
 }
+*/

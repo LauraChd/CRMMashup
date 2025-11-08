@@ -13,7 +13,7 @@
 
     <servlet>
         <servlet-name>ThriftCalculatorServiceServlet</servlet-name>
-        <servlet-class>fr.univangers.internalcrm.ThrifInternalCRMServiceServlet</servlet-class>
+        <servlet-class>fr.univangers.internalcrm.service.ThrifInternalCRMServiceServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
