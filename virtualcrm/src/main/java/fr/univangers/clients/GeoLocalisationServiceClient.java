@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Optional;
 
 import fr.univangers.model.VirtualLeadDto;
 import org.json.JSONArray;
@@ -15,8 +16,8 @@ import org.json.JSONObject;
 /**
  * TODO
  */
-public class GeolocationServiceImpl {
-    public GeographicPointDto lookup(VirtualLeadDto virtualLead) throws IOException {
+public class GeoLocalisationServiceClient {
+    public Optional<GeographicPointDto> lookup(VirtualLeadDto virtualLead) throws IOException {
         GeographicPointDto geographicPoint = null;
 
         String urlStr = "https://nominatim.openstreetmap.org/search?q=" +
@@ -45,6 +46,6 @@ public class GeolocationServiceImpl {
         } else {
             System.out.println("Aucun résultat trouvé.");
         }
-        return geographicPoint;
+        return Optional.ofNullable(geographicPoint);
     }
 }
