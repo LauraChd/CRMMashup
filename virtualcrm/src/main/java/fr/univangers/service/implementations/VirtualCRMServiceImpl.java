@@ -16,12 +16,17 @@ import java.util.Optional;
 
 public class VirtualCRMServiceImpl implements VirtualCRMService {
 
-    // TODO
-    private final SalesforceCRMClient salesforceCRMClient = new SalesforceCRMClient();
-    //TODO
-    private final InternalCRMClient internalCRMClient = new InternalCRMClient();
-    //TODO
-    private final GeoLocalisationServiceClient geoLocalisationServiceClient = new GeoLocalisationServiceClient();
+    private final SalesforceCRMClient salesforceCRMClient;
+    private final InternalCRMClient internalCRMClient;
+    private final GeoLocalisationServiceClient geoLocalisationServiceClient;
+
+    public VirtualCRMServiceImpl(SalesforceCRMClient salesforceCRMClient,
+                                 InternalCRMClient internalCRMClient,
+                                 GeoLocalisationServiceClient geoLocalisationServiceClient) {
+        this.salesforceCRMClient = salesforceCRMClient;
+        this.internalCRMClient = internalCRMClient;
+        this.geoLocalisationServiceClient = geoLocalisationServiceClient;
+    }
 
 
     /**
