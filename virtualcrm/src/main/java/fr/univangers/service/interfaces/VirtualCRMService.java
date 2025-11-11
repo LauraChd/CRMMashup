@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * TODO
  */
-public interface ICRMServices {
+public interface VirtualCRMService {
 
     public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException, IOException;
 

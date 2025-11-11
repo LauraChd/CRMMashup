@@ -1,6 +1,5 @@
 package fr.univangers.clients;
 
-import fr.univangers.service.interfaces.ICRMServices;
 import org.example.internalcrm.thrift.*;
 import fr.univangers.model.VirtualLeadDto;
 import fr.univangers.utils.VirtualLeadConverter;
