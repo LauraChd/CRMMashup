@@ -1,9 +1,10 @@
 package fr.univangers.service.interfaces;
 
-import fr.univangers.thrift.*;
 import fr.univangers.model.VirtualLeadDto;
 import org.apache.thrift.TException;
+import org.example.internalcrm.thrift.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,9 +12,9 @@ import java.util.List;
  */
 public interface ICRMServices {
 
-    public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException;
+    public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException, IOException;
 
-    public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException;
+    public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException, IOException;
 
     public VirtualLeadDto getLeadById(int ID) throws LeadNotFoundException, TException;
 

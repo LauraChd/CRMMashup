@@ -1,5 +1,8 @@
 package fr.univangers.model;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 public class VirtualLeadDto {
 
     private String firstName;
@@ -10,15 +13,15 @@ public class VirtualLeadDto {
     private String postalCode;
     private String city;
     private String country;
-    private String creationDate;
+    private LocalDate creationDate;
     private String company;
     private String state;
-    //private GeographicPointDto geographicPointDto; TODO
+    private GeographicPointDto geographicPointDto;
 
     public VirtualLeadDto(String firstName, String lastName, Double annualRevenue,
                           String phone, String street, String postalCode,
-                          String city, String country, String creationDate,
-                          String company, String state//// GeographicPointDto geographicPointDto
+                          String city, String country, LocalDate creationDate,
+                          String company, String state, GeographicPointDto geographicPointDto
                         ) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,7 +34,7 @@ public class VirtualLeadDto {
         this.creationDate = creationDate;
         this.company = company;
         this.state = state;
-      //  this.geographicPointDto = geographicPointDto;
+        this.geographicPointDto = geographicPointDto;
     }
 
     public VirtualLeadDto() {
@@ -101,21 +104,21 @@ public class VirtualLeadDto {
         this.country = country;
     }
 
-    public String getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     } //TODO : régler problème de retour entre long et String
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
-  /*  public GeographicPointDto getGeographicPointDto() { TODO
+    public GeographicPointDto getGeographicPointDto() {
         return geographicPointDto;
     }
 
     public void setGeographicPointDto(GeographicPointDto geographicPointDto) {
         this.geographicPointDto = geographicPointDto;
-    }*/
+    }
 
     public String getCompany() {
         return company;

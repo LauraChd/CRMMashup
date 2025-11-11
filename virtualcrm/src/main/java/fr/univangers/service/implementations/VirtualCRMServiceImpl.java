@@ -1,22 +1,27 @@
 package fr.univangers.service.implementations;
 
-import fr.univangers.clients.GeolocationServiceImpl;
+import fr.univangers.clients.GeoLocalisationServiceClient;
+import fr.univangers.clients.InternalCRMClient;
+import fr.univangers.clients.SalesforceCRMClient;
+import fr.univangers.model.GeographicPointDto;
 import fr.univangers.model.VirtualLeadDto;
 import fr.univangers.service.interfaces.ICRMServices;
-import fr.univangers.thrift.*;
+import org.example.internalcrm.thrift.*;
 import fr.univangers.utils.VirtualLeadConverter;
 import org.apache.thrift.TException;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class VirtualCRMServiceImpl implements ICRMServices {
 
     // TODO
-    private final SalesforceServiceImpl salesforceService = new SalesforceServiceImpl();
+    private final SalesforceCRMClient salesforceCRMClient = new SalesforceCRMClient();
     //TODO
-    private final InternalCRMServiceImpl internalCRMService = new InternalCRMServiceImpl();
+    private final InternalCRMClient internalCRMClient = new InternalCRMClient();
     //TODO
-    private final GeolocationServiceImpl geolocationService = new GeolocationServiceImpl();
+    private final GeoLocalisationServiceClient geoLocalisationServiceClient = new GeoLocalisationServiceClient();
 
 
     /**
@@ -29,13 +34,20 @@ public class VirtualCRMServiceImpl implements ICRMServices {
      * @throws TException
      */
     @Override
-    public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException {
+    public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException, IOException {
         List<VirtualLeadDto> leadsList = VirtualLeadConverter.mergeInternalSalesforceLeads(
-                salesforceService.findLeads(lowAnnualRevenue, highAnnualRevenue, state),
-                internalCRMService.findLeads(lowAnnualRevenue, highAnnualRevenue, state)
+                salesforceCRMClient.findLeads(lowAnnualRevenue, highAnnualRevenue, state),
+                internalCRMClient.findLeads(lowAnnualRevenue, highAnnualRevenue, state)
         );
 
-        //TODO : set localisation du virtualLeadDto
+        if (leadsList != null) {
+            for(VirtualLeadDto lead : leadsList)
+            {
+                Optional<GeographicPointDto> geographicPoint = geoLocalisationServiceClient.lookup(lead);
+                geographicPoint.ifPresent(lead::setGeographicPointDto);
+            }
+        }
+
         return leadsList;
     }
 
@@ -48,13 +60,20 @@ public class VirtualCRMServiceImpl implements ICRMServices {
      * @throws TException
      */
     @Override
-    public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException {
+    public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException, IOException {
         List<VirtualLeadDto> leadsList = VirtualLeadConverter.mergeInternalSalesforceLeads(
-                salesforceService.findLeadsByDate(startDate, endDate),
-                internalCRMService.findLeadsByDate(startDate, endDate)
+                salesforceCRMClient.findLeadsByDate(startDate, endDate),
+                internalCRMClient.findLeadsByDate(startDate, endDate)
         );
 
-        //TODO : set localisation du virtualLeadDto
+        if (leadsList != null) {
+            for(VirtualLeadDto lead : leadsList)
+            {
+                Optional<GeographicPointDto> geographicPoint = geoLocalisationServiceClient.lookup(lead);
+                geographicPoint.ifPresent(lead::setGeographicPointDto);
+            }
+        }
+
         return leadsList;
     }
 
@@ -67,8 +86,8 @@ public class VirtualCRMServiceImpl implements ICRMServices {
      */
     @Override
     public VirtualLeadDto getLeadById(int id) throws LeadNotFoundException, TException {
-        VirtualLeadDto leadInternal = internalCRMService.getLeadById(id);
-        VirtualLeadDto leadSalesforce = salesforceService.getLeadById(id);
+        VirtualLeadDto leadInternal = internalCRMClient.getLeadById(id);
+        VirtualLeadDto leadSalesforce = salesforceCRMClient.getLeadById(id);
 
         //TODO : fonction pour prendre le seul lead qui existe
 
@@ -88,8 +107,8 @@ public class VirtualCRMServiceImpl implements ICRMServices {
 
         //TODO : try catch
         // si le premier marche pas, faire celui d'apres, sinon lancer exception
-        internalCRMService.deleteLead(id);
-        salesforceService.deleteLead(id);
+        internalCRMClient.deleteLead(id);
+        salesforceCRMClient.deleteLead(id);
 
     }
 
@@ -126,8 +145,8 @@ public class VirtualCRMServiceImpl implements ICRMServices {
     @Override
     public List<VirtualLeadDto> getLeads() throws TException {
         List<VirtualLeadDto> leadsList = VirtualLeadConverter.mergeInternalSalesforceLeads(
-                salesforceService.getLeads(),
-                internalCRMService.getLeads()
+                salesforceCRMClient.getLeads(),
+                internalCRMClient.getLeads()
         );
 
         //TODO : set localisation du virtualLeadDto
@@ -142,7 +161,7 @@ public class VirtualCRMServiceImpl implements ICRMServices {
      */
     @Override
     public int countLeads() throws TException {
-        int countLeads = salesforceService.countLeads() + internalCRMService.countLeads();
+        int countLeads = salesforceCRMClient.countLeads() + internalCRMClient.countLeads();
         return countLeads;
     }
 }

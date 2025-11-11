@@ -1,7 +1,7 @@
-package fr.univangers.service.implementations;
+package fr.univangers.clients;
 
 import fr.univangers.service.interfaces.ICRMServices;
-import fr.univangers.thrift.*;
+import org.example.internalcrm.thrift.*;
 import fr.univangers.model.VirtualLeadDto;
 import fr.univangers.utils.VirtualLeadConverter;
 import org.apache.thrift.TException;
@@ -17,20 +17,10 @@ import java.util.List;
 /**
  * TODO
  */
-public class InternalCRMServiceImpl implements ICRMServices {
+public class InternalCRMClient implements CRMClient {
 
     public static final String INTERNALCRM_URL = "http://localhost:8080/internalcrm/";
 
-    /**
-     * TODO
-     * @param lowAnnualRevenue
-     * @param highAnnualRevenue
-     * @param state
-     * @return
-     * @throws InvalidRevenueRangeException
-     * @throws TException
-     */
-    @Override
     public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException {
 
         List<InternalLeadDto> leadsList =  new ArrayList<>();
@@ -53,15 +43,6 @@ public class InternalCRMServiceImpl implements ICRMServices {
         return VirtualLeadConverter.toVirtualLeadDtoList(leadsList);
     }
 
-    /**
-     * TODO
-     * @param startDate
-     * @param endDate
-     * @return
-     * @throws InvalidDateException
-     * @throws TException
-     */
-    @Override
     public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException {
 
         List<InternalLeadDto> leadsList =  new ArrayList<>();
@@ -92,7 +73,6 @@ public class InternalCRMServiceImpl implements ICRMServices {
      * @throws LeadNotFoundException
      * @throws TException
      */
-    @Override
     public VirtualLeadDto getLeadById(int id) throws LeadNotFoundException, TException {
 
         InternalLeadDto lead = new InternalLeadDto();
@@ -116,16 +96,7 @@ public class InternalCRMServiceImpl implements ICRMServices {
 
     }
 
-    /**
-     * TODO
-     * @param id
-     * @throws LeadNotFoundException
-     * @throws TException
-     */
-    @Override
     public void deleteLead(int id) throws LeadNotFoundException, TException {
-
-        InternalLeadDto lead;
 
         try {
 
@@ -135,7 +106,7 @@ public class InternalCRMServiceImpl implements ICRMServices {
             TProtocol protocol = new TBinaryProtocol(transport);
             InternalCRMService.Client client = new InternalCRMService.Client(protocol);
 
-            lead = client.getLeadById(id);
+            client.deleteLead(id);
 
             transport.close();
 
@@ -144,23 +115,6 @@ public class InternalCRMServiceImpl implements ICRMServices {
         }
     }
 
-    /**
-     * TODO
-     * @param fullName
-     * @param annualRevenue
-     * @param phone
-     * @param street
-     * @param postalCode
-     * @param city
-     * @param country
-     * @param company
-     * @param state
-     * @return
-     * @throws LeadAlreadyExistsException
-     * @throws InvalidLeadParameterException
-     * @throws TException
-     */
-    @Override
     public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
 
         int leadId = -1;
@@ -183,12 +137,6 @@ public class InternalCRMServiceImpl implements ICRMServices {
         return leadId;
     }
 
-    /**
-     * TODO
-     * @return
-     * @throws TException
-     */
-    @Override
     public List<VirtualLeadDto> getLeads() throws TException {
 
         List<InternalLeadDto> leadsList =  new ArrayList<>();
@@ -211,12 +159,6 @@ public class InternalCRMServiceImpl implements ICRMServices {
         return VirtualLeadConverter.toVirtualLeadDtoList(leadsList);
     }
 
-    /**
-     * TODO
-     * @return
-     * @throws TException
-     */
-    @Override
     public int countLeads() throws TException {
 
         int leadId = -1;

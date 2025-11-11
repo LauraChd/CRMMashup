@@ -1,8 +1,9 @@
 package fr.univangers.utils;
 
 import fr.univangers.model.VirtualLeadDto;
-import fr.univangers.thrift.InternalLeadDto;
+import org.example.internalcrm.thrift.InternalLeadDto;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,8 @@ public class VirtualLeadConverter {
     public static InternalLeadDto toInternalLeadDto(VirtualLeadDto modelTo) {
         InternalLeadDto internalLeadDto = new InternalLeadDto();
 
+        long creationDateLong = modelTo.getCreationDate().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
         internalLeadDto.setFullName(modelTo.getFirstName() + ',' + modelTo.getLastName());
         internalLeadDto.setCity(modelTo.getCity());
         internalLeadDto.setAnnualRevenue(modelTo.getAnnualRevenue());
@@ -32,7 +35,7 @@ public class VirtualLeadConverter {
         internalLeadDto.setStreet(modelTo.getStreet());
         internalLeadDto.setPostalCode(modelTo.getPostalCode());
         internalLeadDto.setCountry(modelTo.getCountry());
-        internalLeadDto.setCreationDate(modelTo.getCreationDate());
+        internalLeadDto.setCreationDate(creationDateLong);
         internalLeadDto.setCompany(modelTo.getCompany());
         internalLeadDto.setState(modelTo.getState());
 
@@ -64,6 +67,8 @@ public class VirtualLeadConverter {
 
         String[] nameParts = internalLeadDto.getFullName().split(",");
 
+        LocalDate creationDate = Instant.ofEpochMilli(internalLeadDto.getCreationDate()).atZone(ZoneId.systemDefault()).toLocalDate();
+
         modelTo.setFirstName(nameParts[0]);
         modelTo.setLastName(nameParts[1]);
         modelTo.setCity(internalLeadDto.getCity());
@@ -72,7 +77,7 @@ public class VirtualLeadConverter {
         modelTo.setStreet(internalLeadDto.getStreet());
         modelTo.setPostalCode(internalLeadDto.getPostalCode());
         modelTo.setCountry(internalLeadDto.getCountry());
-        modelTo.setCreationDate(internalLeadDto.getCreationDate());
+        modelTo.setCreationDate(creationDate);
         modelTo.setCompany(internalLeadDto.getCompany());
         modelTo.setState(internalLeadDto.getState());
 
