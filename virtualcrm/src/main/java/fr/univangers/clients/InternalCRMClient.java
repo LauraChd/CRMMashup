@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * TODO
  */
-public class InternalCRMClient implements CRMClient {
+public class InternalCRMClient implements CRMClient<Integer> {
 
     public static final String INTERNALCRM_URL = "http://localhost:8080/internalcrm/";
 
@@ -72,7 +72,8 @@ public class InternalCRMClient implements CRMClient {
      * @throws LeadNotFoundException
      * @throws TException
      */
-    public VirtualLeadDto getLeadById(int id) throws LeadNotFoundException, TException {
+    @Override
+    public VirtualLeadDto getLeadById(Integer id) throws LeadNotFoundException, TException {
 
         InternalLeadDto lead = new InternalLeadDto();
 
@@ -95,7 +96,7 @@ public class InternalCRMClient implements CRMClient {
 
     }
 
-    public void deleteLead(int id) throws LeadNotFoundException, TException {
+    public void deleteLead(Integer id) throws LeadNotFoundException, TException {
 
         try {
 

@@ -10,15 +10,15 @@ import java.util.List;
 /**
  * TODO
  */
-public interface VirtualCRMService {
+public interface VirtualCRMService<ID> {
 
     public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException, IOException;
 
     public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException, IOException;
 
-    public VirtualLeadDto getLeadById(int ID) throws LeadNotFoundException, TException;
+    public VirtualLeadDto getLeadById(String ID) throws LeadNotFoundException, TException;
 
-    public void deleteLead(int ID) throws LeadNotFoundException, TException;
+    public void deleteLead(String ID) throws LeadNotFoundException, TException, IOException;
 
     public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException;
 

@@ -15,7 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * TODO
  */
-public class SalesforceCRMClient implements CRMClient {
+public class SalesforceCRMClient implements CRMClient<String> {
 
 
     private final String clientId;
@@ -80,37 +80,37 @@ public class SalesforceCRMClient implements CRMClient {
         }
     }
 
-    private List<VirtualLeadDto> parseLeads(JSONArray records) {
+    private List<VirtualLeadDto> parseLeads(JSONArray leadsJson) {
         List<VirtualLeadDto> leads = new ArrayList<>();
-        for (int i = 0; i < records.length(); i++) {
-            JSONObject rec = records.getJSONObject(i);
-            VirtualLeadDto dto = new VirtualLeadDto();
+        for (int i = 0; i < leadsJson.length(); i++) {
+            JSONObject leadJson = leadsJson.getJSONObject(i);
+            VirtualLeadDto virtualLeadDto = new VirtualLeadDto();
 
-            dto.setFirstName(rec.optString("FirstName"));
-            dto.setLastName(rec.optString("LastName"));
-            dto.setCompany(rec.optString("Company"));
-            dto.setAnnualRevenue(rec.optDouble("AnnualRevenue"));
-            dto.setPhone(rec.optString("Phone"));
-            dto.setStreet(rec.optString("Street"));
-            dto.setPostalCode(rec.optString("PostalCode"));
-            dto.setCity(rec.optString("City"));
-            dto.setCountry(rec.optString("Country"));
-            String createdDateStr = rec.optString("CreatedDate");
+            virtualLeadDto.setFirstName(leadJson.optString("FirstName"));
+            virtualLeadDto.setLastName(leadJson.optString("LastName"));
+            virtualLeadDto.setCompany(leadJson.optString("Company"));
+            virtualLeadDto.setAnnualRevenue(leadJson.optDouble("AnnualRevenue"));
+            virtualLeadDto.setPhone(leadJson.optString("Phone"));
+            virtualLeadDto.setStreet(leadJson.optString("Street"));
+            virtualLeadDto.setPostalCode(leadJson.optString("PostalCode"));
+            virtualLeadDto.setCity(leadJson.optString("City"));
+            virtualLeadDto.setState(leadJson.optString("State"));
+            virtualLeadDto.setCountry(leadJson.optString("Country"));
+            String createdDateStr = leadJson.optString("CreatedDate");
             if (createdDateStr != null && !createdDateStr.isBlank()) {
-                // Salesforce renvoie un format ISO complet : 2024-11-11T13:49:00.000+0000
-                // Donc il faut utiliser un DateTimeFormatter adapté
+                // Conversion du format Salesforce au type LocalDate
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                dto.setCreationDate(LocalDate.parse(createdDateStr, formatter));
+                virtualLeadDto.setCreationDate(LocalDate.parse(createdDateStr, formatter));
             } else {
-                dto.setCreationDate(null); // ou garder une valeur par défaut
+                virtualLeadDto.setCreationDate(null);
             }
 
-            leads.add(dto);
+            leads.add(virtualLeadDto);
         }
         return leads;
     }
 
-    public List<VirtualLeadDto> executeQuery(String soql) throws IOException {
+    private List<VirtualLeadDto> executeQuery(String soql) throws IOException {
         ensureAuthenticated();
         String urlStr = instanceUrl + "/services/data/v57.0/query?q=" +
                 URLEncoder.encode(soql, StandardCharsets.UTF_8);
@@ -129,8 +129,8 @@ public class SalesforceCRMClient implements CRMClient {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
             String response = reader.lines().reduce("", (acc, line) -> acc + line);
             JSONObject json = new JSONObject(response);
-            JSONArray records = json.getJSONArray("records");
-            return parseLeads(records);
+            JSONArray responseArray = json.getJSONArray("records");
+            return parseLeads(responseArray);
         }
     }
 
@@ -153,26 +153,153 @@ public class SalesforceCRMClient implements CRMClient {
     }
 
     @Override
-    public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException {
-        return List.of(); //TODO
+    public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate)
+            throws InvalidDateException, TException {
+        try {
+            if (startDate > endDate) {
+                throw new InvalidDateException();
+            }
+
+            // Conversion des long (timestamp) en LocalDateTime UTC
+            LocalDateTime start = Instant.ofEpochMilli(startDate)
+                    .atZone(ZoneOffset.UTC)
+                    .toLocalDateTime();
+            LocalDateTime end   = Instant.ofEpochMilli(endDate)
+                    .atZone(ZoneOffset.UTC)
+                    .toLocalDateTime();
+
+            // Conversion des dates au format voulu de SOQL
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            String startStr = start.format(formatter);
+            String endStr = end.format(formatter);
+
+            // Requête pour Salesforce
+            String soql = "SELECT Id, FirstName, LastName, Company, AnnualRevenue, Phone, Street, PostalCode, City, Country, CreatedDate "
+                    + "FROM Lead WHERE CreatedDate >= " + startStr
+                    + " AND CreatedDate <= " + endStr;
+
+            return executeQuery(soql);
+        } catch (IOException e) {
+            throw new TException(e);
+        }
     }
 
-    @Override
-    public VirtualLeadDto getLeadById(int id) throws LeadNotFoundException, TException {
-        return null;
+
+    public VirtualLeadDto getLeadById(String id) throws LeadNotFoundException, TException {
+        try {
+            String soql = "SELECT Id, FirstName, LastName, Company, AnnualRevenue, Phone, Street, PostalCode, City, Country, CreatedDate FROM Lead WHERE Id = '" + id + "'";
+            List<VirtualLeadDto> leads = executeQuery(soql);
+            if (leads.isEmpty()) {
+                throw new LeadNotFoundException();
+            }
+            return leads.get(0);
+        } catch (IOException e) {
+            throw new TException(e);
+        }
     }
 
     @Override
     public List<VirtualLeadDto> getLeads() throws TException {
-        return List.of();
+        try {
+            String soql = "SELECT Id, FirstName, LastName, Company, AnnualRevenue, Phone, Street, PostalCode, City, Country, CreatedDate, State FROM Lead";
+            return executeQuery(soql);
+        } catch (IOException e) {
+            throw new TException(e);
+        }
     }
 
     @Override
     public int countLeads() throws TException {
-        return 0;
+        try {
+            ensureAuthenticated();
+            String soql = "SELECT COUNT() FROM Lead";
+            String urlStr = instanceUrl + "/services/data/v57.0/query?q=" +
+                    URLEncoder.encode(soql, StandardCharsets.UTF_8);
+
+            HttpURLConnection conn = (HttpURLConnection) new URL(urlStr).openConnection();
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                String response = reader.lines().reduce("", (acc, line) -> acc + line);
+                JSONObject json = new JSONObject(response);
+                return json.getInt("totalSize");
+            }
+        } catch (IOException e) {
+            throw new TException(e);
+        }
     }
 
-    public void deleteLead(int id) throws LeadNotFoundException, TException {
+    public String addLead(String fullName, double annualRevenue, String phone, String street,
+                          String postalCode, String city, String country, String company, String state)
+            throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
+        try {
+            ensureAuthenticated();
 
+            // Découpage du nom complet en prénom + nom
+            String[] parts = fullName.split(",", 2);
+            String firstName = parts.length > 0 ? parts[0] : "";
+            String lastName  = parts.length > 1 ? parts[1] : "";
+
+            // Construction du JSON
+            JSONObject leadJson = new JSONObject();
+            leadJson.put("FirstName", firstName);
+            leadJson.put("LastName", lastName);
+            leadJson.put("Company", company);
+            leadJson.put("AnnualRevenue", annualRevenue);
+            leadJson.put("Phone", phone);
+            leadJson.put("Street", street);
+            leadJson.put("PostalCode", postalCode);
+            leadJson.put("City", city);
+            leadJson.put("Country", country);
+            leadJson.put("State", state);
+
+            // URL et connexion Salesforce
+            String urlStr = instanceUrl + "/services/data/v57.0/sobjects/Lead/";
+            HttpURLConnection conn = (HttpURLConnection) new URL(urlStr).openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(leadJson.toString().getBytes(StandardCharsets.UTF_8));
+            }
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode == 201) {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                    String response = reader.lines().reduce("", (acc, line) -> acc + line);
+                    JSONObject json = new JSONObject(response);
+                    return json.getString("id"); // Id Salesforce du Lead créé
+                }
+            } else if (responseCode == 400) {
+                throw new InvalidLeadParameterException();
+            } else if (responseCode == 409) {
+                throw new LeadAlreadyExistsException();
+            } else {
+                throw new TException("Erreur Salesforce: " + responseCode);
+            }
+
+        } catch (IOException e) {
+            throw new TException(e);
+        }
+    }
+
+
+    public void deleteLead(String id) throws LeadNotFoundException, TException, IOException {
+        try {
+            ensureAuthenticated();
+            String urlStr = instanceUrl + "/services/data/v57.0/sobjects/Lead/" + id;
+            HttpURLConnection conn = (HttpURLConnection) new URL(urlStr).openConnection();
+            conn.setRequestMethod("DELETE");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode == 404) {
+                throw new LeadNotFoundException();
+            }
+        } catch (IOException e) {
+            throw new TException(e);
+        }
     }
 }

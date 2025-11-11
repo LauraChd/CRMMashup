@@ -90,8 +90,8 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
      * @throws TException
      */
     @Override
-    public VirtualLeadDto getLeadById(int id) throws LeadNotFoundException, TException {
-        VirtualLeadDto leadInternal = internalCRMClient.getLeadById(id);
+    public VirtualLeadDto getLeadById(String id) throws LeadNotFoundException, TException {
+        VirtualLeadDto leadInternal = internalCRMClient.getLeadById(Integer.valueOf(id));
         VirtualLeadDto leadSalesforce = salesforceCRMClient.getLeadById(id);
 
         //TODO : fonction pour prendre le seul lead qui existe
@@ -108,11 +108,11 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
      * @throws TException
      */
     @Override
-    public void deleteLead(int id) throws LeadNotFoundException, TException {
+    public void deleteLead(String id) throws LeadNotFoundException, TException, IOException {
 
         //TODO : try catch
         // si le premier marche pas, faire celui d'apres, sinon lancer exception
-        internalCRMClient.deleteLead(id);
+        internalCRMClient.deleteLead(Integer.valueOf(id));
         salesforceCRMClient.deleteLead(id);
 
     }

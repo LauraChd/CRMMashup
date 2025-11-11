@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import fr.univangers.model.VirtualLeadDto;
@@ -20,9 +22,13 @@ public class GeoLocalisationServiceClient {
     public Optional<GeographicPointDto> lookup(VirtualLeadDto virtualLead) throws IOException {
         GeographicPointDto geographicPoint = null;
 
-        String urlStr = "https://nominatim.openstreetmap.org/search?q=" +
-                "city=" + virtualLead.getCity() + "&country=" + virtualLead.getCountry() + "&postalcode=" + virtualLead.getPostalCode() +
-                "&street=" + virtualLead.getStreet() + "&format=json&limit=1";
+        String urlStr = "https://nominatim.openstreetmap.org/search?"
+                + "city=" + URLEncoder.encode(virtualLead.getCity(), StandardCharsets.UTF_8)
+                + "&country=" + URLEncoder.encode(virtualLead.getCountry(), StandardCharsets.UTF_8)
+                + "&postalcode=" + URLEncoder.encode(virtualLead.getPostalCode(), StandardCharsets.UTF_8)
+                + "&street=" + URLEncoder.encode(virtualLead.getStreet(), StandardCharsets.UTF_8)
+                + "&format=json&limit=1";
+
 
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
