@@ -119,7 +119,7 @@ public class InternalCRMClient implements CRMClient<Integer> {
         }
     }
 
-    public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
+    public Integer addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
 
         int leadId = -1;
 
