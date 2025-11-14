@@ -1,7 +1,9 @@
 package fr.univangers.utils;
 
 import fr.univangers.model.VirtualLeadDto;
+import org.apache.thrift.TException;
 import org.example.internalcrm.thrift.InternalLeadDto;
+import org.example.internalcrm.thrift.InvalidDateException;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -46,7 +48,7 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * TODO
+     * Permet de convertir une liste de VirtualLeadDTO en une liste de InternalLeadDTO
      *
      * @param lsILeads
      * @return
@@ -60,7 +62,7 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * TODO
+     * Permet de convertir un InternalLeadDTO en un VirtualLeadDTO
      *
      * @param internalLeadDto
      * @return
@@ -89,7 +91,7 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * TODO
+     * Permet de convertir une liste de InternalLeadDTO en une liste de VirtualLeadDTO
      *
      * @param lsInternalLeadDto
      * @return
@@ -102,6 +104,13 @@ public class VirtualLeadConverter {
         return iLeadList;
     }
 
+    /**
+     * Permet de fusionner deux listes de VirtualLeadDTO. Cette méthode est utilisée pour fusionner
+     * la liste des leads de l'Internal CRM et la liste des leads du Virtual CRM
+     * @param internalLeadsLs
+     * @param SalesforceLeadsLs
+     * @return
+     */
     public static List<VirtualLeadDto> mergeInternalSalesforceLeads(List<VirtualLeadDto> internalLeadsLs, List<VirtualLeadDto> SalesforceLeadsLs) {
         List<VirtualLeadDto> mergedList =  new ArrayList<>();
         mergedList.addAll(internalLeadsLs);
@@ -110,7 +119,7 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * TODO
+     * Permet de récupérer le nom et le prénom d'un nom complet (format "Pierre,Balzac")
      *
      * @param fullName
      * @return

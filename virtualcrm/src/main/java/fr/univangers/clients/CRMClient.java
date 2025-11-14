@@ -2,9 +2,7 @@ package fr.univangers.clients;
 
 import fr.univangers.model.VirtualLeadDto;
 import org.apache.thrift.TException;
-import org.example.internalcrm.thrift.InvalidDateException;
-import org.example.internalcrm.thrift.InvalidRevenueRangeException;
-import org.example.internalcrm.thrift.LeadNotFoundException;
+import org.example.internalcrm.thrift.*;
 
 import java.util.List;
 
@@ -14,4 +12,6 @@ public interface CRMClient<ID> {
     VirtualLeadDto getLeadById(ID id) throws LeadNotFoundException, TException;
     List<VirtualLeadDto> getLeads() throws TException;
     int countLeads() throws TException;
+    int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException;
+    void deleteLead(ID id) throws LeadNotFoundException, TException;
 }
