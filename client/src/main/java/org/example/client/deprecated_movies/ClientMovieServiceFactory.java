@@ -1,4 +1,4 @@
-package org.example.client.service;
+package org.example.client.deprecated_movies;
 
 
 import java.lang.reflect.InvocationTargetException;
@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 public class ClientMovieServiceFactory {
 
     private final static String SERVICE_CLASSNAME
-            = "org.example.client.service.rest.RestClientMovieService";
+            = "org.example.client.deprecated_movies.rest.RestClientMovieService";
     private static Class<ClientMovieService> serviceClass = null;
 
     private ClientMovieServiceFactory() {

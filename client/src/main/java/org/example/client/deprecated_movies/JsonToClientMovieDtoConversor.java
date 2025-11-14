@@ -1,4 +1,4 @@
-package org.example.client.service.rest.json;
+package org.example.client.deprecated_movies;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,9 +11,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.example.client.service.dto.ClientMovieDto;
-import org.example.client.service.utils.exceptions.ObjectMapperFactory;
-import org.example.client.service.utils.exceptions.ParsingException;
 
 
 public class JsonToClientMovieDtoConversor {

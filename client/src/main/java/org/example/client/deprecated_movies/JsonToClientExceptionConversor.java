@@ -1,4 +1,4 @@
-package org.example.client.service.rest.json;
+package org.example.client.deprecated_movies;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -6,12 +6,6 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
-import org.example.client.service.exceptions.ClientMovieNotRemovableException;
-import org.example.client.service.exceptions.ClientSaleExpirationException;
-import org.example.client.service.utils.exceptions.InputValidationException;
-import org.example.client.service.utils.exceptions.InstanceNotFoundException;
-import org.example.client.service.utils.exceptions.ObjectMapperFactory;
-import org.example.client.service.utils.exceptions.ParsingException;
 
 
 public class JsonToClientExceptionConversor {
@@ -114,7 +108,7 @@ public class JsonToClientExceptionConversor {
 			throw new ParsingException(e);
 		}
 	}
-	private static ClientSaleExpirationException toSaleExpirationException(JsonNode rootNode) {
+	private static org.example.client.deprecated_movies.ClientSaleExpirationException toSaleExpirationException(JsonNode rootNode) {
 		Long saleId = rootNode.get("saleId").longValue();
 		String expirationDateAsString = rootNode.get("expirationDate").textValue();
 		LocalDateTime expirationDate = null;

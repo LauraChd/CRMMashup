@@ -1,10 +1,4 @@
-package org.example.client.service;
-
-import org.example.client.service.dto.ClientMovieDto;
-import org.example.client.service.exceptions.ClientMovieNotRemovableException;
-import org.example.client.service.exceptions.ClientSaleExpirationException;
-import org.example.client.service.utils.exceptions.InputValidationException;
-import org.example.client.service.utils.exceptions.InstanceNotFoundException;
+package org.example.client.deprecated_movies;
 
 import java.util.List;
 

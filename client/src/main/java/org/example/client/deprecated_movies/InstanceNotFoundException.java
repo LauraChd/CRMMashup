@@ -1,4 +1,4 @@
-package org.example.client.service.utils.exceptions;
+package org.example.client.deprecated_movies;
 
 @SuppressWarnings("serial")
 public class InstanceNotFoundException extends Exception {

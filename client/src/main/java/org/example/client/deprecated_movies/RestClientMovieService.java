@@ -1,4 +1,4 @@
-package org.example.client.service.rest;
+package org.example.client.deprecated_movies;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,18 +7,7 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
-import org.example.client.service.ClientMovieService;
-import org.example.client.service.dto.ClientMovieDto;
-import org.example.client.service.exceptions.ClientMovieNotRemovableException;
-import org.example.client.service.exceptions.ClientSaleExpirationException;
-import org.example.client.service.rest.json.JsonToClientExceptionConversor;
-import org.example.client.service.rest.json.JsonToClientMovieDtoConversor;
-import org.example.client.service.rest.json.JsonToClientSaleDtoConversor;
-import org.example.client.service.utils.exceptions.InputValidationException;
-import org.example.client.service.utils.exceptions.InstanceNotFoundException;
 
-
-import org.example.client.service.utils.exceptions.ObjectMapperFactory;
 import org.apache.hc.client5.http.fluent.Form;
 import org.apache.hc.client5.http.fluent.Request;
 

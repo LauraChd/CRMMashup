@@ -1,4 +1,4 @@
-package org.example.client.service.rest.json;
+package org.example.client.deprecated_movies;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -7,9 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.example.client.service.dto.ClientSaleDto;
-import org.example.client.service.utils.exceptions.ObjectMapperFactory;
-import org.example.client.service.utils.exceptions.ParsingException;
 
 
 public class JsonToClientSaleDtoConversor {

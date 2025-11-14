@@ -1,4 +1,4 @@
-package org.example.client.service.exceptions;
+package org.example.client.deprecated_movies;
 
 public class ClientMovieNotRemovableException extends Exception {
     private Long movieId;

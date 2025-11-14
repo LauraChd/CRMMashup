@@ -1,4 +1,4 @@
-package org.example.client.service.dto;
+package org.example.client.deprecated_movies;
 
 import java.time.LocalDateTime;
 

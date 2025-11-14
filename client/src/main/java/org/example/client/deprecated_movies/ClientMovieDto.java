@@ -1,4 +1,4 @@
-package org.example.client.service.dto;
+package org.example.client.deprecated_movies;
 
 
 public class ClientMovieDto {
