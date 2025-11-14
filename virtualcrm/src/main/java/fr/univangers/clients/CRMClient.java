@@ -12,6 +12,6 @@ public interface CRMClient<ID> {
     VirtualLeadDto getLeadById(ID id) throws LeadNotFoundException, TException;
     List<VirtualLeadDto> getLeads() throws TException;
     int countLeads() throws TException;
-    int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException;
+    ID addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException;
     void deleteLead(ID id) throws LeadNotFoundException, TException;
 }

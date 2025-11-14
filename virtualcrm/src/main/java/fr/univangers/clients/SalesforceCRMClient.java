@@ -287,7 +287,7 @@ public class SalesforceCRMClient implements CRMClient<String> {
     }
 
 
-    public void deleteLead(String id) throws LeadNotFoundException, TException, IOException {
+    public void deleteLead(String id) throws LeadNotFoundException, TException {
         try {
             ensureAuthenticated();
             String urlStr = instanceUrl + "/services/data/v57.0/sobjects/Lead/" + id;
