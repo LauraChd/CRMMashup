@@ -88,7 +88,7 @@ public class VirtualCRM {
             e.printStackTrace();
         }
 
-        //SpringApplication.run(VirtualCRM.class, args);
+        //SpringApplication.run(VirtualCRM.class, args); TODO décommenter
     }
 }
 
