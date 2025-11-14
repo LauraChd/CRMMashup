@@ -31,7 +31,8 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
 
 
     /**
-     * TODO
+     * Recherche les leads qui ont un salaire contenu entre deux valeurs fournies en paramètres
+     *
      * @param lowAnnualRevenue
      * @param highAnnualRevenue
      * @param state
@@ -46,19 +47,17 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
                 internalCRMClient.findLeads(lowAnnualRevenue, highAnnualRevenue, state)
         );
 
-        if (leadsList != null) {
-            for(VirtualLeadDto lead : leadsList)
-            {
-                Optional<GeographicPointDto> geographicPoint = geoLocalisationServiceClient.lookup(lead);
-                geographicPoint.ifPresent(lead::setGeographicPointDto);
-            }
+        for (VirtualLeadDto lead : leadsList) {
+            Optional<GeographicPointDto> geographicPoint = geoLocalisationServiceClient.lookup(lead);
+            geographicPoint.ifPresent(lead::setGeographicPointDto);
         }
 
         return leadsList;
     }
 
     /**
-     * TODO
+     * Recherche les leads dont la date de création se situe entre les deux dates fournies en paramètres
+     *
      * @param startDate
      * @param endDate
      * @return
@@ -72,37 +71,53 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
                 internalCRMClient.findLeadsByDate(startDate, endDate)
         );
 
-        if (leadsList != null) {
-            for(VirtualLeadDto lead : leadsList)
-            {
-                Optional<GeographicPointDto> geographicPoint = geoLocalisationServiceClient.lookup(lead);
-                geographicPoint.ifPresent(lead::setGeographicPointDto);
-            }
+        for (VirtualLeadDto lead : leadsList) {
+            Optional<GeographicPointDto> geographicPoint = geoLocalisationServiceClient.lookup(lead);
+            geographicPoint.ifPresent(lead::setGeographicPointDto);
         }
 
         return leadsList;
     }
 
     /**
-     * TODO
+     * Récupère et renvoie un lead à partir de son id
+     *
      * @param id
      * @return
      * @throws LeadNotFoundException
      * @throws TException
      */
     @Override
-    public VirtualLeadDto getLeadById(String id) throws LeadNotFoundException, TException {
-        VirtualLeadDto leadInternal = internalCRMClient.getLeadById(Integer.valueOf(id));
-        VirtualLeadDto leadSalesforce = salesforceCRMClient.getLeadById(id);
+    public VirtualLeadDto getLeadById(String id) throws LeadNotFoundException, TException, IOException {
+        VirtualLeadDto lead = null;
 
-        //TODO : fonction pour prendre le seul lead qui existe
+        try {
+            // Cas InternalCRM : ID numérique
+            int internalId = Integer.parseInt(id);
+            lead = internalCRMClient.getLeadById(internalId);
+        } catch (NumberFormatException e) {
+            // Cas Salesforce : ID non numérique
+            lead = salesforceCRMClient.getLeadById(id);
+        }
 
-        //TODO : set location to virtualLeadDto
-        return null;
+        if (lead == null) {
+            throw new LeadNotFoundException();
+        }
+
+        // Ajout de la géolocalisation
+        if(!lead.getCountry().isEmpty())
+        {
+            Optional<GeographicPointDto> geo = geoLocalisationServiceClient.lookup(lead);
+            geo.ifPresent(lead::setGeographicPointDto);
+        }
+
+
+        return lead;
     }
 
+
     /**
-     * TODO
+     * Supprime un lead à partir de son id, qu'il soit dans Salesforce ou dans l'Internal CRM
      *
      * @param id
      * @throws LeadNotFoundException
@@ -138,7 +153,7 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
     }
 
     /**
-     * TODO
+     * Ajoute un lead dans l'internal CRM
      *
      * @param fullName
      * @param annualRevenue
@@ -160,24 +175,31 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
     }
 
     /**
-     * TODO
+     * Renvoie l'ensemble leads, ceux de l'Internal CRM et ceux de Salesforce
      *
      * @return
      * @throws TException
      */
     @Override
-    public List<VirtualLeadDto> getLeads() throws TException {
+    public List<VirtualLeadDto> getLeads() throws TException, IOException {
         List<VirtualLeadDto> leadsList = VirtualLeadConverter.mergeInternalSalesforceLeads(
                 salesforceCRMClient.getLeads(),
                 internalCRMClient.getLeads()
         );
 
-        //TODO : set localisation du virtualLeadDto
+        for (VirtualLeadDto lead : leadsList) {
+            if(!lead.getCountry().isEmpty())
+            {
+                Optional<GeographicPointDto> geographicPoint = geoLocalisationServiceClient.lookup(lead);
+                geographicPoint.ifPresent(lead::setGeographicPointDto);
+            }
+        }
+
         return leadsList;
     }
 
     /**
-     * TODO
+     * Renvoie le nombre cumulé de leads contenus dans les deux CRM
      *
      * @return
      * @throws TException

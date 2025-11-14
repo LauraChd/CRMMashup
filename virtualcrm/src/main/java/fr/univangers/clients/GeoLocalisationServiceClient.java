@@ -29,7 +29,6 @@ public class GeoLocalisationServiceClient {
                 + "&street=" + URLEncoder.encode(virtualLead.getStreet(), StandardCharsets.UTF_8)
                 + "&format=json&limit=1";
 
-
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -49,9 +48,8 @@ public class GeoLocalisationServiceClient {
             String lat = obj.getString("lat");
             String lon = obj.getString("lon");
             geographicPoint =  new GeographicPointDto(Double.parseDouble(lat), Double.parseDouble(lon));
-        } else {
-            System.out.println("Aucun résultat trouvé.");
         }
+
         return Optional.ofNullable(geographicPoint);
     }
 }

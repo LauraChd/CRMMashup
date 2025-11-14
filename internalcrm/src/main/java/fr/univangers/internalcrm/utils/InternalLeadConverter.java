@@ -21,6 +21,7 @@ public class InternalLeadConverter {
     {
         InternalLeadDto internalLeadDto = new InternalLeadDto();
 
+        internalLeadDto.setID(modelTo.getID());
         internalLeadDto.setFullName(modelTo.getFirstName() + ',' + modelTo.getLastName());
         internalLeadDto.setCity(modelTo.getCity());
         internalLeadDto.setAnnualRevenue(modelTo.getAnnualRevenue());

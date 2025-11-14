@@ -22,7 +22,7 @@ public class VirtualLeadConverter {
     // TODO : régler problèmes de types et implémentations
 
     /**
-     * TODO
+     * Permet de convertir un VirtualLeadDto en un InternalLeadDto
      *
      * @param modelTo
      * @return
@@ -48,7 +48,7 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * Permet de convertir une liste de VirtualLeadDTO en une liste de InternalLeadDTO
+     * Permet de convertir une liste de VirtualLeadDto en une liste de InternalLeadDto
      *
      * @param lsILeads
      * @return
@@ -62,7 +62,7 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * Permet de convertir un InternalLeadDTO en un VirtualLeadDTO
+     * Permet de convertir un InternalLeadDto en un VirtualLeadDto
      *
      * @param internalLeadDto
      * @return
@@ -91,7 +91,7 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * Permet de convertir une liste de InternalLeadDTO en une liste de VirtualLeadDTO
+     * Permet de convertir une liste de InternalLeadDto en une liste de VirtualLeadDto
      *
      * @param lsInternalLeadDto
      * @return
@@ -105,7 +105,7 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * Permet de fusionner deux listes de VirtualLeadDTO. Cette méthode est utilisée pour fusionner
+     * Permet de fusionner deux listes de VirtualLeadDto. Cette méthode est utilisée pour fusionner
      * la liste des leads de l'Internal CRM et la liste des leads du Virtual CRM
      * @param internalLeadsLs
      * @param SalesforceLeadsLs
@@ -119,14 +119,14 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * Permet de récupérer le nom et le prénom d'un nom complet (format "Pierre,Balzac")
+     * Permet de récupérer le nom et le prénom à partir d'un nom complet (format "Pierre,Balzac")
      *
      * @param fullName
      * @return
      */
     public static String[] splitFullName(String fullName) {
         if (fullName == null || !fullName.contains(",")) {
-            throw new IllegalArgumentException("Le nom complet doit être au format 'Nom, Prénom'");
+            throw new IllegalArgumentException("Le nom complet doit être au format 'Nom,Prénom'");
         }
 
         // Découpage sur la virgule

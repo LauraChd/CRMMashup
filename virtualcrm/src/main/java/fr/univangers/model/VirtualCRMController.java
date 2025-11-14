@@ -47,7 +47,7 @@ public class VirtualCRMController {
     // ----------------------------------------
     @GetMapping("/lead/{id}")
     public VirtualLeadDto getLeadById(@PathVariable String id)
-            throws TException {
+            throws TException, IOException {
         return virtualService.getLeadById(id);
     }
 
@@ -89,7 +89,7 @@ public class VirtualCRMController {
     // 6) GET ALL LEADS
     // ----------------------------------------
     @GetMapping("/leads")
-    public List<VirtualLeadDto> getLeads() throws TException {
+    public List<VirtualLeadDto> getLeads() throws TException, IOException {
         return virtualService.getLeads();
     }
 

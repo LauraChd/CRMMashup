@@ -66,13 +66,14 @@ public class VirtualCRM {
 
             int id = virtualCRMService.addLead("test,test",50000, "070896545", "rertet", "49460", "aaaaa", "france", "oui", "hehe");
 
+            /*
             List<VirtualLeadDto> leads = virtualCRMService.getLeads();
 
             for(VirtualLeadDto lead : leads) {
                 System.out.println(lead);
-            }
+            }*/
 
-            virtualCRMService.deleteLead(Integer.toString(id));
+            //virtualCRMService.deleteLead(Integer.toString(id));
 
 
             System.out.println("après suppression : ");
@@ -84,6 +85,9 @@ public class VirtualCRM {
             }
 
             //sTest.deleteLead("00QgL000007KPW5UAO");
+
+            System.out.println("getLeadById : ");
+            System.out.println(virtualCRMService.getLeadById("1"));
         } catch (Exception e) {
             e.printStackTrace();
         }
