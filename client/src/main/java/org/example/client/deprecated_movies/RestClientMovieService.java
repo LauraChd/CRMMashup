@@ -16,7 +16,9 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpStatus;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.example.client.service.utils.exceptions.InputValidationException;
+import org.example.client.service.utils.exceptions.InstanceNotFoundException;
+import org.example.client.service.utils.exceptions.ObjectMapperFactory;
 
 
 public class RestClientMovieService implements ClientMovieService {

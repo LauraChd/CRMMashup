@@ -1,4 +1,4 @@
-package org.example.client;
+package org.example.client.service.config;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

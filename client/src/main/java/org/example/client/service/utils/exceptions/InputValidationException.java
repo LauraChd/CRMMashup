@@ -1,4 +1,4 @@
-package org.example.client.deprecated_movies;
+package org.example.client.service.utils.exceptions;
 
 
 @SuppressWarnings("serial")

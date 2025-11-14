@@ -1,5 +1,8 @@
 package org.example.client.deprecated_movies;
 
+import org.example.client.service.utils.exceptions.InputValidationException;
+import org.example.client.service.utils.exceptions.InstanceNotFoundException;
+
 import java.util.List;
 
 

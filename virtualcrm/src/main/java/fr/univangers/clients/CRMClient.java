@@ -7,6 +7,7 @@ import org.example.internalcrm.thrift.*;
 import java.util.List;
 
 public interface CRMClient<ID> {
+    //TODO ajouter add et delete leads
     List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException;
     List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException;
     VirtualLeadDto getLeadById(ID id) throws LeadNotFoundException, TException;

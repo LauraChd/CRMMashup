@@ -6,6 +6,10 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
+import org.example.client.service.utils.exceptions.InputValidationException;
+import org.example.client.service.utils.exceptions.InstanceNotFoundException;
+import org.example.client.service.utils.exceptions.ObjectMapperFactory;
+import org.example.client.service.utils.exceptions.ParsingException;
 
 
 public class JsonToClientExceptionConversor {

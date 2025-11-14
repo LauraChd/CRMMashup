@@ -1,4 +1,4 @@
-package org.example.client;
+package org.example.client.service.dto;
 
 public class GeographicPointDto {
     private Double latitude;

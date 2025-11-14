@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.example.client.service.utils.exceptions.ObjectMapperFactory;
+import org.example.client.service.utils.exceptions.ParsingException;
 
 
 public class JsonToClientMovieDtoConversor {
