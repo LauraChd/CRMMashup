@@ -7,6 +7,7 @@ import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpStatus;
 import org.example.client.service.config.Config;
+import org.example.client.service.exceptions.InvalidParametersException;
 import org.example.client.service.exceptions.LeadNotFoundException;
 import org.example.client.service.rest.json.JsonToClientExceptionConversor;
 import org.example.client.service.rest.json.JsonToLeadConversor;
@@ -39,7 +40,8 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
 
     @Override
-    public String addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) {
+    public String addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state)
+    throws InvalidParametersException {
 
         try {
             //Construction JSON
@@ -73,7 +75,8 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
     }
 
     @Override
-    public String deleteLead(String id) throws LeadNotFoundException {
+    public String deleteLead(String id)
+    throws InvalidParametersException, LeadNotFoundException {
         try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
                     .delete(api_url + "/deleteLead/" + id)
@@ -110,7 +113,8 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
 
     @Override
-    public String getLeadById(String id) {
+    public String getLeadById(String id)
+    throws LeadNotFoundException {
         try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
                     .get(api_url + "/getLeadById/" + id)
@@ -128,7 +132,8 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
     }
 
     @Override
-    public String findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) {
+    public String findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state)
+    throws InvalidParametersException {
         try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
                     .get(api_url
@@ -149,7 +154,8 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
     }
 
     @Override
-    public String findLeadsByDate(String startDate, String endDate) {
+    public String findLeadsByDate(String startDate, String endDate)
+    throws InvalidParametersException {
         try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
                     .get(api_url
@@ -202,8 +208,6 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                 case HttpStatus.SC_NOT_FOUND -> throw JsonToClientExceptionConversor.fromNotFoundErrorCode(
                         response.getEntity().getContent());
                 case HttpStatus.SC_BAD_REQUEST -> throw JsonToClientExceptionConversor.fromBadRequestErrorCode(
-                        response.getEntity().getContent());
-                case HttpStatus.SC_FORBIDDEN -> throw JsonToClientExceptionConversor.fromForbiddenErrorCode(
                         response.getEntity().getContent());
                 default -> throw new RuntimeException("HTTP error; status code = "
                         + statusCode);

@@ -1,0 +1,8 @@
+package org.example.client.service.exceptions;
+
+public class InvalidParametersException extends Exception {
+
+    public InvalidParametersException() {
+        super("Requête invalide");
+    }
+}
