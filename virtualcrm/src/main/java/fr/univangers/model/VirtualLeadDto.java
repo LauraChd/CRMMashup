@@ -5,6 +5,7 @@ import java.util.Optional;
 
 public class VirtualLeadDto {
 
+    private String id;
     private String firstName;
     private String lastName;
     private Double annualRevenue;
@@ -18,11 +19,12 @@ public class VirtualLeadDto {
     private String state;
     private GeographicPointDto geographicPointDto;
 
-    public VirtualLeadDto(String firstName, String lastName, Double annualRevenue,
+    public VirtualLeadDto(String id, String firstName, String lastName, Double annualRevenue,
                           String phone, String street, String postalCode,
                           String city, String country, LocalDate creationDate,
                           String company, String state, GeographicPointDto geographicPointDto
                         ) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.annualRevenue = annualRevenue;
@@ -38,6 +40,12 @@ public class VirtualLeadDto {
     }
 
     public VirtualLeadDto() {
+    }
+
+    public String getId() {return id;}
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -139,7 +147,8 @@ public class VirtualLeadDto {
     @Override
     public String toString() {
         return "VirtualLDto{" +
-                "firstName='" + firstName + '\'' +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", annualRevenue=" + annualRevenue +
                 ", phone='" + phone + '\'' +

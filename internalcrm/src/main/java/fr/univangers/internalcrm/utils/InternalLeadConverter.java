@@ -2,6 +2,7 @@ package fr.univangers.internalcrm.utils;
 
 import fr.univangers.internalcrm.model.ILead;
 import org.example.internalcrm.thrift.InternalLeadDto;
+import org.example.internalcrm.thrift.InvalidLeadParameterException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,17 +94,17 @@ public class InternalLeadConverter {
      * @param fullName
      * @return
      */
-    public static String[] splitFullName(String fullName) {
-        if (fullName == null || !fullName.contains(",")) {
-            throw new IllegalArgumentException("Le nom complet doit être au format 'Nom, Prénom'");
+    public static String[] splitFullName(String fullName) throws InvalidLeadParameterException {
+        if (fullName == null) {
+            throw new InvalidLeadParameterException("Le nom complet ne peut pas être null");
         }
 
-        // Découpage sur la virgule
         String[] parts = fullName.split(",", 2);
+        if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
+            throw new InvalidLeadParameterException("Le nom complet doit être au format 'Nom,Prénom'");
+        }
 
-        String lastName = parts[0].trim();
-        String firstName = parts[1].trim();
-
-        return new String[] { firstName, lastName };
+        return new String[] { parts[0].trim(), parts[1].trim() };
     }
+
 }

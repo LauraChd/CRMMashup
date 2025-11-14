@@ -86,6 +86,7 @@ public class SalesforceCRMClient implements CRMClient<String> {
             JSONObject leadJson = leadsJson.getJSONObject(i);
             VirtualLeadDto virtualLeadDto = new VirtualLeadDto();
 
+            virtualLeadDto.setId(leadJson.optString("Id"));
             virtualLeadDto.setFirstName(leadJson.optString("FirstName"));
             virtualLeadDto.setLastName(leadJson.optString("LastName"));
             virtualLeadDto.setCompany(leadJson.optString("Company"));

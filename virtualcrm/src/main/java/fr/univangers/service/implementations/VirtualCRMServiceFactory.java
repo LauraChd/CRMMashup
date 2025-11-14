@@ -8,11 +8,11 @@ import fr.univangers.service.interfaces.VirtualCRMService;
 import java.io.IOException;
 
 public class VirtualCRMServiceFactory {
-    private static VirtualCRMService virtualCRMService;
+    private static VirtualCRMServiceImpl virtualCRMService;
 
     private VirtualCRMServiceFactory() {}
 
-    public synchronized static VirtualCRMService getInstance() throws IOException {
+    public synchronized static VirtualCRMServiceImpl getInstance() throws IOException {
         if (virtualCRMService == null) {
             virtualCRMService = new VirtualCRMServiceImpl(new SalesforceCRMClient(), new InternalCRMClient(), new GeoLocalisationServiceClient());
         }

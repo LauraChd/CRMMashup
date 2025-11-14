@@ -110,7 +110,11 @@ public class InternalCRMClient implements CRMClient<Integer> {
 
             transport.close();
 
-        } catch (TTransportException e) {
+        } catch (LeadNotFoundException e) {
+            // suppression impossible car lead inexistant
+            throw e;
+
+        }catch (TTransportException e) {
             e.printStackTrace();
         }
     }

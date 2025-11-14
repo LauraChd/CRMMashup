@@ -18,7 +18,7 @@ public interface VirtualCRMService<ID> {
 
     public VirtualLeadDto getLeadById(String ID) throws LeadNotFoundException, TException;
 
-    public void deleteLead(String ID) throws LeadNotFoundException, TException, IOException;
+    public boolean deleteLead(String ID) throws LeadNotFoundException, TException, IOException;
 
     public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException;
 

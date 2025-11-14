@@ -10,6 +10,7 @@ import org.example.internalcrm.thrift.*;
 import fr.univangers.utils.VirtualLeadConverter;
 import org.apache.thrift.TException;
 
+import javax.lang.model.SourceVersion;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -108,13 +109,32 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
      * @throws TException
      */
     @Override
-    public void deleteLead(String id) throws LeadNotFoundException, TException, IOException {
+    public boolean deleteLead(String id) throws LeadNotFoundException, TException, IOException {
 
         //TODO : try catch
         // si le premier marche pas, faire celui d'apres, sinon lancer exception
-        internalCRMClient.deleteLead(Integer.valueOf(id));
-        salesforceCRMClient.deleteLead(id);
 
+        // Essai InternalCRM
+        try {
+            int internalId = Integer.parseInt(id);
+            internalCRMClient.deleteLead(internalId);
+            return true;
+        } catch (NumberFormatException e) {
+            // Dans le cas où l'ID n'est pas un entier parce que c'est un ID Salesforce
+        } catch (LeadNotFoundException e) {
+            // pas trouvé dans InternalCRM donc on continue vers Salesforce
+        }
+
+        // Essai Salesforce
+        try {
+            salesforceCRMClient.deleteLead(id);
+            return true;
+        } catch (LeadNotFoundException e) {
+            // pas trouvé dans Salesforce donc on laisse tomber
+        }
+
+        // Si aucun des deux n'a réussi
+        throw new LeadNotFoundException();
     }
 
     /**
@@ -136,9 +156,7 @@ public class VirtualCRMServiceImpl implements VirtualCRMService {
      */
     @Override
     public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
-
-        //TODO : ajouter dans lequel ?
-        return 0;
+        return internalCRMClient.addLead(fullName, annualRevenue, phone, street, postalCode, city, country, company, state);
     }
 
     /**

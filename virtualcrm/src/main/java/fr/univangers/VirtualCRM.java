@@ -2,6 +2,9 @@ package fr.univangers;
 
 import fr.univangers.clients.SalesforceCRMClient;
 import fr.univangers.model.VirtualLeadDto;
+import fr.univangers.service.implementations.VirtualCRMServiceFactory;
+import fr.univangers.service.implementations.VirtualCRMServiceImpl;
+import fr.univangers.service.interfaces.VirtualCRMService;
 import org.apache.thrift.TException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +20,7 @@ public class VirtualCRM {
     public static void main(String[] args) throws IOException, TException {
 
         try {
+            /*
             SalesforceCRMClient sTest = new SalesforceCRMClient();
 
 
@@ -55,6 +59,28 @@ public class VirtualCRM {
             System.out.println("getLeads");
             for(VirtualLeadDto dto : test4) {
                 System.out.println(dto);
+            }
+            */
+
+            VirtualCRMServiceImpl virtualCRMService = VirtualCRMServiceFactory.getInstance();
+
+            int id = virtualCRMService.addLead("test,test",50000, "070896545", "rertet", "49460", "aaaaa", "france", "oui", "hehe");
+
+            List<VirtualLeadDto> leads = virtualCRMService.getLeads();
+
+            for(VirtualLeadDto lead : leads) {
+                System.out.println(lead);
+            }
+
+            virtualCRMService.deleteLead(Integer.toString(id));
+
+
+            System.out.println("après suppression : ");
+
+            List<VirtualLeadDto> leads2 = virtualCRMService.getLeads();
+
+            for(VirtualLeadDto lead : leads2) {
+                System.out.println(lead);
             }
 
             //sTest.deleteLead("00QgL000007KPW5UAO");

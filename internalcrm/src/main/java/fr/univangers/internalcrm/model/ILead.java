@@ -21,6 +21,7 @@ public class ILead {
                  String postalCode, String city, String country, long creationDate, String company, String state){
         this.ID = ID;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.annualRevenue = annualRevenue;
         this.phone = phone;
         this.street = street;

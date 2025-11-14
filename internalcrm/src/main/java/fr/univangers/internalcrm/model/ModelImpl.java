@@ -27,15 +27,7 @@ public class ModelImpl {
     private ModelImpl() {
         this.iLeads = new ArrayList<>();
         // Add some examples
-        try {
-            addLead("Alice Dupont", 120000.50, "+33123456789", "12 rue de la Paix", "75002", "Paris", "France", "Dupont SA", "Île-de-France");
-            addLead("Bob Martin", 950000.00, "+447912345678", "221B Baker Street", "NW1 6XE", "London", "UK", "Martin & Co Ltd", "Greater London");
-            addLead("Chloé Bernard", 35000.00, "+33698765432", "5 avenue des Champs", "33000", "Bordeaux", "France", "Chloé Consulting", "Nouvelle-Aquitaine");
-            addLead("David Smith", 500000.00, "+14165551234", "500 Market St", "94105", "San Francisco", "USA", "Smith Corp", "California");
-            addLead("Emma Johnson", 78000.00, "+61234567890", "10 George St", "2000", "Sydney", "Australia", "Emma Ventures", "New South Wales");
-        } catch(TException e) {
-            e.printStackTrace();
-        }
+
     }
 
     /**

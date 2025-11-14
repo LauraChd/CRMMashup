@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * TODO
  */
@@ -28,6 +30,7 @@ public class VirtualLeadConverter {
 
         long creationDateLong = modelTo.getCreationDate().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
+        internalLeadDto.setID(parseInt(modelTo.getId()));
         internalLeadDto.setFullName(modelTo.getFirstName() + ',' + modelTo.getLastName());
         internalLeadDto.setCity(modelTo.getCity());
         internalLeadDto.setAnnualRevenue(modelTo.getAnnualRevenue());
@@ -69,6 +72,7 @@ public class VirtualLeadConverter {
 
         LocalDate creationDate = Instant.ofEpochMilli(internalLeadDto.getCreationDate()).atZone(ZoneId.systemDefault()).toLocalDate();
 
+        modelTo.setId(Integer.toString(internalLeadDto.getID()));
         modelTo.setFirstName(nameParts[0]);
         modelTo.setLastName(nameParts[1]);
         modelTo.setCity(internalLeadDto.getCity());
@@ -99,8 +103,10 @@ public class VirtualLeadConverter {
     }
 
     public static List<VirtualLeadDto> mergeInternalSalesforceLeads(List<VirtualLeadDto> internalLeadsLs, List<VirtualLeadDto> SalesforceLeadsLs) {
-        //TODO
-        return null;
+        List<VirtualLeadDto> mergedList =  new ArrayList<>();
+        mergedList.addAll(internalLeadsLs);
+        mergedList.addAll(SalesforceLeadsLs);
+        return mergedList;
     }
 
     /**
