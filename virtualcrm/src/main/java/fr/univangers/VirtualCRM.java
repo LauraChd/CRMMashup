@@ -1,25 +1,17 @@
 package fr.univangers;
 
-import fr.univangers.clients.SalesforceCRMClient;
-import fr.univangers.model.VirtualLeadDto;
-import fr.univangers.service.implementations.VirtualCRMServiceFactory;
-import fr.univangers.service.implementations.VirtualCRMServiceImpl;
-import fr.univangers.service.interfaces.VirtualCRMService;
 import org.apache.thrift.TException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.List;
 
 @SpringBootApplication
 public class VirtualCRM {
 
     public static void main(String[] args) throws IOException, TException {
 
-        try {
+//        try {
             /*
             SalesforceCRMClient sTest = new SalesforceCRMClient();
 
@@ -62,7 +54,7 @@ public class VirtualCRM {
             }
             */
 
-            VirtualCRMServiceImpl virtualCRMService = VirtualCRMServiceFactory.getInstance();
+/*            VirtualCRMServiceImpl virtualCRMService = VirtualCRMServiceFactory.getInstance();
 
             int id = virtualCRMService.addLead("test,test",50000, "070896545", "rertet", "49460", "aaaaa", "france", "oui", "hehe");
 
@@ -76,7 +68,7 @@ public class VirtualCRM {
             //virtualCRMService.deleteLead(Integer.toString(id));
 
 
-            System.out.println("après suppression : ");
+           /* System.out.println("après suppression : ");
 
             List<VirtualLeadDto> leads2 = virtualCRMService.getLeads();
 
@@ -90,9 +82,9 @@ public class VirtualCRM {
             System.out.println(virtualCRMService.getLeadById("1"));
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
-        //SpringApplication.run(VirtualCRM.class, args); TODO décommenter
+        SpringApplication.run(VirtualCRM.class, args);
     }
 }
 

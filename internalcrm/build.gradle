@@ -14,11 +14,12 @@ dependencies {
 // https://mvnrepository.com/artifact/org.apache.thrift/libthrift
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-reload4j
-    implementation 'org.gretty:gretty:+'
+//    implementation 'org.gretty:gretty:+'
     implementation 'org.slf4j:slf4j-reload4j:2.0.16'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'org.apache.thrift:libthrift:0.19.0'
+    implementation 'org.springframework:spring-context:5.3.29'
 }
 
 

@@ -5,17 +5,16 @@ import fr.univangers.clients.InternalCRMClient;
 import fr.univangers.clients.SalesforceCRMClient;
 import fr.univangers.model.GeographicPointDto;
 import fr.univangers.model.VirtualLeadDto;
-import fr.univangers.service.interfaces.VirtualCRMService;
+import fr.univangers.service.interfaces.IVirtualCRMService;
 import org.example.internalcrm.thrift.*;
 import fr.univangers.utils.VirtualLeadConverter;
 import org.apache.thrift.TException;
 
-import javax.lang.model.SourceVersion;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public class VirtualCRMServiceImpl implements VirtualCRMService {
+public class VirtualCRMServiceImpl implements IVirtualCRMService {
 
     private final SalesforceCRMClient salesforceCRMClient;
     private final InternalCRMClient internalCRMClient;

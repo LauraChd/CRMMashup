@@ -12,5 +12,6 @@ public class JsonToLeadConversor {
     }
 
     public static String toLeadDtos(InputStream content) {
+        return null;
     }
 }

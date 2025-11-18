@@ -15,7 +15,7 @@ dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation 'org.gretty:gretty:+'
+//    implementation 'org.gretty:gretty:+'
     implementation 'org.json:json:20230227'
     implementation 'org.apache.thrift:libthrift:0.19.0'
     implementation project(':internalcrm')
@@ -24,6 +24,7 @@ dependencies {
 /*gretty {
     httpPort = project.hasProperty("httpPort") ? project.httpPort as int : 8080
     contextPath = '/'
+    inplaceMode = 'hard'  // force un nettoyage complet des filtres au redémarrage
 }*/
 
 test {

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class InternalCRMClient implements CRMClient<Integer> {
 
-    public static final String INTERNALCRM_URL = "http://localhost:8080/internalcrm/";
+    public static final String INTERNALCRM_URL = "http://localhost:8090/internalcrm/";
 
     public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException {
 

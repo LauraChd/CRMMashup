@@ -59,7 +59,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
             InputStream bodyStream = new ByteArrayInputStream(json.toString().getBytes(StandardCharsets.UTF_8));
 
             ClassicHttpResponse response = (ClassicHttpResponse) Request
-                    .post(api_url + "addLead")
+                    .post(api_url + "/addLead")
                     .bodyStream(bodyStream, ContentType.APPLICATION_JSON)
                     .execute()
                     .returnResponse();
@@ -79,7 +79,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
     throws InvalidParametersException, LeadNotFoundException {
         try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
-                    .delete(api_url + "/deleteLead/" + id)
+                    .delete(api_url + "/leads/" + id)
                     .execute()
                     .returnResponse();
 
@@ -117,7 +117,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
     throws LeadNotFoundException {
         try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
-                    .get(api_url + "/getLeadById/" + id)
+                    .get(api_url + "/leads/" + id)
                     .execute()
                     .returnResponse();
 

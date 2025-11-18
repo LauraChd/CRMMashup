@@ -20,12 +20,13 @@ dependencies {
 
 
 farm{
-    webapp ':virtualcrm' //requete sur /virualcrm
+    //webapp ':virtualcrm' requete sur /virualcrm
     webapp ':internalcrm' //requete sur /internalcrm
 
     gretty {
         httpPort = project.hasProperty("httpPort") ? project.httpPort as int : 8080
         contextPath = '/'
+        inplaceMode = 'hard'
     }
 }
 
@@ -34,4 +35,3 @@ project.afterEvaluate {
     tasks.farmRun.dependsOn ':client:shadowJar'
 }
 
-//tasks.farmRun.dependsOn
