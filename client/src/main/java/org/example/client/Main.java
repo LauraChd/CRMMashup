@@ -1,4 +1,4 @@
-package org.example.client.service.ui;
+package org.example.client;
 
 import org.example.client.service.exceptions.LeadNotFoundException;
 import org.example.client.service.rest.VirtualCRMAPI;

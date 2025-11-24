@@ -118,7 +118,11 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
      */
     @Override
     public List<InternalLeadDto> getLeads() {
-        return InternalLeadConverter.toInternalLeadDTOList(ModelImpl.getInstance().getAllLeads());
+        try {
+            return InternalLeadConverter.toInternalLeadDTOList(ModelImpl.getInstance().getAllLeads());
+        } catch (TException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -127,6 +131,10 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
      */
     @Override
     public int countLeads() {
-        return ModelImpl.getInstance().countLeads();
+        try {
+            return ModelImpl.getInstance().countLeads();
+        } catch (TException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
