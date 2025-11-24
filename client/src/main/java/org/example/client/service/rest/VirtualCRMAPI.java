@@ -97,7 +97,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
     public String getLeads() {
         try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
-                    .get(api_url + "/virtualcrm/leads") //TODO : get ou autre méthode ?
+                    .get(api_url + "/leads") //TODO : get ou autre méthode ?
                     .execute()
                     .returnResponse();
 
