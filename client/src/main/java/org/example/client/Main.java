@@ -27,7 +27,7 @@ public class Main {
                 System.out.println(res);
             }
             // ADD
-            if (args[0].equals("addLeads")) {
+            if (args[0].equals("addLead")) {
                 System.out.println("Adding lead...");
                 System.out.println("Lead added, here is his id :");
                 res = virtualCRMAPIService.addLead(args[1], Double.parseDouble(args[2]), args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
