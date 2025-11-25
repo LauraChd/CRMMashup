@@ -1,5 +1,6 @@
 package fr.univangers.conroller;
 
+import fr.univangers.merge.LeadMerger;
 import fr.univangers.model.VirtualLeadDto;
 import fr.univangers.service.implementations.VirtualCRMServiceFactory;
 import fr.univangers.service.interfaces.IVirtualCRMService;
@@ -102,6 +103,14 @@ public class VirtualCRMController implements IVirtualCRMService {
     public int countLeads() throws TException, IOException {
         return VirtualCRMServiceFactory.getInstance().countLeads();
     }
+
+    @GetMapping("/merge")
+    public String merge() throws Exception {
+        LeadMerger merger = new LeadMerger();
+        merger.merge();
+        return "Merge terminé";
+    }
+
 }
 
 
