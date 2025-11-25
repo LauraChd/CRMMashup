@@ -37,13 +37,13 @@ sourceSets.main.java.srcDirs += ['$projectDir/generated/java']
 
 jar {
     manifest {
-        attributes 'Main-Class': 'org.example.client.Main'
+        attributes 'Main-Class': 'fr.univangers.client.Main'
     }
 }
 
 shadowJar {
     manifest {
-        attributes 'Main-Class': 'org.example.client.Main'
+        attributes 'Main-Class': 'fr.univangers.client.Main'
     }
 }
 
