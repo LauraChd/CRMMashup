@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual CRM - Dashboard</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --bg-light: #1e293b;
+            --bg-lighter: #111827;
+            --accent: #38bdf8;
+            --accent-soft: rgba(56,189,248,0.2);
+            --danger: #f97373;
+            --text: #e5e7eb;
+            --text-soft: #9ca3af;
+            --radius: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #1e293b, #020617);
+            color: var(--text);
+        }
+
+        .app {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        header h1 span.logo {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        header small {
+            color: var(--text-soft);
+            font-size: 0.85rem;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 0.8rem;
+            border: 1px solid rgba(56,189,248,0.5);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr;
+            gap: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(15,23,42,0.85);
+            border-radius: var(--radius);
+            padding: 16px 18px;
+            border: 1px solid rgba(148,163,184,0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(15,23,42,0.8);
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card h2 span.subtitle {
+            font-size: 0.75rem;
+            color: var(--text-soft);
+            font-weight: 400;
+        }
+
+        .card + .card {
+            margin-top: 12px;
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            background: var(--bg-light);
+            color: var(--text);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
+        }
+
+        button.primary {
+            background: linear-gradient(135deg, var(--accent), #0ea5e9);
+            color: #0b1120;
+            font-weight: 600;
+        }
+
+        button.danger {
+            background: linear-gradient(135deg, #f97373, #ef4444);
+            color: #0b1120;
+            font-weight: 600;
+        }
+
+        button.small {
+            padding: 4px 10px;
+            font-size: 0.8rem;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(15,23,42,0.8);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        input, select {
+            background: var(--bg-lighter);
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.4);
+            padding: 6px 10px;
+            color: var(--text);
+            font-size: 0.85rem;
+            outline: none;
+            min-width: 0;
+        }
+
+        input::placeholder {
+            color: var(--text-soft);
+        }
+
+        .field-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .field-row label {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 80px;
+            flex: 1;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(148,163,184,0.3);
+        }
+
+        .pill span.dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+        }
+
+        .output {
+            margin-top: 12px;
+            background: #020617;
+            border-radius: var(--radius);
+            border: 1px solid rgba(148,163,184,0.45);
+            padding: 12px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            max-height: 380px;
+            overflow: auto;
+            white-space: pre;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            margin-top: 8px;
+        }
+
+        .status-bar span.status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #22c55e;
+        }
+
+        .status-dot.error {
+            background: #f97373;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            font-size: 0.8rem;
+        }
+
+        th, td {
+            border-bottom: 1px solid rgba(31,41,55,0.9);
+            padding: 6px 4px;
+            text-align: left;
+        }
+
+        th {
+            color: var(--text-soft);
+            font-weight: 500;
+        }
+
+        tr:hover {
+            background: rgba(15,23,42,0.8);
+        }
+
+        .chip {
+            display: inline-flex;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(148,163,184,0.4);
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <header>
+        <div>
+            <h1>
+                <span class="logo">VC</span>
+                Virtual CRM
+            </h1>
+            <small>Interface web pour tester rapidement tous les endpoints (port 8080)</small>
+        </div>
+        <span class="tag">REST + Thrift + Salesforce</span>
+    </header>
+
+    <div class="layout">
+
+        <!-- COLONNE GAUCHE : Actions / formulaires -->
+        <div>
+            <div class="card">
+                <h2>
+                    Actions globales
+                    <span class="subtitle">InternalCRM + Salesforce</span>
+                </h2>
+                <div class="btn-row">
+                    <button class="primary" onclick="loadLeads()">
+                        Charger tous les leads
+                    </button>
+                    <button onclick="countLeads()">
+                         CountLeads
+                    </button>
+                    <button class="primary" onclick="mergeLeads()">
+                        Merge Salesforce → InternalCRM
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    Recherche par revenu & état
+                    <span class="subtitle">/findLeads</span>
+                </h2>
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>Revenue min</label>
+                        <input id="low" type="number" placeholder="0">
+                    </div>
+                    <div class="field-group">
+                        <label>Revenue max</label>
+                        <input id="high" type="number" placeholder="1000000">
+                    </div>
+                    <div class="field-group">
+                        <label>État / département</label>
+                        <input id="state" type="text" placeholder="California, Île-de-France...">
+                    </div>
+                </div>
+                <div class="btn-row">
+                    <button onclick="findLeads()">🔍 Rechercher</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    Recherche par ID & suppression
+                    <span class="subtitle">/leads/{id}</span>
+                </h2>
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>ID Lead</label>
+                        <input id="leadId" type="text" placeholder="1 ou Salesforce ID">
+                    </div>
+                    <div class="btn-row">
+                        <button onclick="getLead()">🔎 Get Lead</button>
+                    </div>
+                </div>
+                <hr style="border: none; border-top: 1px solid rgba(31,41,55,0.9); margin: 10px 0;">
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>ID à supprimer</label>
+                        <input id="deleteId" type="text" placeholder="ID Internal ou Salesforce">
+                    </div>
+                    <div class="btn-row">
+                        <button class="danger" onclick="deleteLead()">🗑 Delete Lead</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    Ajouter un Lead (InternalCRM)
+                    <span class="subtitle">/addLead</span>
+                </h2>
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>Nom complet</label>
+                        <input id="fullName" type="text" placeholder="Nom, Prénom">
+                    </div>
+                    <div class="field-group">
+                        <label>Revenue annuel</label>
+                        <input id="annualRevenue" type="number" placeholder="50000">
+                    </div>
+                    <div class="field-group">
+                        <label>Téléphone</label>
+                        <input id="phone" type="text" placeholder="+33...">
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>Rue</label>
+                        <input id="street" type="text" placeholder="1 rue de Paris">
+                    </div>
+                    <div class="field-group">
+                        <label>Code postal</label>
+                        <input id="postalCode" type="text" placeholder="75000">
+                    </div>
+                    <div class="field-group">
+                        <label>Ville</label>
+                        <input id="city" type="text" placeholder="Paris">
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>Pays</label>
+                        <input id="country" type="text" placeholder="France">
+                    </div>
+                    <div class="field-group">
+                        <label>Entreprise</label>
+                        <input id="company" type="text" placeholder="MaBoite">
+                    </div>
+                    <div class="field-group">
+                        <label>État / Province</label>
+                        <input id="stateAdd" type="text" placeholder="Île-de-France">
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button class="primary" onclick="addLead()">➕ Ajouter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLONNE DROITE : Résultats / logs -->
+        <div>
+            <div class="card">
+                <h2>
+                    Résultats & logs
+                    <span class="subtitle">Réponse brute + tableau simplifié</span>
+                </h2>
+
+                <div class="status-bar">
+                    <span class="status">
+                        <span id="statusDot" class="status-dot"></span>
+                        <span id="statusText">Prêt</span>
+                    </span>
+                    <span id="summary" class="chip">0 leads affichés</span>
+                </div>
+
+                <div id="tableContainer"></div>
+
+                <div class="output" id="output">// Réponses brutes des endpoints s'affichent ici...</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const outputEl = document.getElementById("output");
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+    const summaryEl = document.getElementById("summary");
+    const tableContainer = document.getElementById("tableContainer");
+
+    function setStatus(text, isError = false) {
+        statusText.textContent = text;
+        statusDot.classList.toggle("error", isError);
+    }
+
+    function setSummary(text) {
+        summaryEl.textContent = text;
+    }
+
+    function showRaw(text) {
+        outputEl.textContent = text;
+    }
+
+    function tryParseJSON(text) {
+        try {
+            return JSON.parse(text);
+        } catch (_) {
+            return null;
+        }
+    }
+
+    function renderTableIfLeads(json) {
+        tableContainer.innerHTML = "";
+        if (!Array.isArray(json) || json.length === 0) {
+            setSummary("0 lead affiché");
+            return;
+        }
+
+        setSummary(json.length + " leads affichés");
+
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const tbody = document.createElement("tbody");
+
+        thead.innerHTML = `
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Entreprise</th>
+                <th>Revenue</th>
+                <th>Ville</th>
+                <th>Pays</th>
+            </tr>
+        `;
+
+        json.forEach(l => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${l.id ?? "-"}</td>
+                <td>${(l.firstName || "") + " " + (l.lastName || "")}</td>
+                <td>${l.company ?? "-"}</td>
+                <td>${l.annualRevenue ?? "-"}</td>
+                <td>${l.city ?? "-"}</td>
+                <td>${l.country ?? "-"}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        tableContainer.appendChild(table);
+    }
+
+    async function call(endpoint, options = {}) {
+        try {
+            setStatus("Appel : " + endpoint);
+            const res = await fetch(endpoint, options);
+            const text = await res.text();
+            showRaw(text);
+
+            const json = tryParseJSON(text);
+            if (json && Array.isArray(json)) {
+                renderTableIfLeads(json);
+            } else {
+                // Si pas un tableau de leads, on nettoie juste le tableau
+                tableContainer.innerHTML = "";
+                setSummary("Aucun tableau de leads à afficher");
+            }
+
+            if (!res.ok) {
+                setStatus("Erreur HTTP " + res.status, true);
+            } else {
+                setStatus("OK (" + res.status + ")");
+            }
+
+        } catch (e) {
+            setStatus("Erreur JS : " + e.message, true);
+            showRaw("// Erreur : " + e.message);
+        }
+    }
+
+    // ---- Wrappers pour les boutons ----
+
+    function loadLeads() {
+        call("/leads");
+    }
+
+    function countLeads() {
+        call("/countLeads");
+    }
+
+    function mergeLeads() {
+        if (!confirm("Lancer le merge Salesforce → InternalCRM ?")) return;
+        call("/merge");
+    }
+
+    function findLeads() {
+        const low = document.getElementById("low").value || 0;
+        const high = document.getElementById("high").value || 1000000;
+        const st = document.getElementById("state").value || "";
+
+        const url = `/findLeads?lowAnnualRevenue=${encodeURIComponent(low)}&highAnnualRevenue=${encodeURIComponent(high)}&state=${encodeURIComponent(st)}`;
+        call(url);
+    }
+
+    function getLead() {
+        const id = document.getElementById("leadId").value;
+        if (!id) {
+            alert("Merci de saisir un ID");
+            return;
+        }
+        call(`/leads/${encodeURIComponent(id)}`);
+    }
+
+    async function deleteLead() {
+        const id = document.getElementById("deleteId").value;
+        if (!id) {
+            alert("Merci de saisir un ID");
+            return;
+        }
+        if (!confirm("Supprimer le lead " + id + " ?")) return;
+
+        await call(`/leads/${encodeURIComponent(id)}`, { method: "DELETE" });
+    }
+
+    async function addLead() {
+        const params = new URLSearchParams({
+            fullName: document.getElementById("fullName").value,
+            annualRevenue: document.getElementById("annualRevenue").value,
+            phone: document.getElementById("phone").value,
+            street: document.getElementById("street").value,
+            postalCode: document.getElementById("postalCode").value,
+            city: document.getElementById("city").value,
+            country: document.getElementById("country").value,
+            company: document.getElementById("company").value,
+            state: document.getElementById("stateAdd").value
+        });
+
+        await call("/addLead", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: params.toString()
+        });
+    }
+
+    // Charger les leads au chargement de la page
+    window.addEventListener("load", loadLeads);
+</script>
+</body>
+</html>
