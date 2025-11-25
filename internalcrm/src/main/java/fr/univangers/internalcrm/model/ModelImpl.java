@@ -1,8 +1,8 @@
 package fr.univangers.internalcrm.model;
 
+import fr.univangers.internalcrm.thrift.*;
 import fr.univangers.internalcrm.utils.InternalLeadConverter;
 import org.apache.thrift.TException;
-import org.example.internalcrm.thrift.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +26,21 @@ public class ModelImpl {
      */
     private ModelImpl() throws TException {
         this.iLeads = new ArrayList<>();
-        // Add some examples
-        int lead1 = addLead("Alice Dupont", 120000.50, "+33123456789", "12 rue de la Paix", "75002", "Paris", "France", "Dupont SA", "Île-de-France");
-        int lead2 = addLead("Bob Martin", 950000.00, "+447912345678", "221B Baker Street", "NW1 6XE", "London", "UK", "Martin & Co Ltd", "Greater London");
-        int lead3 = addLead("Chloé Bernard", 35000.00, "+33698765432", "5 avenue des Champs", "33000", "Bordeaux", "France", "Chloé Consulting", "Nouvelle-Aquitaine");
-        int lead4 = addLead("David Smith", 500000.00, "+14165551234", "500 Market St", "94105", "San Francisco", "USA", "Smith Corp", "California");
-        int lead5 = addLead("Emma Johnson", 78000.00, "+61234567890", "10 George St", "2000", "Sydney", "Australia", "Emma Ventures", "New South Wales");
+        // Add some examples (Nom, Prénom)
+        int lead1 = addLead("Dupont, Alice", 120000.50, "+33123456789",
+                "12 rue de la Paix", "75002", "Paris", "France", "Dupont SA", "Île-de-France");
+
+        int lead2 = addLead("Martin, Bob", 950000.00, "+447912345678",
+                "221B Baker Street", "NW1 6XE", "London", "UK", "Martin & Co Ltd", "Greater London");
+
+        int lead3 = addLead("Bernard, Chloé", 35000.00, "+33698765432",
+                "5 avenue des Champs", "33000", "Bordeaux", "France", "Chloé Consulting", "Nouvelle-Aquitaine");
+
+        int lead4 = addLead("Smith, David", 500000.00, "+14165551234",
+                "500 Market St", "94105", "San Francisco", "USA", "Smith Corp", "California");
+
+        int lead5 = addLead("Johnson, Emma", 78000.00, "+61234567890",
+                "10 George St", "2000", "Sydney", "Australia", "Emma Ventures", "New South Wales");
     }
 
     /**

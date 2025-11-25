@@ -1,8 +1,8 @@
 package fr.univangers.clients;
 
 import fr.univangers.config.Config;
+import fr.univangers.internalcrm.thrift.*;
 import fr.univangers.model.VirtualLeadDto;
-import org.example.internalcrm.thrift.*;
 import org.apache.thrift.TException;
 import org.json.JSONArray;
 import org.json.JSONObject;

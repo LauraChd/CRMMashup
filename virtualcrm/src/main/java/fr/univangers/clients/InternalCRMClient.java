@@ -1,6 +1,6 @@
 package fr.univangers.clients;
 
-import org.example.internalcrm.thrift.*;
+import fr.univangers.internalcrm.thrift.*;
 import fr.univangers.model.VirtualLeadDto;
 import fr.univangers.utils.VirtualLeadConverter;
 import org.apache.thrift.TException;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class InternalCRMClient implements CRMClient<Integer> {
 
-    public static final String INTERNALCRM_URL = "http://localhost:9090/";
+  public static final String INTERNALCRM_URL = "http://localhost:9090/";
 
     public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException {
 
@@ -38,6 +38,7 @@ public class InternalCRMClient implements CRMClient<Integer> {
 
         } catch (TTransportException e) {
             e.printStackTrace();
+            throw new TException("Erreur de connexion à InternalCRM: " + e.getMessage(), e);
         }
         return VirtualLeadConverter.toVirtualLeadDtoList(leadsList);
     }
@@ -91,6 +92,7 @@ public class InternalCRMClient implements CRMClient<Integer> {
 
         } catch (TTransportException e) {
             e.printStackTrace();
+            throw new TException("Erreur de connexion à InternalCRM: " + e.getMessage(), e);
         }
         return VirtualLeadConverter.toVirtualLeadDto(lead);
 
@@ -116,6 +118,7 @@ public class InternalCRMClient implements CRMClient<Integer> {
 
         }catch (TTransportException e) {
             e.printStackTrace();
+            throw new TException("Erreur de connexion à InternalCRM: " + e.getMessage(), e);
         }
     }
 
@@ -137,6 +140,7 @@ public class InternalCRMClient implements CRMClient<Integer> {
 
         } catch (TTransportException e) {
             e.printStackTrace();
+            throw new TException("Erreur de connexion à InternalCRM: " + e.getMessage(), e);
         }
         return leadId;
     }
@@ -159,6 +163,7 @@ public class InternalCRMClient implements CRMClient<Integer> {
 
         } catch (TTransportException e) {
             e.printStackTrace();
+            throw new TException("Erreur de connexion à InternalCRM: " + e.getMessage(), e);
         }
         return VirtualLeadConverter.toVirtualLeadDtoList(leadsList);
     }
@@ -181,6 +186,7 @@ public class InternalCRMClient implements CRMClient<Integer> {
 
         } catch (TTransportException e) {
             e.printStackTrace();
+            throw new TException("Erreur de connexion à InternalCRM: " + e.getMessage(), e);
         }
         return leadId;
     }

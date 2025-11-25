@@ -28,7 +28,7 @@ public class ThriftHttpServletTemplate extends HttpServlet {
 
     private final Collection<Map.Entry<String, String>> customHeaders;
 
-    /**
+    /**A
      * @see HttpServlet#HttpServlet()
      */
     public ThriftHttpServletTemplate(TProcessor processor, TProtocolFactory inProtocolFactory,

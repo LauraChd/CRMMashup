@@ -1,8 +1,8 @@
 package fr.univangers.internalcrm.utils;
 
 import fr.univangers.internalcrm.model.ILead;
-import org.example.internalcrm.thrift.InternalLeadDto;
-import org.example.internalcrm.thrift.InvalidLeadParameterException;
+import fr.univangers.internalcrm.thrift.InternalLeadDto;
+import fr.univangers.internalcrm.thrift.InvalidLeadParameterException;
 
 import java.util.ArrayList;
 import java.util.List;

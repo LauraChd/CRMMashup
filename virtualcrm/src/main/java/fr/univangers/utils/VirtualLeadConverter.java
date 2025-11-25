@@ -1,9 +1,7 @@
 package fr.univangers.utils;
 
 import fr.univangers.model.VirtualLeadDto;
-import org.apache.thrift.TException;
-import org.example.internalcrm.thrift.InternalLeadDto;
-import org.example.internalcrm.thrift.InvalidDateException;
+import fr.univangers.internalcrm.thrift.InternalLeadDto;
 
 import java.time.Instant;
 import java.time.LocalDate;

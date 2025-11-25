@@ -15,9 +15,7 @@ import fr.univangers.model.VirtualLeadDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * TODO
- */
+
 public class GeoLocalisationServiceClient {
     public Optional<GeographicPointDto> lookup(VirtualLeadDto virtualLead) throws IOException {
         GeographicPointDto geographicPoint = null;

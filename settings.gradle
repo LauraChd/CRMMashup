@@ -1,3 +1,6 @@
 rootProject.name = 'mashup'
 include("client", "virtualcrm", "internalcrm")
 
+
+include 'marger'
+include 'merger'

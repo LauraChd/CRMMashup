@@ -39,9 +39,10 @@ compileThrift {
 
 sourceSets.main.java.srcDirs += ['$projectDir/generated/java']
 
-/*java {
-    sourceCompatibility = '17'
-}*/
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 war {
     webAppDirectory = file('src/main/webapp')
@@ -52,12 +53,6 @@ gretty {
     contextPath = '/'
 }
 
-
-//sourceCompatibility = JavaVersion.VERSION_21
-
-
 farm {
     webapp project
 }
-
-//sourceCompatibility = JavaVersion.VERSION_18

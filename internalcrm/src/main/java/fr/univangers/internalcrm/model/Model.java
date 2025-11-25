@@ -1,7 +1,7 @@
 package fr.univangers.internalcrm.model;
 
+import fr.univangers.internalcrm.thrift.*;
 import org.apache.thrift.TException;
-import org.example.internalcrm.thrift.*;
 
 import java.util.List;
 

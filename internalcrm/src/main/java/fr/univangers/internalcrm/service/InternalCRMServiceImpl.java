@@ -1,10 +1,10 @@
 package fr.univangers.internalcrm.service;
 
+import fr.univangers.internalcrm.thrift.*;
 import fr.univangers.internalcrm.utils.InternalLeadConverter;
 import fr.univangers.internalcrm.model.ILead;
 import fr.univangers.internalcrm.model.ModelImpl;
 import org.apache.thrift.TException;
-import org.example.internalcrm.thrift.*;
 
 
 import java.util.List;
