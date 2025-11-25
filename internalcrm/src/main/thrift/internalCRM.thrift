@@ -1,4 +1,4 @@
-namespace java org.example.internalcrm.thrift
+namespace java fr.univangers.internalcrm.thrift
 
 typedef i32 int
 typedef i64 long

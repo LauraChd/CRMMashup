@@ -1,8 +1,8 @@
 package fr.univangers.service.interfaces;
 
+import fr.univangers.internalcrm.thrift.*;
 import fr.univangers.model.VirtualLeadDto;
 import org.apache.thrift.TException;
-import org.example.internalcrm.thrift.*;
 
 import java.io.IOException;
 import java.util.List;

@@ -10,15 +10,36 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    // Exclure slf4j-reload4j globalement pour éviter conflit avec Logback
+    all {
+        exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 //    implementation 'org.gretty:gretty:+'
     implementation 'org.json:json:20230227'
     implementation 'org.apache.thrift:libthrift:0.19.0'
     implementation project(':internalcrm')
+}
+
+// Pour bootRun, forcer tomcat à être disponible (war le met en providedRuntime)
+// Solution : modifier le classpath de bootRun pour inclure tomcat
+tasks.named('bootRun') {
+    doFirst {
+        // Ajouter tomcat au classpath pour bootRun
+        classpath = files(sourceSets.main.output.classesDirs, sourceSets.main.output.resourcesDir) +
+                    configurations.runtimeClasspath.filter { 
+                        !it.name.contains('spring-boot-starter-tomcat') 
+                    } +
+                    project.files(project.configurations.detachedConfiguration(
+                        project.dependencies.create('org.springframework.boot:spring-boot-starter-tomcat:3.1.3')
+                    ).resolve())
+    }
 }
 
 /*gretty {
@@ -31,10 +52,11 @@ test {
     useJUnitPlatform()
 }
 
-//sourceCompatibility = JavaVersion.VERSION_21
-
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 farm {
     webapp project
 }
-//sourceCompatibility = JavaVersion.VERSION_18

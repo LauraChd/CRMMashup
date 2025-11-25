@@ -3,10 +3,10 @@ package fr.univangers.service.implementations;
 import fr.univangers.clients.GeoLocalisationServiceClient;
 import fr.univangers.clients.InternalCRMClient;
 import fr.univangers.clients.SalesforceCRMClient;
+import fr.univangers.internalcrm.thrift.*;
 import fr.univangers.model.GeographicPointDto;
 import fr.univangers.model.VirtualLeadDto;
 import fr.univangers.service.interfaces.IVirtualCRMService;
-import org.example.internalcrm.thrift.*;
 import fr.univangers.utils.VirtualLeadConverter;
 import org.apache.thrift.TException;
 
@@ -18,6 +18,7 @@ public class VirtualCRMServiceImpl implements IVirtualCRMService {
 
     private final SalesforceCRMClient salesforceCRMClient;
     private final InternalCRMClient internalCRMClient;
+    
     private final GeoLocalisationServiceClient geoLocalisationServiceClient;
 
     public VirtualCRMServiceImpl(SalesforceCRMClient salesforceCRMClient,
@@ -27,7 +28,7 @@ public class VirtualCRMServiceImpl implements IVirtualCRMService {
         this.internalCRMClient = internalCRMClient;
         this.geoLocalisationServiceClient = geoLocalisationServiceClient;
     }
-
+ 
 
     /**
      * Recherche les leads qui ont un salaire contenu entre deux valeurs fournies en paramètres
