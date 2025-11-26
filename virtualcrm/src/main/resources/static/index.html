@@ -680,7 +680,11 @@
         const startDate = document.getElementById("startDate").value || 0;
         const endDate = document.getElementById("endDate").value || 1000000;
 
-        const url = `/findLeadsByDate?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+        // Convertir en timestamp (millisecondes)
+        const start = new Date(startDate).getTime();
+        const end = new Date(endDate).getTime();
+
+        const url = `/findLeadsByDate?startDate=${encodeURIComponent(start)}&endDate=${encodeURIComponent(end)}`;
         call(url);
     }
 
