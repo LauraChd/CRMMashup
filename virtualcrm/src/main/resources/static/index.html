@@ -227,6 +227,7 @@
             max-height: 380px;
             overflow: auto;
             white-space: pre;
+            display: none;
         }
 
         .status-bar {
@@ -260,7 +261,18 @@
             border-collapse: collapse;
             margin-top: 8px;
             font-size: 0.8rem;
+
+            table-layout: fixed;
+            width: 100%;
         }
+
+        th:nth-child(1), td:nth-child(1) { width: 160px; }   /* ID */
+        th:nth-child(2), td:nth-child(2) { width: 160px; }  /* Nom */
+        th:nth-child(3), td:nth-child(3) { width: 150px; }  /* Entreprise */
+        th:nth-child(4), td:nth-child(4) { width: 120px; }  /* Revenue */
+        th:nth-child(5), td:nth-child(5) { width: 130px; }  /* Ville */
+        th:nth-child(6), td:nth-child(6) { width: 120px; }  /* Pays */
+
 
         th, td {
             border-bottom: 1px solid rgba(31,41,55,0.9);
@@ -285,6 +297,17 @@
             border: 1px solid rgba(148,163,184,0.4);
             font-size: 0.7rem;
         }
+
+        @keyframes blink-status {
+            0% { background: #22c55e; }
+            50% { background: #f97373; }
+            100% { background: #22c55e; }
+        }
+
+        .status-dot.blinking {
+            animation: blink-status 0.6s infinite;
+        }
+
     </style>
 </head>
 <body>
@@ -433,7 +456,7 @@
             <div class="card">
                 <h2>
                     Résultats & logs
-                    <span class="subtitle">Réponse brute + tableau simplifié</span>
+<!--                    <span class="subtitle">Réponse brute + tableau simplifié</span>-->
                 </h2>
 
                 <div class="status-bar">
@@ -460,9 +483,10 @@
     const summaryEl = document.getElementById("summary");
     const tableContainer = document.getElementById("tableContainer");
 
-    function setStatus(text, isError = false) {
+    function setStatus(text, isError = false, isLoading = false) {
         statusText.textContent = text;
         statusDot.classList.toggle("error", isError);
+        statusDot.classList.toggle("blinking", isLoading);
     }
 
     function setSummary(text) {
@@ -525,7 +549,7 @@
 
     async function call(endpoint, options = {}) {
         try {
-            setStatus("Appel : " + endpoint);
+            setStatus("Appel en cours : " + endpoint, false, true);
             const res = await fetch(endpoint, options);
             const text = await res.text();
             showRaw(text);
@@ -540,13 +564,13 @@
             }
 
             if (!res.ok) {
-                setStatus("Erreur HTTP " + res.status, true);
+                setStatus("Erreur HTTP " + res.status, true, false);
             } else {
-                setStatus("OK (" + res.status + ")");
+                setStatus("OK (" + res.status + ")", false, false);
             }
 
         } catch (e) {
-            setStatus("Erreur JS : " + e.message, true);
+            setStatus("Erreur JS : " + e.message, true, false);
             showRaw("// Erreur : " + e.message);
         }
     }
@@ -616,7 +640,7 @@
     }
 
     // Charger les leads au chargement de la page
-    window.addEventListener("load", loadLeads);
+    //window.addEventListener("load", loadLeads);
 </script>
 </body>
 </html>
