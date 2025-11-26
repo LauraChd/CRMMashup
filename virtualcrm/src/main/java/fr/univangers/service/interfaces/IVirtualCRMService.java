@@ -25,4 +25,6 @@ public interface IVirtualCRMService {
     public List<VirtualLeadDto> getLeads() throws TException, IOException;
 
     public int countLeads() throws TException, IOException;
+
+    String merge() throws TException, IOException;
 }

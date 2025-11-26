@@ -13,5 +13,6 @@ public interface IVirtualCRMAPI {
     String countLeads() ;
     String deleteLead(String id) throws LeadNotFoundException, InvalidParametersException;
 
+    String merge();
 }
 

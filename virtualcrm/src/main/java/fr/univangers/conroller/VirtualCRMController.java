@@ -105,10 +105,8 @@ public class VirtualCRMController implements IVirtualCRMService {
     }
 
     @GetMapping("/merge")
-    public String merge() throws Exception {
-        LeadMerger merger = new LeadMerger();
-        merger.merge();
-        return "Merge terminé";
+    public String merge() throws TException, IOException {
+        return VirtualCRMServiceFactory.getInstance().merge();
     }
 
 }

@@ -194,6 +194,20 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
         }
     }
 
+    @Override
+    public String merge() {
+        try{
+            ClassicHttpResponse response = (ClassicHttpResponse) Request
+                    .get(api_url + "/merge")
+                    .execute()
+                    .returnResponse();
+
+            return new String (response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8).trim();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     private void validateStatusCode(int successCode, ClassicHttpResponse response) throws Exception {
 

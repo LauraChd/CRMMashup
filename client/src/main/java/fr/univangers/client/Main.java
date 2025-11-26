@@ -72,6 +72,11 @@ public class Main {
                 System.out.println("Leads found by date : ");
                 res = virtualCRMAPIService.findLeadsByDate(args[1], args[2]);
             }
+            // MERGE SALESFORCE AND INTERNALCRM
+            else if (args[0].equals("merge")) {
+                System.out.println("Merging leads from salesforce and internalCRM...");
+                res = virtualCRMAPIService.merge();
+            }
             System.out.println(res);
         } catch (Exception e) {
             throw new RuntimeException(e);
