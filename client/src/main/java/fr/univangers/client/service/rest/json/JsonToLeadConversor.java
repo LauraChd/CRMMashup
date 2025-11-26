@@ -5,6 +5,9 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class JsonToLeadConversor {
@@ -38,6 +41,12 @@ public class JsonToLeadConversor {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < array.length(); i++) {
             JSONObject obj = array.getJSONObject(i);
+
+            long epoch = obj.optLong("creationDate");
+            String date = Instant.ofEpochMilli(epoch)
+                    .atZone(ZoneId.systemDefault())
+                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
             sb.append(String.format(
                     "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s]%n",
                     obj.optString("id"),
@@ -51,7 +60,7 @@ public class JsonToLeadConversor {
                     obj.optString("city"),
                     obj.optString("state"),
                     obj.optString("country"),
-                    obj.optString("date")
+                    date
             ));
         }
         return sb.toString();
