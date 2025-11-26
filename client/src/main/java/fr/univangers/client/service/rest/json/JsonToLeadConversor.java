@@ -15,8 +15,8 @@ public class JsonToLeadConversor {
         JSONObject obj = new JSONObject(jsonText);
 
         return String.format(
-                "Lead[id=%d, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s %s %s %s %s]",
-                obj.optInt("id"),
+                "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s, %s, date=%s]",
+                obj.optString("id"),
                 obj.optString("firstName"),
                 obj.optString("lastName"),
                 obj.optString("company"),
@@ -26,8 +26,8 @@ public class JsonToLeadConversor {
                 obj.optString("postalCode"),
                 obj.optString("city"),
                 obj.optString("state"),
-                obj.optString("country")
-        );
+                obj.optString("country"),
+                obj.optString("date"));
     }
 
     // Convertit une liste de Leads en String lisible
@@ -39,8 +39,8 @@ public class JsonToLeadConversor {
         for (int i = 0; i < array.length(); i++) {
             JSONObject obj = array.getJSONObject(i);
             sb.append(String.format(
-                    "Lead[id=%d, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s %s %s %s %s]%n",
-                    obj.optInt("id"),
+                    "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s]%n",
+                    obj.optString("id"),
                     obj.optString("firstName"),
                     obj.optString("lastName"),
                     obj.optString("company"),
@@ -50,7 +50,8 @@ public class JsonToLeadConversor {
                     obj.optString("postalCode"),
                     obj.optString("city"),
                     obj.optString("state"),
-                    obj.optString("country")
+                    obj.optString("country"),
+                    obj.optString("date")
             ));
         }
         return sb.toString();

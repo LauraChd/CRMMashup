@@ -9,7 +9,7 @@
             --bg-light: #1e293b;
             --bg-lighter: #111827;
             --accent: #38bdf8;
-            --accent-soft: rgba(56,189,248,0.2);
+            --accent-soft: rgba(56, 189, 248, 0.2);
             --danger: #f97373;
             --text: #e5e7eb;
             --text-soft: #9ca3af;
@@ -71,7 +71,7 @@
             background: var(--accent-soft);
             color: var(--accent);
             font-size: 0.8rem;
-            border: 1px solid rgba(56,189,248,0.5);
+            border: 1px solid rgba(56, 189, 248, 0.5);
         }
 
         .layout {
@@ -87,12 +87,12 @@
         }
 
         .card {
-            background: rgba(15,23,42,0.85);
+            background: rgba(15, 23, 42, 0.85);
             border-radius: var(--radius);
             padding: 16px 18px;
-            border: 1px solid rgba(148,163,184,0.2);
+            border: 1px solid rgba(148, 163, 184, 0.2);
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 25px rgba(15,23,42,0.8);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
         }
 
         .card h2 {
@@ -154,7 +154,7 @@
 
         button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 5px 12px rgba(15,23,42,0.8);
+            box-shadow: 0 5px 12px rgba(15, 23, 42, 0.8);
         }
 
         button:active {
@@ -165,7 +165,7 @@
         input, select {
             background: var(--bg-lighter);
             border-radius: 999px;
-            border: 1px solid rgba(148,163,184,0.4);
+            border: 1px solid rgba(148, 163, 184, 0.4);
             padding: 6px 10px;
             color: var(--text);
             font-size: 0.85rem;
@@ -204,8 +204,8 @@
             font-size: 0.8rem;
             padding: 4px 10px;
             border-radius: 999px;
-            background: rgba(15,23,42,0.9);
-            border: 1px solid rgba(148,163,184,0.3);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.3);
         }
 
         .pill span.dot {
@@ -219,7 +219,7 @@
             margin-top: 12px;
             background: #020617;
             border-radius: var(--radius);
-            border: 1px solid rgba(148,163,184,0.45);
+            border: 1px solid rgba(148, 163, 184, 0.45);
             padding: 12px;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: 0.8rem;
@@ -266,16 +266,40 @@
             width: 100%;
         }
 
-        th:nth-child(1), td:nth-child(1) { width: 160px; }   /* ID */
-        th:nth-child(2), td:nth-child(2) { width: 160px; }  /* Nom */
-        th:nth-child(3), td:nth-child(3) { width: 150px; }  /* Entreprise */
-        th:nth-child(4), td:nth-child(4) { width: 120px; }  /* Revenue */
-        th:nth-child(5), td:nth-child(5) { width: 130px; }  /* Ville */
-        th:nth-child(6), td:nth-child(6) { width: 120px; }  /* Pays */
+        th:nth-child(1), td:nth-child(1) {
+            width: 160px;
+        }
+
+        /* ID */
+        th:nth-child(2), td:nth-child(2) {
+            width: 160px;
+        }
+
+        /* Nom */
+        th:nth-child(3), td:nth-child(3) {
+            width: 150px;
+        }
+
+        /* Entreprise */
+        th:nth-child(4), td:nth-child(4) {
+            width: 120px;
+        }
+
+        /* Revenue */
+        th:nth-child(5), td:nth-child(5) {
+            width: 130px;
+        }
+
+        /* Ville */
+        th:nth-child(6), td:nth-child(6) {
+            width: 120px;
+        }
+
+        /* Pays */
 
 
         th, td {
-            border-bottom: 1px solid rgba(31,41,55,0.9);
+            border-bottom: 1px solid rgba(31, 41, 55, 0.9);
             padding: 6px 4px;
             text-align: left;
         }
@@ -286,22 +310,28 @@
         }
 
         tr:hover {
-            background: rgba(15,23,42,0.8);
+            background: rgba(15, 23, 42, 0.8);
         }
 
         .chip {
             display: inline-flex;
             padding: 2px 7px;
             border-radius: 999px;
-            background: rgba(15,23,42,0.9);
-            border: 1px solid rgba(148,163,184,0.4);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
             font-size: 0.7rem;
         }
 
         @keyframes blink-status {
-            0% { background: #22c55e; }
-            50% { background: #f97373; }
-            100% { background: #22c55e; }
+            0% {
+                background: #22c55e;
+            }
+            50% {
+                background: #f97373;
+            }
+            100% {
+                background: #22c55e;
+            }
         }
 
         .status-dot.blinking {
@@ -337,7 +367,7 @@
                         Charger tous les leads
                     </button>
                     <button onclick="countLeads()">
-                         CountLeads
+                        CountLeads
                     </button>
                     <button class="primary" onclick="mergeLeads()">
                         Merge Salesforce → InternalCRM
@@ -368,6 +398,26 @@
                     <button onclick="findLeads()">🔍 Rechercher</button>
                 </div>
             </div>
+            <div class="card">
+                <h2>
+                    Recherche par date
+                    <span class="subtitle">/findLeads</span>
+                </h2>
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>Date de début</label>
+                        <input id="startDate" type="date">
+                    </div>
+                    <div class="field-group">
+                        <label>Date de fin</label>
+                        <input id="endDate" type="date">
+                    </div>
+                </div>
+                <div class="btn-row">
+                    <button onclick="findLeadsByDate()">🔍 Rechercher</button>
+                </div>
+            </div>
+
 
             <div class="card">
                 <h2>
@@ -456,7 +506,7 @@
             <div class="card">
                 <h2>
                     Résultats & logs
-<!--                    <span class="subtitle">Réponse brute + tableau simplifié</span>-->
+                    <!--                    <span class="subtitle">Réponse brute + tableau simplifié</span>-->
                 </h2>
 
                 <div class="status-bar">
@@ -508,7 +558,7 @@
     function renderTableIfLeads(json) {
         tableContainer.innerHTML = "";
         if (!Array.isArray(json) || json.length === 0) {
-            setSummary("0 lead affiché");
+            setSummary("0 lead trouvé");
             return;
         }
 
@@ -522,10 +572,11 @@
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
-                <th>Entreprise</th>
+                <th>Téléphone</th>
                 <th>Revenue</th>
-                <th>Ville</th>
-                <th>Pays</th>
+                <th>Entreprise</th>
+                <th>Adresse</th>
+                <th>Date d'ajout</th>
             </tr>
         `;
 
@@ -534,10 +585,11 @@
             tr.innerHTML = `
                 <td>${l.id ?? "-"}</td>
                 <td>${(l.firstName || "") + " " + (l.lastName || "")}</td>
-                <td>${l.company ?? "-"}</td>
+                <td>${l.phone ?? "-"}</td>
                 <td>${l.annualRevenue ?? "-"}</td>
-                <td>${l.city ?? "-"}</td>
-                <td>${l.country ?? "-"}</td>
+                <td>${l.company ?? "-"}</td>
+                <td>${(l.street + "," || "") + " " + (l.postalCode || "" ) + " " + (l.city + "," || "") + " " + (l.state + "," || "") + " " + (l.country || "")}</td>
+                <td>${l.date ?? "-"}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -555,8 +607,33 @@
             showRaw(text);
 
             const json = tryParseJSON(text);
+
+            if (!res.ok && endpoint.startsWith("/leads/")) {
+                tableContainer.innerHTML = `
+                <div class="card" style="margin-top:10px; text-align:center; padding:14px; color:#f97373;">
+                    <span style="font-size:1rem; font-weight:600;">Lead introuvable ou erreur serveur (${res.status})</span>
+                </div>
+            `;
+                setSummary("0 lead trouvé");
+                setStatus("Erreur HTTP " + res.status, true, false);
+                return;
+            }
+
             if (json && Array.isArray(json)) {
                 renderTableIfLeads(json);
+            } else if (json !== null && typeof json === "number") {
+                tableContainer.innerHTML = `
+        <div class="card" style="margin-top:10px; text-align:center; padding:14px;">
+            <span style="font-size:1.2rem; font-weight:600;">${json} lead(s)</span>
+        </div>
+    `;
+                setSummary("Aucun tableau de leads à afficher");
+                setStatus("OK", false, false);
+                return; // on quitte car on a affiché le résultat
+            }
+            else if (json !== null && typeof json === "object") {
+                    renderTableIfLeads([json]);
+                    setStatus("OK", false, false);
             } else {
                 // Si pas un tableau de leads, on nettoie juste le tableau
                 tableContainer.innerHTML = "";
@@ -599,6 +676,14 @@
         call(url);
     }
 
+    function findLeadsByDate() {
+        const startDate = document.getElementById("startDate").value || 0;
+        const endDate = document.getElementById("endDate").value || 1000000;
+
+        const url = `/findLeadsByDate?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+        call(url);
+    }
+
     function getLead() {
         const id = document.getElementById("leadId").value;
         if (!id) {
@@ -616,7 +701,7 @@
         }
         if (!confirm("Supprimer le lead " + id + " ?")) return;
 
-        await call(`/leads/${encodeURIComponent(id)}`, { method: "DELETE" });
+        await call(`/leads/${encodeURIComponent(id)}`, {method: "DELETE"});
     }
 
     async function addLead() {
@@ -634,7 +719,7 @@
 
         await call("/addLead", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: params.toString()
         });
     }
