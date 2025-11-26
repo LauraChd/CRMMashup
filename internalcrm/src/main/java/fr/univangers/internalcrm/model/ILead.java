@@ -133,13 +133,34 @@ public class ILead {
     }
 
     public boolean sameAs(ILead l){
+        System.out.println("l.toString() = " + l.toString());
+        System.out.println("this.toString() = " + this.toString());
+
         return this.getAnnualRevenue() == l.getAnnualRevenue()
                 && this.getFirstName().equalsIgnoreCase(l.getFirstName())
                 && this.getLastName().equalsIgnoreCase(l.getLastName())
                 && this.getStreet().equalsIgnoreCase(l.getStreet())
                 && this.getPostalCode().equalsIgnoreCase(l.getPostalCode())
                 && this.getCountry().equalsIgnoreCase(l.getCountry())
-                && this.getCompany().equalsIgnoreCase(l.getCountry())
+                && this.getCompany().equalsIgnoreCase(l.getCompany())
                 && this.getState().equalsIgnoreCase(l.getState());
+    }
+
+    @Override
+    public String toString() {
+        return "ILead{" +
+                "ID=" + ID +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", annualRevenue=" + annualRevenue +
+                ", phone='" + phone + '\'' +
+                ", street='" + street + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", creationDate=" + creationDate +
+                ", company='" + company + '\'' +
+                ", state='" + state + '\'' +
+                '}';
     }
 }

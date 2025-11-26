@@ -452,8 +452,12 @@
                 </h2>
                 <div class="field-row">
                     <div class="field-group">
-                        <label>Nom complet</label>
-                        <input id="fullName" type="text" placeholder="Nom, Prénom">
+                        <label>Nom</label>
+                        <input id="LastName" type="text" placeholder="Nom">
+                    </div>
+                    <div class="field-group">
+                        <label>Prénom</label>
+                        <input id="FirstName" type="text" placeholder="Prénom">
                     </div>
                     <div class="field-group">
                         <label>Revenue annuel</label>
@@ -487,7 +491,7 @@
                     </div>
                     <div class="field-group">
                         <label>Entreprise</label>
-                        <input id="company" type="text" placeholder="MaBoite">
+                        <input id="company" type="text" placeholder="Entreprise">
                     </div>
                     <div class="field-group">
                         <label>État / Province</label>
@@ -709,8 +713,16 @@
     }
 
     async function addLead() {
+        const firstName = document.getElementById("FirstName").value.trim();
+        const lastName  = document.getElementById("LastName").value.trim();
+
+        // Concaténation propre : "Nom, Prénom"
+        const fullName = lastName && firstName
+            ? `${lastName}, ${firstName}`
+            : lastName || firstName; // fallback si un des deux manque
+
         const params = new URLSearchParams({
-            fullName: document.getElementById("fullName").value,
+            fullName: fullName,
             annualRevenue: document.getElementById("annualRevenue").value,
             phone: document.getElementById("phone").value,
             street: document.getElementById("street").value,

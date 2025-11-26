@@ -35,9 +35,9 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
 
     @Override
-    public String addLead(String fullName, double annualRevenue, String phone,
+    public String addLead(String fullName, double annualRevenue, String phone, String company,
                           String street, String postalCode, String city,
-                          String country, String company, String state)
+                          String country, String state)
             throws InvalidParametersException {
 
         try {
@@ -193,7 +193,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public String merge() {
         try{
@@ -201,7 +201,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .get(api_url + "/merge")
                     .execute()
                     .returnResponse();
-
+            
             return new String (response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8).trim();
         } catch (Exception e) {
             throw new RuntimeException(e);
