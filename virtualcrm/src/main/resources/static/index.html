@@ -589,7 +589,7 @@
                 <td>${l.annualRevenue ?? "-"}</td>
                 <td>${l.company ?? "-"}</td>
                 <td>${(l.street + "," || "") + " " + (l.postalCode || "" ) + " " + (l.city + "," || "") + " " + (l.state + "," || "") + " " + (l.country || "")}</td>
-                <td>${l.date ?? "-"}</td>
+                <td>${l.creationDate ?? "-"}</td>
             `;
             tbody.appendChild(tr);
         });
