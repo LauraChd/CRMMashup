@@ -37,18 +37,11 @@ public class JsonToLeadConversor {
     public static String toLeadDtos(InputStream content) {
         String jsonText = convertStreamToString(content);
         JSONArray array = new JSONArray(jsonText);
-        System.out.println("jsonText = " + jsonText);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < array.length(); i++) {
             JSONObject obj = array.getJSONObject(i);
 
             String date = obj.optString("creationDate", "Date inconnue");
-            System.out.println(date);
-            /*long epoch = obj.optLong("creationDate");
-            System.out.println("epoch = " + epoch);
-            String date = Instant.ofEpochMilli(epoch)
-                    .atZone(ZoneId.systemDefault())
-                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);*/
 
             sb.append(String.format(
                     "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s]%n",
