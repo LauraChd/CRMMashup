@@ -222,8 +222,10 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
             /* Handler error. */
             switch (statusCode) {
+                // 404
                 case HttpStatus.SC_NOT_FOUND -> throw JsonToClientExceptionConversor.fromNotFoundErrorCode(
                         response.getEntity().getContent());
+                // 400 ??
                 case HttpStatus.SC_BAD_REQUEST -> throw JsonToClientExceptionConversor.fromBadRequestErrorCode(
                         response.getEntity().getContent());
                 default -> throw new RuntimeException("HTTP error; status code = "
