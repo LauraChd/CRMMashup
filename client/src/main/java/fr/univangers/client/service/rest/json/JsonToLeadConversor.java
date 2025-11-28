@@ -42,9 +42,10 @@ public class JsonToLeadConversor {
             JSONObject obj = array.getJSONObject(i);
 
             String date = obj.optString("creationDate", "Date inconnue");
+            String geographicLocal = obj.optString("geographicPointDto");
 
             sb.append(String.format(
-                    "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s]%n",
+                    "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s, geographicPosition=%s]%n",
                     obj.optString("id"),
                     obj.optString("firstName"),
                     obj.optString("lastName"),
@@ -56,7 +57,8 @@ public class JsonToLeadConversor {
                     obj.optString("city"),
                     obj.optString("state"),
                     obj.optString("country"),
-                    date
+                    date,
+                    geographicLocal
             ));
         }
         return sb.toString();
