@@ -1,8 +1,8 @@
 package fr.univangers.service.implementations;
 
 import fr.univangers.clients.GeoLocalisationServiceClient;
-import fr.univangers.clients.InternalICRMClient;
-import fr.univangers.clients.SalesforceICRMClient;
+import fr.univangers.clients.InternalCRMClient;
+import fr.univangers.clients.SalesforceCRMClient;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class VirtualCRMServiceFactory {
 
     public synchronized static VirtualCRMServiceImpl getInstance() throws IOException {
         if (virtualCRMService == null) {
-            virtualCRMService = new VirtualCRMServiceImpl(new SalesforceICRMClient(), new InternalICRMClient(), new GeoLocalisationServiceClient());
+            virtualCRMService = new VirtualCRMServiceImpl(new SalesforceCRMClient(), new InternalCRMClient(), new GeoLocalisationServiceClient());
         }
         return virtualCRMService;
     }

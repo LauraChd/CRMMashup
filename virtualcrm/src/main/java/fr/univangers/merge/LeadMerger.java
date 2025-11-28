@@ -1,8 +1,8 @@
 package fr.univangers.merge;
 
 
-import fr.univangers.clients.InternalICRMClient;
-import fr.univangers.clients.SalesforceICRMClient;
+import fr.univangers.clients.InternalCRMClient;
+import fr.univangers.clients.SalesforceCRMClient;
 import fr.univangers.model.VirtualLeadDto;
 import org.apache.thrift.TException;
 
@@ -11,12 +11,12 @@ import java.util.List;
 
 public class LeadMerger {
 
-    private final SalesforceICRMClient salesforceClient;
-    private final InternalICRMClient internalClient;
+    private final SalesforceCRMClient salesforceClient;
+    private final InternalCRMClient internalClient;
 
     public LeadMerger() throws IOException {
-        this.salesforceClient = new SalesforceICRMClient();
-        this.internalClient  = new InternalICRMClient();
+        this.salesforceClient = new SalesforceCRMClient();
+        this.internalClient  = new InternalCRMClient();
     }
 
     public void merge() throws TException, IOException {
