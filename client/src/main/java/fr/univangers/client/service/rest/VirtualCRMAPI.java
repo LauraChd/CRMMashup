@@ -60,7 +60,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .returnResponse();
 
             // (optionnel) tu peux checker le status ici avec validateStatusCode(...)
-            // validateStatusCode(HttpStatus.SC_CREATED, response);
+            validateStatusCode(HttpStatus.SC_CREATED, response);
 
             // On lit juste la réponse brute (l'id renvoyé par le contrôleur)
             return new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8).trim();
@@ -107,7 +107,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .returnResponse();
 
             // Vérif retour HTTP TODO
-//            validateStatusCode(HttpStatus.SC_CREATED, response);
+            validateStatusCode(HttpStatus.SC_CREATED, response);
 
             return JsonToLeadConversor.toLeadDtos(response.getEntity().getContent());
 
@@ -127,7 +127,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .returnResponse();
 
             // Vérif retour HTTP TODO
-//            validateStatusCode(HttpStatus.SC_CREATED, response);
+            validateStatusCode(HttpStatus.SC_CREATED, response);
 
             return JsonToLeadConversor.toLeadDto(response.getEntity().getContent()).toString();
 
@@ -169,7 +169,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .returnResponse();
 
             // Vérif retour HTTP TODO
-//            validateStatusCode(HttpStatus.SC_CREATED, response);
+            validateStatusCode(HttpStatus.SC_CREATED, response);
 
             return JsonToLeadConversor.toLeadDtos(response.getEntity().getContent());
 
@@ -222,10 +222,16 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
             /* Handler error. */
             switch (statusCode) {
+                // 404
                 case HttpStatus.SC_NOT_FOUND -> throw JsonToClientExceptionConversor.fromNotFoundErrorCode(
                         response.getEntity().getContent());
+                // 400 ??
                 case HttpStatus.SC_BAD_REQUEST -> throw JsonToClientExceptionConversor.fromBadRequestErrorCode(
                         response.getEntity().getContent());
+                // 500
+                case HttpStatus.SC_INTERNAL_SERVER_ERROR -> throw JsonToClientExceptionConversor.fromServerErrorCode(
+                                response.getEntity().getContent()
+                        );
                 default -> throw new RuntimeException("HTTP error; status code = "
                         + statusCode);
             }

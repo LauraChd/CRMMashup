@@ -190,7 +190,11 @@ public class VirtualCRMServiceImpl implements IVirtualCRMService {
      */
     @Override
     public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
-        return internalCRMClient.addLead(fullName, annualRevenue, phone, street, postalCode, city, country, company, state);
+        try {
+            return internalCRMClient.addLead(fullName, annualRevenue, phone, street, postalCode, city, country, company, state);
+        } catch (LeadAlreadyExistsException e) {
+            throw new LeadAlreadyExistsException(e);
+        }
     }
 
     /**

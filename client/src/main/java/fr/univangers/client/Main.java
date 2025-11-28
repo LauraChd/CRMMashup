@@ -1,7 +1,9 @@
 package fr.univangers.client;
 
+import fr.univangers.client.service.exceptions.ForbiddenActionException;
 import fr.univangers.client.service.exceptions.LeadNotFoundException;
 import fr.univangers.client.service.rest.VirtualCRMAPI;
+import fr.univangers.client.service.utils.exceptions.InputValidationException;
 
 /**
  * TODO
@@ -10,7 +12,7 @@ public class Main {
 
     private static final VirtualCRMAPI virtualCRMAPIService = new VirtualCRMAPI();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ForbiddenActionException, InputValidationException, LeadNotFoundException {
 
         String res = "";
         try {
@@ -76,8 +78,8 @@ public class Main {
                 res = virtualCRMAPIService.merge();
             }
             System.out.println(res);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
 
 
