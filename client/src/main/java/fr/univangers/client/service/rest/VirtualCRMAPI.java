@@ -216,7 +216,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
             int statusCode = response.getCode();
 
             /* Success? */
-            if (statusCode == successCode) {
+            if (statusCode == successCode || statusCode == 200) {
                 return;
             }
 
