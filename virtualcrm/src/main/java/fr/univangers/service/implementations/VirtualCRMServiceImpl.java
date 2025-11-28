@@ -1,8 +1,8 @@
 package fr.univangers.service.implementations;
 
 import fr.univangers.clients.GeoLocalisationServiceClient;
-import fr.univangers.clients.InternalCRMClient;
-import fr.univangers.clients.SalesforceCRMClient;
+import fr.univangers.clients.InternalICRMClient;
+import fr.univangers.clients.SalesforceICRMClient;
 import fr.univangers.internalcrm.thrift.*;
 import fr.univangers.merge.LeadMerger;
 import fr.univangers.model.GeographicPointDto;
@@ -17,16 +17,16 @@ import java.util.Optional;
 
 public class VirtualCRMServiceImpl implements IVirtualCRMService {
 
-    private final SalesforceCRMClient salesforceCRMClient;
-    private final InternalCRMClient internalCRMClient;
+    private final SalesforceICRMClient salesforceCRMClient;
+    private final InternalICRMClient internalCRMClient;
     
     private final GeoLocalisationServiceClient geoLocalisationServiceClient;
 
     // True if a merge has been done
     private boolean merged = false;
 
-    public VirtualCRMServiceImpl(SalesforceCRMClient salesforceCRMClient,
-                                 InternalCRMClient internalCRMClient,
+    public VirtualCRMServiceImpl(SalesforceICRMClient salesforceCRMClient,
+                                 InternalICRMClient internalCRMClient,
                                  GeoLocalisationServiceClient geoLocalisationServiceClient) {
         this.salesforceCRMClient = salesforceCRMClient;
         this.internalCRMClient = internalCRMClient;

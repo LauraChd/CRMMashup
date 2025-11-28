@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * TODO
  */
-public class InternalCRMClient implements CRMClient<Integer> {
+public class InternalICRMClient implements ICRMClient<Integer> {
 
   public static final String INTERNALCRM_URL = "http://localhost:9090/";
 

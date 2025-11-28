@@ -15,6 +15,8 @@ import fr.univangers.client.service.rest.json.JsonToLeadConversor;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 
 public class VirtualCRMAPI implements IVirtualCRMAPI {
@@ -161,10 +163,17 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
     public String findLeadsByDate(String startDate, String endDate)
     throws InvalidParametersException {
         try {
+            long start = LocalDate.parse(startDate)
+                    .atStartOfDay(ZoneId.systemDefault())
+                    .toEpochSecond();
+            long end = LocalDate.parse(endDate)
+                    .atStartOfDay(ZoneId.systemDefault())
+                    .toEpochSecond();
+
             ClassicHttpResponse response = (ClassicHttpResponse) Request
                     .get(api_url
-                            + "/leads?startDate=" + URLEncoder.encode(String.valueOf(startDate), "UTF-8")
-                            + "&endDate=" +  URLEncoder.encode(String.valueOf(endDate), "UTF-8"))
+                            + "/findLeadsByDate?startDate=" + URLEncoder.encode(String.valueOf(start), "UTF-8")
+                            + "&endDate=" +  URLEncoder.encode(String.valueOf(end), "UTF-8"))
                     .execute()
                     .returnResponse();
 

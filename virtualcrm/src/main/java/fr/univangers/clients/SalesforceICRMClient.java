@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * TODO
  */
-public class SalesforceCRMClient implements CRMClient<String> {
+public class SalesforceICRMClient implements ICRMClient<String> {
 
 
     private final String clientId;
@@ -33,7 +33,7 @@ public class SalesforceCRMClient implements CRMClient<String> {
     private final String instanceUrl;
     private String accessToken;
 
-    public SalesforceCRMClient() throws IOException {
+    public SalesforceICRMClient() throws IOException {
         Config config = new Config("config.properties");
         this.clientId = config.getProperty("CLIENT_ID");
         this.clientSecret = config.getProperty("CLIENT_SECRET");

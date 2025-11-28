@@ -6,7 +6,7 @@ import org.apache.thrift.TException;
 
 import java.util.List;
 
-public interface CRMClient<ID> {
+public interface ICRMClient<ID> {
     //TODO ajouter add et delete leads
     List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException;
     List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException;
