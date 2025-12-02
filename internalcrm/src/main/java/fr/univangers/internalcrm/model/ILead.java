@@ -1,7 +1,7 @@
 package fr.univangers.internalcrm.model;
 
 /**
- * Classe représentant un lead interne.
+ * TODO
  */
 public class ILead {
     int ID;
@@ -18,7 +18,7 @@ public class ILead {
     String state;
 
     public ILead(int ID, String firstName, String lastName, double annualRevenue, String phone, String street,
-            String postalCode, String city, String country, long creationDate, String company, String state) {
+                 String postalCode, String city, String country, long creationDate, String company, String state){
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,8 +34,7 @@ public class ILead {
 
     }
 
-    public ILead() {
-    }
+    public ILead(){}
 
     public String getFirstName() {
         return firstName;
@@ -133,13 +132,7 @@ public class ILead {
         this.ID = ID;
     }
 
-    /**
-     * Vérifie si deux leads sont identiques.
-     *
-     * @param l Le lead à comparer.
-     * @return Vrai si les leads sont identiques, faux sinon.
-     */
-    public boolean sameAs(ILead l) {
+    public boolean sameAs(ILead l){
         return this.getAnnualRevenue() == l.getAnnualRevenue()
                 && this.getFirstName().equalsIgnoreCase(l.getFirstName())
                 && this.getLastName().equalsIgnoreCase(l.getLastName())

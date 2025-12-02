@@ -10,18 +10,13 @@ import fr.univangers.client.service.utils.exceptions.ParsingException;
 
 import java.io.InputStream;
 
-/**
- * Classe qui permet de convertir des erreurs JSON provenant
- * du serveur en exceptions Java côté client.
- */
 public class JsonToClientExceptionConversor {
 
     /**
-     * Convertit une erreur HTTP 400 (Bad Request) en exception Java.
-     *
-     * @param ex flux JSON contenant les informations d'erreur
-     * @return une exception correspondant à l'erreur
-     * @throws ParsingException si le JSON est invalide ou inconnu
+     * Requête incorrecte
+     * @param ex
+     * @return
+     * @throws ParsingException
      */
     public static Exception fromBadRequestErrorCode(InputStream ex) throws ParsingException {
         try {
@@ -44,23 +39,16 @@ public class JsonToClientExceptionConversor {
         }
     }
 
-    /**
-     * Convertit un JSON vers une InputValidationException.
-     *
-     * @param rootNode racine du JSON
-     * @return exception de validation d’entrée
-     */
     private static InputValidationException toInputValidationException(JsonNode rootNode) {
         String message = rootNode.get("message").textValue();
         return new InputValidationException(message);
     }
 
     /**
-     * Convertit une erreur HTTP 404 (Not Found) en exception Java.
-     *
-     * @param ex flux JSON contenant les informations d'erreur
-     * @return une exception InstanceNotFoundException
-     * @throws ParsingException si le JSON est invalide
+     * Requête qui n'a pas fonctionné
+     * @param ex
+     * @return
+     * @throws ParsingException
      */
     public static Exception fromNotFoundErrorCode(InputStream ex) throws ParsingException {
         try {
@@ -83,16 +71,11 @@ public class JsonToClientExceptionConversor {
         }
     }
 
-    /**
-     * Convertit un JSON vers une InstanceNotFoundException.
-     *
-     * @param rootNode racine du JSON
-     * @return exception InstanceNotFoundException
-     */
     private static InstanceNotFoundException toInstanceNotFoundException(JsonNode rootNode) {
         String instanceId = rootNode.get("instanceId").textValue();
         String instanceType = rootNode.get("instanceType").textValue();
         return new InstanceNotFoundException(instanceId, instanceType);
     }
+
 
 }

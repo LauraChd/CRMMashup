@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Client pour le service InternalCRM via Thrift.
  */
-public class InternalCRMClient implements CRMClient<Integer> {
+public class InternalCRMClient implements ICRMClient<Integer> {
 
     public static final String INTERNALCRM_URL = "http://localhost:9090/";
 

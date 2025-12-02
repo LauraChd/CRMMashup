@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Client pour le service Salesforce CRM.
  */
-public class SalesforceCRMClient implements CRMClient<String> {
+public class SalesforceCRMClient implements ICRMClient<String> {
 
     private final String clientId;
     private final String clientSecret;
