@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * Template de servlet pour les services Thrift.
+ */
 public class ThriftHttpServletTemplate extends HttpServlet {
 
     private final TProcessor processor;
@@ -28,11 +31,15 @@ public class ThriftHttpServletTemplate extends HttpServlet {
 
     private final Collection<Map.Entry<String, String>> customHeaders;
 
-    /**A
-     * @see HttpServlet#HttpServlet()
+    /**
+     * Constructeur avec processeur et factories de protocole.
+     *
+     * @param processor          Processeur Thrift.
+     * @param inProtocolFactory  Factory de protocole d'entrée.
+     * @param outProtocolFactory Factory de protocole de sortie.
      */
     public ThriftHttpServletTemplate(TProcessor processor, TProtocolFactory inProtocolFactory,
-                                     TProtocolFactory outProtocolFactory) {
+            TProtocolFactory outProtocolFactory) {
         super();
         this.processor = processor;
         this.inProtocolFactory = inProtocolFactory;
@@ -41,15 +48,22 @@ public class ThriftHttpServletTemplate extends HttpServlet {
     }
 
     /**
-     * @see HttpServlet#HttpServlet()
+     * Constructeur avec processeur et factory de protocole unique.
+     *
+     * @param processor       Processeur Thrift.
+     * @param protocolFactory Factory de protocole (entrée et sortie).
      */
     public ThriftHttpServletTemplate(TProcessor processor, TProtocolFactory protocolFactory) {
         this(processor, protocolFactory, protocolFactory);
     }
 
     /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     *      response)
+     * Traite les requêtes POST.
+     *
+     * @param request  Requête HTTP.
+     * @param response Réponse HTTP.
+     * @throws ServletException En cas d'erreur de servlet.
+     * @throws IOException      En cas d'erreur d'entrée/sortie.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -84,14 +98,24 @@ public class ThriftHttpServletTemplate extends HttpServlet {
     }
 
     /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-     *      response)
+     * Traite les requêtes GET (déléguées à POST).
+     *
+     * @param request  Requête HTTP.
+     * @param response Réponse HTTP.
+     * @throws ServletException En cas d'erreur de servlet.
+     * @throws IOException      En cas d'erreur d'entrée/sortie.
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doPost(request, response);
     }
 
+    /**
+     * Ajoute un header personnalisé.
+     *
+     * @param key   Clé du header.
+     * @param value Valeur du header.
+     */
     public void addCustomHeader(final String key, final String value) {
         this.customHeaders.add(new Map.Entry<String, String>() {
             public String getKey() {
@@ -108,6 +132,11 @@ public class ThriftHttpServletTemplate extends HttpServlet {
         });
     }
 
+    /**
+     * Définit les headers personnalisés.
+     *
+     * @param headers Collection de headers.
+     */
     public void setCustomHeaders(Collection<Map.Entry<String, String>> headers) {
         this.customHeaders.clear();
         this.customHeaders.addAll(headers);

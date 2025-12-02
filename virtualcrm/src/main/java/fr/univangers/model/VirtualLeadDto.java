@@ -1,8 +1,10 @@
 package fr.univangers.model;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
+/**
+ * DTO représentant un lead virtuel (unifié).
+ */
 public class VirtualLeadDto {
 
     private String id;
@@ -20,10 +22,9 @@ public class VirtualLeadDto {
     private GeographicPointDto geographicPointDto;
 
     public VirtualLeadDto(String id, String firstName, String lastName, Double annualRevenue,
-                          String phone, String street, String postalCode,
-                          String city, String country, LocalDate creationDate,
-                          String company, String state, GeographicPointDto geographicPointDto
-                        ) {
+            String phone, String street, String postalCode,
+            String city, String country, LocalDate creationDate,
+            String company, String state, GeographicPointDto geographicPointDto) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,10 +40,15 @@ public class VirtualLeadDto {
         this.geographicPointDto = geographicPointDto;
     }
 
+    /**
+     * Constructeur par défaut.
+     */
     public VirtualLeadDto() {
     }
 
-    public String getId() {return id;}
+    public String getId() {
+        return id;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -114,7 +120,7 @@ public class VirtualLeadDto {
 
     public LocalDate getCreationDate() {
         return creationDate;
-    } //TODO : régler problème de retour entre long et String
+    } // TODO : régler problème de retour entre long et String
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
@@ -159,9 +165,7 @@ public class VirtualLeadDto {
                 ", creationDate='" + creationDate + '\'' +
                 ", company='" + company + '\'' +
                 ", state='" + state + '\'' +
-              //  ", geographicPointDto=" + geographicPointDto + TODO
+                // ", geographicPointDto=" + geographicPointDto + TODO
                 '}' + '\n';
     }
 }
-
-

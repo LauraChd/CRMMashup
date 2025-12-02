@@ -10,9 +10,18 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+/**
+ * Classe qui permet de convertir des contenus JSON représentant des leads en
+ * chaînes lisibles.
+ */
 public class JsonToLeadConversor {
 
-    // Convertit un seul Lead en String lisible
+    /**
+     * Convertit un seul Lead en String lisible.
+     *
+     * @param content Flux JSON.
+     * @return Représentation textuelle du lead.
+     */
     public static String toLeadDto(InputStream content) {
         String jsonText = convertStreamToString(content);
         JSONObject obj = new JSONObject(jsonText);
@@ -33,7 +42,12 @@ public class JsonToLeadConversor {
                 obj.optString("date"));
     }
 
-    // Convertit une liste de Leads en String lisible
+    /**
+     * Convertit une liste de Leads en String lisible.
+     *
+     * @param content Flux JSON.
+     * @return Représentation textuelle des leads.
+     */
     public static String toLeadDtos(InputStream content) {
         String jsonText = convertStreamToString(content);
         JSONArray array = new JSONArray(jsonText);
@@ -60,13 +74,17 @@ public class JsonToLeadConversor {
                     obj.optString("city"),
                     obj.optString("state"),
                     obj.optString("country"),
-                    date
-            ));
+                    date));
         }
         return sb.toString();
     }
 
-    // Utilitaire pour lire un InputStream en String
+    /**
+     * Pour lire un InputStream en String.
+     *
+     * @param is Flux d'entrée.
+     * @return Contenu sous forme de chaîne.
+     */
     private static String convertStreamToString(InputStream is) {
         Scanner scanner = new Scanner(is, StandardCharsets.UTF_8.name());
         String text = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
@@ -74,4 +92,3 @@ public class JsonToLeadConversor {
         return text;
     }
 }
-

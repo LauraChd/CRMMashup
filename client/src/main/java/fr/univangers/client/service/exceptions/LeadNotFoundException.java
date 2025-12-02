@@ -1,6 +1,9 @@
 package fr.univangers.client.service.exceptions;
 
-public class LeadNotFoundException extends Exception{
+/**
+ * Exception levée lorsque le lead n'est pas trouvé (erreur 404).
+ */
+public class LeadNotFoundException extends Exception {
 
     private String leadId;
 

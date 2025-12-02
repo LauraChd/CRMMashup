@@ -21,10 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO
+ * Client pour le service Salesforce CRM.
  */
 public class SalesforceCRMClient implements CRMClient<String> {
-
 
     private final String clientId;
     private final String clientSecret;
@@ -33,6 +32,11 @@ public class SalesforceCRMClient implements CRMClient<String> {
     private final String instanceUrl;
     private String accessToken;
 
+    /**
+     * Constructeur. Charge la configuration.
+     *
+     * @throws IOException En cas d'erreur de lecture de la configuration.
+     */
     public SalesforceCRMClient() throws IOException {
         Config config = new Config("config.properties");
         this.clientId = config.getProperty("CLIENT_ID");
@@ -41,7 +45,6 @@ public class SalesforceCRMClient implements CRMClient<String> {
         this.password = config.getProperty("PASSWORD");
         this.instanceUrl = config.getProperty("INSTANCE_URL");
     }
-
 
     /**
      * Authentification à Salesforce et récupération de l'access_token
@@ -74,12 +77,23 @@ public class SalesforceCRMClient implements CRMClient<String> {
         }
     }
 
+    /**
+     * Vérifie si l'authentification est effectuée, sinon s'authentifie.
+     *
+     * @throws IOException En cas d'erreur d'authentification.
+     */
     private void ensureAuthenticated() throws IOException {
         if (accessToken == null) {
             authenticate();
         }
     }
 
+    /**
+     * Parse les leads JSON en objets VirtualLeadDto.
+     *
+     * @param leadsJson Tableau JSON des leads.
+     * @return Liste des leads.
+     */
     private List<VirtualLeadDto> parseLeads(JSONArray leadsJson) {
         List<VirtualLeadDto> leads = new ArrayList<>();
         for (int i = 0; i < leadsJson.length(); i++) {
@@ -111,6 +125,13 @@ public class SalesforceCRMClient implements CRMClient<String> {
         return leads;
     }
 
+    /**
+     * Exécute une requête SOQL.
+     *
+     * @param soql La requête SOQL.
+     * @return Liste des leads trouvés.
+     * @throws IOException En cas d'erreur d'exécution.
+     */
     private List<VirtualLeadDto> executeQuery(String soql) throws IOException {
         ensureAuthenticated();
         String urlStr = instanceUrl + "/services/data/v57.0/query?q=" +
@@ -135,10 +156,19 @@ public class SalesforceCRMClient implements CRMClient<String> {
         }
     }
 
-
-
+    /**
+     * Trouve des leads par revenu.
+     *
+     * @param lowAnnualRevenue  Revenu minimum.
+     * @param highAnnualRevenue Revenu maximum.
+     * @param state             État.
+     * @return Liste des leads trouvés.
+     * @throws InvalidRevenueRangeException Si la plage de revenus est invalide.
+     * @throws TException                   En cas d'erreur Thrift.
+     */
     @Override
-    public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException {
+    public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state)
+            throws InvalidRevenueRangeException, TException {
         try {
             if (lowAnnualRevenue > highAnnualRevenue) {
                 throw new InvalidRevenueRangeException();
@@ -153,6 +183,15 @@ public class SalesforceCRMClient implements CRMClient<String> {
         }
     }
 
+    /**
+     * Trouve des leads par date.
+     *
+     * @param startDate Date de début.
+     * @param endDate   Date de fin.
+     * @return Liste des leads trouvés.
+     * @throws InvalidDateException Si la plage de dates est invalide.
+     * @throws TException           En cas d'erreur Thrift.
+     */
     @Override
     public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate)
             throws InvalidDateException, TException {
@@ -165,7 +204,7 @@ public class SalesforceCRMClient implements CRMClient<String> {
             LocalDateTime start = Instant.ofEpochMilli(startDate)
                     .atZone(ZoneOffset.UTC)
                     .toLocalDateTime();
-            LocalDateTime end   = Instant.ofEpochMilli(endDate)
+            LocalDateTime end = Instant.ofEpochMilli(endDate)
                     .atZone(ZoneOffset.UTC)
                     .toLocalDateTime();
 
@@ -185,10 +224,18 @@ public class SalesforceCRMClient implements CRMClient<String> {
         }
     }
 
-
+    /**
+     * Récupère un lead par son ID.
+     *
+     * @param id ID du lead.
+     * @return Le lead trouvé.
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
+     * @throws TException            En cas d'erreur Thrift.
+     */
     public VirtualLeadDto getLeadById(String id) throws LeadNotFoundException, TException {
         try {
-            String soql = "SELECT Id, FirstName, LastName, Company, AnnualRevenue, Phone, Street, PostalCode, City, Country, CreatedDate FROM Lead WHERE Id = '" + id + "'";
+            String soql = "SELECT Id, FirstName, LastName, Company, AnnualRevenue, Phone, Street, PostalCode, City, Country, CreatedDate FROM Lead WHERE Id = '"
+                    + id + "'";
             List<VirtualLeadDto> leads = executeQuery(soql);
             if (leads.isEmpty()) {
                 throw new LeadNotFoundException();
@@ -199,6 +246,12 @@ public class SalesforceCRMClient implements CRMClient<String> {
         }
     }
 
+    /**
+     * Récupère tous les leads.
+     *
+     * @return Liste de tous les leads.
+     * @throws TException En cas d'erreur Thrift.
+     */
     @Override
     public List<VirtualLeadDto> getLeads() throws TException {
         try {
@@ -209,6 +262,12 @@ public class SalesforceCRMClient implements CRMClient<String> {
         }
     }
 
+    /**
+     * Compte le nombre de leads.
+     *
+     * @return Le nombre de leads.
+     * @throws TException En cas d'erreur Thrift.
+     */
     @Override
     public int countLeads() throws TException {
         try {
@@ -230,8 +289,25 @@ public class SalesforceCRMClient implements CRMClient<String> {
         }
     }
 
+    /**
+     * Ajoute un lead.
+     *
+     * @param fullName      Nom complet.
+     * @param annualRevenue Revenu annuel.
+     * @param phone         Téléphone.
+     * @param street        Rue.
+     * @param postalCode    Code postal.
+     * @param city          Ville.
+     * @param country       Pays.
+     * @param company       Entreprise.
+     * @param state         État.
+     * @return L'ID du lead ajouté.
+     * @throws LeadAlreadyExistsException    Si le lead existe déjà.
+     * @throws InvalidLeadParameterException Si les paramètres sont invalides.
+     * @throws TException                    En cas d'erreur Thrift.
+     */
     public String addLead(String fullName, double annualRevenue, String phone, String street,
-                          String postalCode, String city, String country, String company, String state)
+            String postalCode, String city, String country, String company, String state)
             throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
         try {
             ensureAuthenticated();
@@ -239,7 +315,7 @@ public class SalesforceCRMClient implements CRMClient<String> {
             // Découpage du nom complet en prénom + nom
             String[] parts = fullName.split(",", 2);
             String firstName = parts.length > 0 ? parts[0] : "";
-            String lastName  = parts.length > 1 ? parts[1] : "";
+            String lastName = parts.length > 1 ? parts[1] : "";
 
             // Construction du JSON
             JSONObject leadJson = new JSONObject();
@@ -286,7 +362,13 @@ public class SalesforceCRMClient implements CRMClient<String> {
         }
     }
 
-
+    /**
+     * Supprime un lead.
+     *
+     * @param id ID du lead à supprimer.
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
+     * @throws TException            En cas d'erreur Thrift.
+     */
     public void deleteLead(String id) throws LeadNotFoundException, TException {
         try {
             ensureAuthenticated();

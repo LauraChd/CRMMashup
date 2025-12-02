@@ -9,10 +9,20 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+/**
+ * Client console autonome communiquant directement avec l’API REST via
+ * HttpURLConnection.
+ */
 public class VirtualCRMCommandLineClient {
 
     private static final String BASE_URL = "http://localhost:8080";
 
+    /**
+     * Méthode principale du client console.
+     *
+     * @param args Arguments de la ligne de commande.
+     * @throws Exception En cas d'erreur.
+     */
     public static void main(String[] args) throws Exception {
 
         Scanner sc = new Scanner(System.in);
@@ -34,17 +44,18 @@ public class VirtualCRMCommandLineClient {
                 continue;
             }
 
-            // Découper la ligne en mots
+            // découpe la ligne en mots
             String[] cmd = line.split(" ");
 
-            if (cmd.length == 0) continue;
+            if (cmd.length == 0)
+                continue;
 
             String command = cmd[0];
 
             switch (command) {
 
                 case "findLeads":
-                    if(cmd.length != 4) {
+                    if (cmd.length != 4) {
                         System.out.println("Usage: findLeads low high state");
                         break;
                     }
@@ -52,7 +63,7 @@ public class VirtualCRMCommandLineClient {
                     break;
 
                 case "findLeadsByDate":
-                    if(cmd.length != 3) {
+                    if (cmd.length != 3) {
                         System.out.println("Usage: findLeadsByDate startDate endDate");
                         break;
                     }
@@ -60,7 +71,7 @@ public class VirtualCRMCommandLineClient {
                     break;
 
                 case "getLead":
-                    if(cmd.length != 2) {
+                    if (cmd.length != 2) {
                         System.out.println("Usage: getLead id");
                         break;
                     }
@@ -68,7 +79,7 @@ public class VirtualCRMCommandLineClient {
                     break;
 
                 case "deleteLead":
-                    if(cmd.length != 2) {
+                    if (cmd.length != 2) {
                         System.out.println("Usage: deleteLead id");
                         break;
                     }
@@ -76,8 +87,9 @@ public class VirtualCRMCommandLineClient {
                     break;
 
                 case "addLead":
-                    if(cmd.length != 10) {
-                        System.out.println("Usage: addLead fullName revenue phone street postalCode city country company state");
+                    if (cmd.length != 10) {
+                        System.out.println(
+                                "Usage: addLead fullName revenue phone street postalCode city country company state");
                         break;
                     }
                     addLead(cmd);
@@ -99,8 +111,13 @@ public class VirtualCRMCommandLineClient {
         sc.close();
     }
 
-
-    // HTTP GET
+    /**
+     * Envoie une requête HTTP GET.
+     *
+     * @param urlStr URL de la requête.
+     * @return La réponse du serveur.
+     * @throws IOException En cas d'erreur d'entrée/sortie.
+     */
     private static String httpGet(String urlStr) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -109,8 +126,13 @@ public class VirtualCRMCommandLineClient {
         return readResponse(con);
     }
 
-
-    // HTTP DELETE
+    /**
+     * Envoie une requête HTTP DELETE.
+     *
+     * @param urlStr URL de la requête.
+     * @return La réponse du serveur.
+     * @throws IOException En cas d'erreur d'entrée/sortie.
+     */
     private static String httpDelete(String urlStr) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -119,7 +141,14 @@ public class VirtualCRMCommandLineClient {
         return readResponse(con);
     }
 
-    // HTTP POST (form-data urlencoded)
+    /**
+     * Envoie une requête HTTP POST.
+     *
+     * @param urlStr URL de la requête.
+     * @param params Paramètres de la requête.
+     * @return La réponse du serveur.
+     * @throws IOException En cas d'erreur d'entrée/sortie.
+     */
     private static String httpPost(String urlStr, String params) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -128,20 +157,25 @@ public class VirtualCRMCommandLineClient {
         con.setDoOutput(true);
         con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-        try(OutputStream os = con.getOutputStream()) {
+        try (OutputStream os = con.getOutputStream()) {
             os.write(params.getBytes(StandardCharsets.UTF_8));
         }
 
         return readResponse(con);
     }
 
-
-    // Read HTTP response
+    /**
+     * Lit la réponse HTTP.
+     *
+     * @param con Connexion HTTP.
+     * @return Le contenu de la réponse.
+     * @throws IOException En cas d'erreur d'entrée/sortie.
+     */
     private static String readResponse(HttpURLConnection con) throws IOException {
         int status = con.getResponseCode();
         BufferedReader in;
 
-        if(status >= 200 && status < 300) {
+        if (status >= 200 && status < 300) {
             in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         } else {
             in = new BufferedReader(new InputStreamReader(con.getErrorStream()));
@@ -150,7 +184,7 @@ public class VirtualCRMCommandLineClient {
         String inputLine;
         StringBuilder content = new StringBuilder();
 
-        while((inputLine = in.readLine()) != null) {
+        while ((inputLine = in.readLine()) != null) {
             content.append(inputLine).append("\n");
         }
 
@@ -158,9 +192,7 @@ public class VirtualCRMCommandLineClient {
         return content.toString();
     }
 
-
-    // COMMAND IMPLEMENTATIONS
-
+    // implémentation des commandes
 
     private static void findLeads(String low, String high, String state) throws Exception {
         String url = BASE_URL + "/findLeads?lowAnnualRevenue=" + low +
@@ -186,16 +218,15 @@ public class VirtualCRMCommandLineClient {
     }
 
     private static void addLead(String[] args) throws Exception {
-        String params =
-                "fullName=" + args[1] +
-                        "&annualRevenue=" + args[2] +
-                        "&phone=" + args[3] +
-                        "&street=" + args[4] +
-                        "&postalCode=" + args[5] +
-                        "&city=" + args[6] +
-                        "&country=" + args[7] +
-                        "&company=" + args[8] +
-                        "&state=" + args[9];
+        String params = "fullName=" + args[1] +
+                "&annualRevenue=" + args[2] +
+                "&phone=" + args[3] +
+                "&street=" + args[4] +
+                "&postalCode=" + args[5] +
+                "&city=" + args[6] +
+                "&country=" + args[7] +
+                "&company=" + args[8] +
+                "&state=" + args[9];
 
         System.out.println(httpPost(BASE_URL + "/lead", params));
     }
@@ -208,8 +239,9 @@ public class VirtualCRMCommandLineClient {
         System.out.println(httpGet(BASE_URL + "/countLeads"));
     }
 
-
-    // HELP
+    /**
+     * Affiche l'aide.
+     */
     private static void printUsage() {
         System.out.println("Commandes disponibles :");
         System.out.println("  findLeads low high state");

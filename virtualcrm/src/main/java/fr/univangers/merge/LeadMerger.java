@@ -1,6 +1,5 @@
 package fr.univangers.merge;
 
-
 import fr.univangers.clients.InternalCRMClient;
 import fr.univangers.clients.SalesforceCRMClient;
 import fr.univangers.model.VirtualLeadDto;
@@ -9,19 +8,33 @@ import org.apache.thrift.TException;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Classe responsable de la fusion des leads provenant de différentes sources.
+ */
 public class LeadMerger {
 
     private final SalesforceCRMClient salesforceClient;
     private final InternalCRMClient internalClient;
 
+    /**
+     * Constructeur. Initialise les clients CRM.
+     *
+     * @throws IOException En cas d'erreur d'initialisation.
+     */
     public LeadMerger() throws IOException {
         this.salesforceClient = new SalesforceCRMClient();
-        this.internalClient  = new InternalCRMClient();
+        this.internalClient = new InternalCRMClient();
     }
 
+    /**
+     * Fusionne les leads de Salesforce vers InternalCRM en évitant les doublons.
+     *
+     * @throws TException  En cas d'erreur Thrift.
+     * @throws IOException En cas d'erreur d'entrée/sortie.
+     */
     public void merge() throws TException, IOException {
 
-        List<VirtualLeadDto> sfLeads      = salesforceClient.getLeads();
+        List<VirtualLeadDto> sfLeads = salesforceClient.getLeads();
         List<VirtualLeadDto> internalLeads = internalClient.getLeads();
 
         int added = 0;
@@ -44,8 +57,7 @@ public class LeadMerger {
                     sfLead.getCity(),
                     sfLead.getCountry(),
                     sfLead.getCompany(),
-                    sfLead.getState()
-            );
+                    sfLead.getState());
 
             added++;
         }
@@ -53,21 +65,34 @@ public class LeadMerger {
         System.out.println("Merge terminé. Ajoutés = " + added + ", ignorés (doublons) = " + skipped);
     }
 
+    /**
+     * Vérifie si un lead est un doublon.
+     *
+     * @param a    Le lead à vérifier.
+     * @param list La liste des leads existants.
+     * @return Vrai si c'est un doublon, faux sinon.
+     */
     private boolean isDuplicate(VirtualLeadDto a, List<VirtualLeadDto> list) {
-        return list.stream().anyMatch(l ->
-                safeEq(l.getFirstName(), a.getFirstName()) &&
-                        safeEq(l.getLastName(), a.getLastName()) &&
-                        safeEq(l.getCompany(), a.getCompany()) &&
-                        safeEq(l.getPhone(), a.getPhone()) &&
-                        safeEq(l.getStreet(), a.getStreet()) &&
-                        safeEq(l.getCity(), a.getCity()) &&
-                        safeEq(l.getCountry(), a.getCountry()) &&
-                        safeEq(l.getState(), a.getState())
-        );
+        return list.stream().anyMatch(l -> safeEq(l.getFirstName(), a.getFirstName()) &&
+                safeEq(l.getLastName(), a.getLastName()) &&
+                safeEq(l.getCompany(), a.getCompany()) &&
+                safeEq(l.getPhone(), a.getPhone()) &&
+                safeEq(l.getStreet(), a.getStreet()) &&
+                safeEq(l.getCity(), a.getCity()) &&
+                safeEq(l.getCountry(), a.getCountry()) &&
+                safeEq(l.getState(), a.getState()));
     }
 
+    /**
+     * Compare deux chaînes de caractères de manière sûre (null-safe).
+     *
+     * @param a Première chaîne.
+     * @param b Deuxième chaîne.
+     * @return Vrai si les chaînes sont égales, faux sinon.
+     */
     private boolean safeEq(String a, String b) {
-        if (a == null) return b == null;
+        if (a == null)
+            return b == null;
         return a.equals(b);
     }
 }

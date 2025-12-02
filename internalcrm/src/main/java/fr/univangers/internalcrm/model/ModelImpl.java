@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO
+ * Implémentation du modèle.
  */
 public class ModelImpl {
 
@@ -18,15 +18,12 @@ public class ModelImpl {
     // Leads list ~= Database
     private final List<ILead> iLeads;
 
-    // Counts the number of leads and gives their IDs
-    private int leadsCount = 1 ;
+    // compte le nombre de leads et donne leurs IDs
+    private int leadsCount = 1;
 
-    /**
-     * Private constructor because it's a singleton
-     */
     private ModelImpl() throws TException {
         this.iLeads = new ArrayList<>();
-        // Add some examples (Nom, Prénom)
+
         int lead1 = addLead("Dupont, Alice", 120000.50, "+33123456789",
                 "12 rue de la Paix", "75002", "Paris", "France", "Dupont SA", "Île-de-France");
 
@@ -45,6 +42,7 @@ public class ModelImpl {
 
     /**
      * Global access to the singleton
+     * 
      * @return the unique instance of the model
      */
     public static synchronized ModelImpl getInstance() throws TException {
@@ -54,14 +52,15 @@ public class ModelImpl {
         return instance;
     }
 
-
     /**
      * Find leads by revenue and state
-     * @param lowAnnualRevenue minimum annual revenue of the lead
+     * 
+     * @param lowAnnualRevenue  minimum annual revenue of the lead
      * @param highAnnualRevenue maximal annual revenue of the lead
-     * @param state departement where the lead works
+     * @param state             departement where the lead works
      * @return a list of Leads that meet the criterias given
-     * @throws InvalidRevenueRangeException if the minimum annual revenue is higher than maximal annual revenue
+     * @throws InvalidRevenueRangeException if the minimum annual revenue is higher
+     *                                      than maximal annual revenue
      * @throws TException
      */
     public List<ILead> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state)
@@ -85,17 +84,19 @@ public class ModelImpl {
 
     /**
      * Find leads added between two dates
+     * 
      * @param startDate minimum date when the lead was added
-     * @param endDate maximum date when the lead was added
+     * @param endDate   maximum date when the lead was added
      * @return the list of the leads that matches the requirements
      * @throws InvalidDateException if the startDate is higher than the endDate
      * @throws TException
      */
     public List<ILead> findLeadsByDate(long startDate, long endDate)
             throws InvalidDateException, TException {
-        //TODO : comment client fait pour saisir les dates ? Doit prendre dates format 10/10/2025 et convertir dans Virtual ou internal ?
+        // TODO : comment client fait pour saisir les dates ? Doit prendre dates format
+        // 10/10/2025 et convertir dans Virtual ou internal ?
 
-        if(startDate > endDate) {
+        if (startDate > endDate) {
             throw new InvalidDateException("Invalid date range", startDate, endDate);
         }
 
@@ -110,7 +111,8 @@ public class ModelImpl {
 
     /**
      * Add a lead to the list of leads
-     * @param fullName as "LastName, FirstName"
+     * 
+     * @param fullName      as "LastName, FirstName"
      * @param annualRevenue
      * @param phone
      * @param street
@@ -118,9 +120,10 @@ public class ModelImpl {
      * @param city
      * @param country
      * @param company
-     * @param state in the company
+     * @param state         in the company
      * @return -1 if the creation of lead turned wrong, else the ID of the lead
-     * @throws LeadAlreadyExistsException if a lead already exists with the same parameters
+     * @throws LeadAlreadyExistsException    if a lead already exists with the same
+     *                                       parameters
      * @throws InvalidLeadParameterException if a parameter is not of the right type
      * @throws TException
      */
@@ -137,7 +140,7 @@ public class ModelImpl {
                 postalCode, city, country, System.currentTimeMillis(), company, state);
         // Check is this lead already exists
         for (ILead iLead : iLeads) {
-            if (iLead.sameAs(newLead)){
+            if (iLead.sameAs(newLead)) {
                 throw new LeadAlreadyExistsException("Le lead existe déjà !", iLead.getID());
             }
         }
@@ -149,6 +152,7 @@ public class ModelImpl {
 
     /**
      * Delete a lead from ID
+     * 
      * @param ID of the lead to delete
      * @throws LeadNotFoundException if the given ID isn't attributed to a lead
      * @throws TException
@@ -164,6 +168,7 @@ public class ModelImpl {
 
     /**
      * Get all the leads from the list
+     * 
      * @return the list of the leads
      */
     public List<ILead> getAllLeads() {
@@ -172,16 +177,17 @@ public class ModelImpl {
     }
 
     /**
-     * TODO
-     * @param id
-     * @return
-     * @throws LeadNotFoundException
-     * @throws TException
+     * Récupère un lead par son ID.
+     *
+     * @param id ID du lead.
+     * @return Le lead trouvé.
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
+     * @throws TException            En cas d'erreur Thrift.
      */
     public ILead getLeadByID(int id)
-        throws LeadNotFoundException, TException {
-        for(ILead lead : iLeads) {
-            if(lead.getID() == id) {
+            throws LeadNotFoundException, TException {
+        for (ILead lead : iLeads) {
+            if (lead.getID() == id) {
                 return lead;
             }
         }
@@ -189,12 +195,11 @@ public class ModelImpl {
     }
 
     /**
-     * TODO
-     * @return
+     * Compte le nombre de leads.
+     *
+     * @return Le nombre de leads.
      */
     public int countLeads() {
         return iLeads.size();
     }
 }
-
-

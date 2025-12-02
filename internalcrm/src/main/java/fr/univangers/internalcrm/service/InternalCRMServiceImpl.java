@@ -6,25 +6,26 @@ import fr.univangers.internalcrm.model.ILead;
 import fr.univangers.internalcrm.model.ModelImpl;
 import org.apache.thrift.TException;
 
-
 import java.util.List;
 
 /**
- * TODO
+ * Implémentation du service InternalCRM.
  */
 public class InternalCRMServiceImpl implements InternalCRMService.Iface {
 
     /**
+     * Trouve des leads par revenu.
      *
-     * @param lowAnnualRevenue minimum annual revenue of the lead
-     * @param highAnnualRevenue maximal annual revenue of the lead
-     * @param state departement where the lead works
-     * @return a list of Leads that meet the criterias given
-     * @throws InvalidRevenueRangeException if the minimum annual revenue is higher than maximal annual revenue
-     * @throws TException
+     * @param lowAnnualRevenue  Revenu minimum.
+     * @param highAnnualRevenue Revenu maximum.
+     * @param state             État.
+     * @return Liste des leads trouvés.
+     * @throws InvalidRevenueRangeException Si la plage de revenus est invalide.
+     * @throws TException                   En cas d'erreur Thrift.
      */
     @Override
-    public List<InternalLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state) throws InvalidRevenueRangeException, TException {
+    public List<InternalLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state)
+            throws InvalidRevenueRangeException, TException {
         try {
             List<ILead> leadsModel = ModelImpl.getInstance().findLeads(lowAnnualRevenue, highAnnualRevenue, state);
             return InternalLeadConverter.toInternalLeadDTOList(leadsModel);
@@ -34,12 +35,13 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * TODO
-     * @param startDate
-     * @param endDate
-     * @return
-     * @throws InvalidDateException
-     * @throws TException
+     * Trouve des leads par date.
+     *
+     * @param startDate Date de début.
+     * @param endDate   Date de fin.
+     * @return Liste des leads trouvés.
+     * @throws InvalidDateException Si la plage de dates est invalide.
+     * @throws TException           En cas d'erreur Thrift.
      */
     @Override
     public List<InternalLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException {
@@ -53,11 +55,12 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * TODO
-     * @param ID
-     * @return
-     * @throws LeadNotFoundException
-     * @throws TException
+     * Récupère un lead par son ID.
+     *
+     * @param ID ID du lead.
+     * @return Le lead trouvé.
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
+     * @throws TException            En cas d'erreur Thrift.
      */
     @Override
     public InternalLeadDto getLeadById(int ID) throws LeadNotFoundException, TException {
@@ -70,10 +73,11 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * TODO
-     * @param ID
-     * @throws LeadNotFoundException
-     * @throws TException
+     * Supprime un lead.
+     *
+     * @param ID ID du lead à supprimer.
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
+     * @throws TException            En cas d'erreur Thrift.
      */
     @Override
     public void deleteLead(int ID) throws LeadNotFoundException, TException {
@@ -86,25 +90,29 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * TODO
-     * @param fullName
-     * @param annualRevenue
-     * @param phone
-     * @param street
-     * @param postalCode
-     * @param city
-     * @param country
-     * @param company
-     * @param state
-     * @return
-     * @throws LeadAlreadyExistsException
-     * @throws InvalidLeadParameterException
-     * @throws TException
+     * Ajoute un lead.
+     *
+     * @param fullName      Nom complet.
+     * @param annualRevenue Revenu annuel.
+     * @param phone         Téléphone.
+     * @param street        Rue.
+     * @param postalCode    Code postal.
+     * @param city          Ville.
+     * @param country       Pays.
+     * @param company       Entreprise.
+     * @param state         État.
+     * @return L'ID du lead ajouté.
+     * @throws LeadAlreadyExistsException    Si le lead existe déjà.
+     * @throws InvalidLeadParameterException Si les paramètres sont invalides.
+     * @throws TException                    En cas d'erreur Thrift.
      */
     @Override
-    public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode, String city, String country, String company, String state) throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
+    public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode,
+            String city, String country, String company, String state)
+            throws LeadAlreadyExistsException, InvalidLeadParameterException, TException {
         try {
-            return ModelImpl.getInstance().addLead(fullName, annualRevenue, phone, street, postalCode, city, country, company, state);
+            return ModelImpl.getInstance().addLead(fullName, annualRevenue, phone, street, postalCode, city, country,
+                    company, state);
         } catch (LeadAlreadyExistsException e) {
             throw new LeadAlreadyExistsException(e.getMessage(), e.getID());
         } catch (InvalidLeadParameterException ee) {
@@ -113,8 +121,9 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * TODO
-     * @return
+     * Récupère tous les leads.
+     *
+     * @return Liste de tous les leads.
      */
     @Override
     public List<InternalLeadDto> getLeads() {
@@ -126,8 +135,9 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * TODO
-     * @return
+     * Compte le nombre de leads.
+     *
+     * @return Le nombre de leads.
      */
     @Override
     public int countLeads() {

@@ -2,6 +2,10 @@ package fr.univangers.client;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * Fabrique permettant d’instancier un client à partir de son nom
+ * de classe (pattern Factory).
+ */
 public class ClientServiceFactory {
 
     private final static String SERVICE_CLASSNAME = "org.example.client.service.rest.VirtualCRMAPI";
@@ -11,7 +15,7 @@ public class ClientServiceFactory {
     }
 
     /**
-     * Constructeur privé pour créer un singleton
+     * Constructeur privé pour créer un singleton.
      */
     @SuppressWarnings("unchecked")
     private synchronized static Class<IClientService> getServiceClass() {
@@ -27,11 +31,15 @@ public class ClientServiceFactory {
 
     }
 
+    /**
+     * Retourne une instance du service
+     */
     public static IClientService getService() {
 
         try {
             return (IClientService) getServiceClass().getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException
+                | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
 

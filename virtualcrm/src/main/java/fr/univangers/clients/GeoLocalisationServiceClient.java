@@ -15,8 +15,17 @@ import fr.univangers.model.VirtualLeadDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
+/**
+ * Client pour le service de géolocalisation.
+ */
 public class GeoLocalisationServiceClient {
+    /**
+     * Recherche les coordonnées géographiques d'un lead.
+     *
+     * @param virtualLead Le lead pour lequel chercher les coordonnées.
+     * @return Les coordonnées géographiques trouvées, ou vide si non trouvé.
+     * @throws IOException En cas d'erreur d'entrée/sortie.
+     */
     public Optional<GeographicPointDto> lookup(VirtualLeadDto virtualLead) throws IOException {
         GeographicPointDto geographicPoint = null;
 
@@ -45,7 +54,7 @@ public class GeoLocalisationServiceClient {
             JSONObject obj = jsonArray.getJSONObject(0);
             String lat = obj.getString("lat");
             String lon = obj.getString("lon");
-            geographicPoint =  new GeographicPointDto(Double.parseDouble(lat), Double.parseDouble(lon));
+            geographicPoint = new GeographicPointDto(Double.parseDouble(lat), Double.parseDouble(lon));
         }
 
         return Optional.ofNullable(geographicPoint);
