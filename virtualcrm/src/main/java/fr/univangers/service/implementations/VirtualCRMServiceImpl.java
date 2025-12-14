@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe principale du VirtualCRM, qui redistribue les requêtes pour met en forme les réponses pour les envoyer au client
+ */
 public class VirtualCRMServiceImpl implements IVirtualCRMService {
 
     private final SalesforceCRMClient salesforceCRMClient;

@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Convertisseur pour les leads internes.
+ * Convertisseur de type pour les leads internes et les leads qui sont envoyés au VirtualCRM
  */
 public class InternalLeadConverter {
 
     /**
-     * Convertit un modèle ILead en DTO InternalLeadDto.
+     * Convertit un modèle ILead en DTO InternalLeadDto
      *
-     * @param modelTo Le modèle ILead.
-     * @return Le DTO InternalLeadDto.
+     * @param modelTo Le modèle ILead
+     * @return Le DTO InternalLeadDto
      */
     public static InternalLeadDto toInternalLeadDTO(ILead modelTo) {
         InternalLeadDto internalLeadDto = new InternalLeadDto();
@@ -37,10 +37,10 @@ public class InternalLeadConverter {
     }
 
     /**
-     * Convertit une liste de modèles ILead en liste de DTO InternalLeadDto.
+     * Convertit une liste de modèles ILead en liste de DTO InternalLeadDto
      *
-     * @param lsILeads Liste de modèles ILead.
-     * @return Liste de DTO InternalLeadDto.
+     * @param lsILeads Liste de modèles ILead
+     * @return Liste de DTO InternalLeadDto
      */
     public static List<InternalLeadDto> toInternalLeadDTOList(List<ILead> lsILeads) {
         List<InternalLeadDto> internalLeadDtoList = new ArrayList<>();
@@ -51,10 +51,10 @@ public class InternalLeadConverter {
     }
 
     /**
-     * Convertit un DTO InternalLeadDto en modèle ILead.
+     * Convertit un DTO InternalLeadDto en modèle ILead
      *
-     * @param internalLeadDto Le DTO InternalLeadDto.
-     * @return Le modèle ILead.
+     * @param internalLeadDto Le DTO InternalLeadDto
+     * @return Le modèle ILead
      */
     public static ILead toILead(InternalLeadDto internalLeadDto) {
         ILead modelTo = new ILead();
@@ -77,10 +77,10 @@ public class InternalLeadConverter {
     }
 
     /**
-     * Convertit une liste de DTO InternalLeadDto en liste de modèles ILead.
+     * Convertit une liste de DTO InternalLeadDto en liste de modèles ILead
      *
-     * @param lsInternalLeadDto Liste de DTO InternalLeadDto.
-     * @return Liste de modèles ILead.
+     * @param lsInternalLeadDto Liste de DTO InternalLeadDto
+     * @return Liste de modèles ILead
      */
     public static List<ILead> toILeadList(List<InternalLeadDto> lsInternalLeadDto) {
         List<ILead> iLeadList = new ArrayList<>();
@@ -91,11 +91,11 @@ public class InternalLeadConverter {
     }
 
     /**
-     * Sépare le nom complet en nom et prénom.
+     * Sépare le nom complet en nom et prénom
      *
-     * @param fullName Nom complet.
-     * @return Tableau contenant le nom et le prénom.
-     * @throws InvalidLeadParameterException Si le nom complet est invalide.
+     * @param fullName Nom complet
+     * @return Tableau contenant le nom et le prénom
+     * @throws InvalidLeadParameterException Si le nom complet est invalide
      */
     public static String[] splitFullName(String fullName) throws InvalidLeadParameterException {
         if (fullName == null) {

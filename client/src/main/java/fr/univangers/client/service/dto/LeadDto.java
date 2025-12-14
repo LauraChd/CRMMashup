@@ -3,7 +3,7 @@ package fr.univangers.client.service.dto;
 import java.time.LocalDate;
 
 /**
- * Classe contenant les informations d'un Lead.
+ * DTO représentant un Lead
  */
 public class LeadDto {
 
@@ -87,19 +87,14 @@ public class LeadDto {
     }
 
     /**
-     * Retourne les coordonnées géographiques du lead.
+     * Retourne les coordonnées géographiques du lead
      *
-     * @return Les coordonnées géographiques.
+     * @return Les coordonnées géographiques
      */
     public GeographicPointDto getGeographicPointDto() {
         return geographicPointDto;
     }
 
-    /**
-     * Retourne une représentation textuelle complète du lead.
-     *
-     * @return Une chaîne de caractères représentant le lead.
-     */
     @Override
     public String toString() {
         return "VirtualLDto{" +

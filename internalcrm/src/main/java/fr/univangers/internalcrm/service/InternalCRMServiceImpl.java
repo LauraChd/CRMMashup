@@ -9,19 +9,19 @@ import org.apache.thrift.TException;
 import java.util.List;
 
 /**
- * Implémentation du service InternalCRM.
+ * Point d'entrée du service InternalCRM
  */
 public class InternalCRMServiceImpl implements InternalCRMService.Iface {
 
     /**
-     * Trouve des leads par revenu.
+     * Trouve des leads par revenu
      *
-     * @param lowAnnualRevenue  Revenu minimum.
-     * @param highAnnualRevenue Revenu maximum.
-     * @param state             État.
-     * @return Liste des leads trouvés.
-     * @throws InvalidRevenueRangeException Si la plage de revenus est invalide.
-     * @throws TException                   En cas d'erreur Thrift.
+     * @param lowAnnualRevenue  Revenu minimum
+     * @param highAnnualRevenue Revenu maximum
+     * @param state             État
+     * @return Liste des leads trouvés
+     * @throws InvalidRevenueRangeException Si la plage de revenus est invalide
+     * @throws TException                   En cas d'erreur Thrift
      */
     @Override
     public List<InternalLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state)
@@ -35,13 +35,13 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * Trouve des leads par date.
+     * Trouve des leads par date
      *
-     * @param startDate Date de début.
-     * @param endDate   Date de fin.
-     * @return Liste des leads trouvés.
-     * @throws InvalidDateException Si la plage de dates est invalide.
-     * @throws TException           En cas d'erreur Thrift.
+     * @param startDate Date de début
+     * @param endDate   Date de fin
+     * @return Liste des leads trouvés
+     * @throws InvalidDateException Si la plage de dates est invalide
+     * @throws TException           En cas d'erreur Thrift
      */
     @Override
     public List<InternalLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException {
@@ -55,12 +55,12 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * Récupère un lead par son ID.
+     * Récupère un lead par son ID
      *
-     * @param ID ID du lead.
-     * @return Le lead trouvé.
-     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
-     * @throws TException            En cas d'erreur Thrift.
+     * @param ID ID du lead
+     * @return Le lead trouvé
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé
+     * @throws TException            En cas d'erreur Thrift
      */
     @Override
     public InternalLeadDto getLeadById(int ID) throws LeadNotFoundException, TException {
@@ -73,11 +73,11 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * Supprime un lead.
+     * Supprime un lead
      *
-     * @param ID ID du lead à supprimer.
-     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
-     * @throws TException            En cas d'erreur Thrift.
+     * @param ID ID du lead à supprimer
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé
+     * @throws TException            En cas d'erreur Thrift
      */
     @Override
     public void deleteLead(int ID) throws LeadNotFoundException, TException {
@@ -90,21 +90,21 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * Ajoute un lead.
+     * Ajoute un lead
      *
-     * @param fullName      Nom complet.
-     * @param annualRevenue Revenu annuel.
-     * @param phone         Téléphone.
-     * @param street        Rue.
-     * @param postalCode    Code postal.
-     * @param city          Ville.
-     * @param country       Pays.
-     * @param company       Entreprise.
-     * @param state         État.
-     * @return L'ID du lead ajouté.
-     * @throws LeadAlreadyExistsException    Si le lead existe déjà.
-     * @throws InvalidLeadParameterException Si les paramètres sont invalides.
-     * @throws TException                    En cas d'erreur Thrift.
+     * @param fullName      Nom complet
+     * @param annualRevenue Revenu annuel
+     * @param phone         Téléphone
+     * @param street        Rue
+     * @param postalCode    Code postal
+     * @param city          Ville
+     * @param country       Pays
+     * @param company       Entreprise
+     * @param state         État
+     * @return L'ID du lead ajouté
+     * @throws LeadAlreadyExistsException    Si le lead existe déjà
+     * @throws InvalidLeadParameterException Si les paramètres sont invalides
+     * @throws TException                    En cas d'erreur Thrift
      */
     @Override
     public int addLead(String fullName, double annualRevenue, String phone, String street, String postalCode,
@@ -121,9 +121,9 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * Récupère tous les leads.
+     * Récupère tous les leads
      *
-     * @return Liste de tous les leads.
+     * @return Liste de tous les leads
      */
     @Override
     public List<InternalLeadDto> getLeads() {
@@ -135,9 +135,9 @@ public class InternalCRMServiceImpl implements InternalCRMService.Iface {
     }
 
     /**
-     * Compte le nombre de leads.
+     * Compte le nombre de leads
      *
-     * @return Le nombre de leads.
+     * @return Le nombre de leads
      */
     @Override
     public int countLeads() {

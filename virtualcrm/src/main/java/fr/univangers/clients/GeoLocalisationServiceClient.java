@@ -16,15 +16,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Client pour le service de géolocalisation.
+ * Client pour le service de géolocalisation
  */
 public class GeoLocalisationServiceClient {
     /**
-     * Recherche les coordonnées géographiques d'un lead.
+     * Recherche les coordonnées géographiques d'un lead
      *
-     * @param virtualLead Le lead pour lequel chercher les coordonnées.
-     * @return Les coordonnées géographiques trouvées, ou vide si non trouvé.
-     * @throws IOException En cas d'erreur d'entrée/sortie.
+     * @param virtualLead Le lead pour lequel chercher les coordonnées
+     * @return Les coordonnées géographiques trouvées, ou vide si non trouvé
+     * @throws IOException En cas d'erreur d'entrée/sortie
      */
     public Optional<GeographicPointDto> lookup(VirtualLeadDto virtualLead) throws IOException {
         GeographicPointDto geographicPoint = null;

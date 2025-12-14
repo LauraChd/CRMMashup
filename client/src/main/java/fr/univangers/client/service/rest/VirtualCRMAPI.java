@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-
+/**
+ * API permettant de communiquer avec le service VirtualCRM via REST
+ */
 public class VirtualCRMAPI implements IVirtualCRMAPI {
 
     Config config;
@@ -59,7 +61,6 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .execute()
                     .returnResponse();
 
-            // (optionnel) tu peux checker le status ici avec validateStatusCode(...)
             // validateStatusCode(HttpStatus.SC_CREATED, response);
 
             // On lit juste la réponse brute (l'id renvoyé par le contrôleur)
@@ -215,12 +216,12 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
             int statusCode = response.getCode();
 
-            /* Success? */
+            /* Success */
             if (statusCode == successCode) {
                 return;
             }
 
-            /* Handler error. */
+            /* Error */
             switch (statusCode) {
                 case HttpStatus.SC_NOT_FOUND -> throw JsonToClientExceptionConversor.fromNotFoundErrorCode(
                         response.getEntity().getContent());

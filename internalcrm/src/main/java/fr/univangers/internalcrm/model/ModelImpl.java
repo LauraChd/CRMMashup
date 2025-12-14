@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implémentation du modèle.
+ * Implémentation concrètes des opérations
  */
 public class ModelImpl {
 
@@ -177,12 +177,12 @@ public class ModelImpl {
     }
 
     /**
-     * Récupère un lead par son ID.
+     * Récupère un lead par son ID
      *
-     * @param id ID du lead.
-     * @return Le lead trouvé.
-     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
-     * @throws TException            En cas d'erreur Thrift.
+     * @param id ID du lead
+     * @return Le lead trouvé
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé
+     * @throws TException            En cas d'erreur Thrift
      */
     public ILead getLeadByID(int id)
             throws LeadNotFoundException, TException {
@@ -195,9 +195,9 @@ public class ModelImpl {
     }
 
     /**
-     * Compte le nombre de leads.
+     * Compte le nombre de leads
      *
-     * @return Le nombre de leads.
+     * @return Le nombre de leads
      */
     public int countLeads() {
         return iLeads.size();

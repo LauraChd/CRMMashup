@@ -1,17 +1,17 @@
 package fr.univangers.model;
 
 /**
- * DTO représentant un point géographique (latitude, longitude).
+ * DTO représentant un point géographique (latitude, longitude)
  */
 public class GeographicPointDto {
     private Double latitude;
     private Double longitude;
 
     /**
-     * Constructeur.
+     * Constructeur
      *
-     * @param latitude  Latitude.
-     * @param longitude Longitude.
+     * @param latitude  Latitude
+     * @param longitude Longitude
      */
     public GeographicPointDto(Double latitude, Double longitude) {
         this.latitude = latitude;

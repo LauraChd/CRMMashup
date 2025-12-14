@@ -3,7 +3,7 @@ package fr.univangers.model;
 import java.time.LocalDate;
 
 /**
- * DTO représentant un lead virtuel (unifié).
+ * DTO représentant un lead virtuel
  */
 public class VirtualLeadDto {
 
@@ -41,7 +41,7 @@ public class VirtualLeadDto {
     }
 
     /**
-     * Constructeur par défaut.
+     * Constructeur par défaut
      */
     public VirtualLeadDto() {
     }

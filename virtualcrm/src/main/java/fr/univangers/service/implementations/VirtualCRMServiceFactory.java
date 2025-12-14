@@ -7,7 +7,7 @@ import fr.univangers.clients.SalesforceCRMClient;
 import java.io.IOException;
 
 /**
- * Factory pour créer et accéder à l'instance unique de VirtualCRMService.
+ * Factory pour créer et accéder à l'instance unique de VirtualCRMService
  */
 public class VirtualCRMServiceFactory {
     private static VirtualCRMServiceImpl virtualCRMService;

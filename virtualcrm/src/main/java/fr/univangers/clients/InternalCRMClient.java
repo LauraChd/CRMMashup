@@ -14,21 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Client pour le service InternalCRM via Thrift.
+ * Client pour le service InternalCRM via Thrift
  */
 public class InternalCRMClient implements ICRMClient<Integer> {
 
     public static final String INTERNALCRM_URL = "http://localhost:9090/";
 
     /**
-     * Trouve des leads par revenu.
+     * Trouve des leads par revenu
      *
-     * @param lowAnnualRevenue  Revenu minimum.
-     * @param highAnnualRevenue Revenu maximum.
-     * @param state             État.
-     * @return Liste des leads trouvés.
-     * @throws InvalidRevenueRangeException Si la plage de revenus est invalide.
-     * @throws TException                   En cas d'erreur Thrift.
+     * @param lowAnnualRevenue  Revenu minimum
+     * @param highAnnualRevenue Revenu maximum
+     * @param state             État
+     * @return Liste des leads trouvés
+     * @throws InvalidRevenueRangeException Si la plage de revenus est invalide
+     * @throws TException                   En cas d'erreur Thrift
      */
     public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state)
             throws InvalidRevenueRangeException, TException {
@@ -55,13 +55,13 @@ public class InternalCRMClient implements ICRMClient<Integer> {
     }
 
     /**
-     * Trouve des leads par date.
+     * Trouve des leads par date
      *
-     * @param startDate Date de début.
-     * @param endDate   Date de fin.
-     * @return Liste des leads trouvés.
-     * @throws InvalidDateException Si la plage de dates est invalide.
-     * @throws TException           En cas d'erreur Thrift.
+     * @param startDate Date de début
+     * @param endDate   Date de fin
+     * @return Liste des leads trouvés
+     * @throws InvalidDateException Si la plage de dates est invalide
+     * @throws TException           En cas d'erreur Thrift
      */
     public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate) throws InvalidDateException, TException {
 
@@ -87,12 +87,12 @@ public class InternalCRMClient implements ICRMClient<Integer> {
     }
 
     /**
-     * Récupère un lead par son ID.
+     * Récupère un lead par son ID
      *
-     * @param id ID du lead.
-     * @return Le lead trouvé.
-     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
-     * @throws TException            En cas d'erreur Thrift.
+     * @param id ID du lead
+     * @return Le lead trouvé
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé
+     * @throws TException            En cas d'erreur Thrift
      */
     @Override
     public VirtualLeadDto getLeadById(Integer id) throws LeadNotFoundException, TException {
@@ -120,11 +120,11 @@ public class InternalCRMClient implements ICRMClient<Integer> {
     }
 
     /**
-     * Supprime un lead.
+     * Supprime un lead
      *
-     * @param id ID du lead à supprimer.
-     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
-     * @throws TException            En cas d'erreur Thrift.
+     * @param id ID du lead à supprimer
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé
+     * @throws TException            En cas d'erreur Thrift
      */
     public void deleteLead(Integer id) throws LeadNotFoundException, TException {
 
@@ -151,21 +151,21 @@ public class InternalCRMClient implements ICRMClient<Integer> {
     }
 
     /**
-     * Ajoute un lead.
+     * Ajoute un lead
      *
-     * @param fullName      Nom complet.
-     * @param annualRevenue Revenu annuel.
-     * @param phone         Téléphone.
-     * @param street        Rue.
-     * @param postalCode    Code postal.
-     * @param city          Ville.
-     * @param country       Pays.
-     * @param company       Entreprise.
-     * @param state         État.
-     * @return L'ID du lead ajouté.
-     * @throws LeadAlreadyExistsException    Si le lead existe déjà.
-     * @throws InvalidLeadParameterException Si les paramètres sont invalides.
-     * @throws TException                    En cas d'erreur Thrift.
+     * @param fullName      Nom complet
+     * @param annualRevenue Revenu annuel
+     * @param phone         Téléphone
+     * @param street        Rue
+     * @param postalCode    Code postal
+     * @param city          Ville
+     * @param country       Pays
+     * @param company       Entreprise
+     * @param state         État
+     * @return L'ID du lead ajouté
+     * @throws LeadAlreadyExistsException    Si le lead existe déjà
+     * @throws InvalidLeadParameterException Si les paramètres sont invalides
+     * @throws TException                    En cas d'erreur Thrift
      */
     public Integer addLead(String fullName, double annualRevenue, String phone, String street, String postalCode,
             String city, String country, String company, String state)
@@ -193,10 +193,10 @@ public class InternalCRMClient implements ICRMClient<Integer> {
     }
 
     /**
-     * Récupère tous les leads.
+     * Récupère tous les leads
      *
-     * @return Liste de tous les leads.
-     * @throws TException En cas d'erreur Thrift.
+     * @return Liste de tous les leads
+     * @throws TException En cas d'erreur Thrift
      */
     public List<VirtualLeadDto> getLeads() throws TException {
 
@@ -222,10 +222,10 @@ public class InternalCRMClient implements ICRMClient<Integer> {
     }
 
     /**
-     * Compte le nombre de leads.
+     * Compte le nombre de leads
      *
-     * @return Le nombre de leads.
-     * @throws TException En cas d'erreur Thrift.
+     * @return Le nombre de leads
+     * @throws TException En cas d'erreur Thrift
      */
     public int countLeads() throws TException {
 

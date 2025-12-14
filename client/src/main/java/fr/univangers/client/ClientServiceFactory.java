@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * Fabrique permettant d’instancier un client à partir de son nom
- * de classe (pattern Factory).
+ * de classe (pattern Factory)
  */
 public class ClientServiceFactory {
 
@@ -15,7 +15,7 @@ public class ClientServiceFactory {
     }
 
     /**
-     * Constructeur privé pour créer un singleton.
+     * Constructeur privé pour créer un singleton
      */
     @SuppressWarnings("unchecked")
     private synchronized static Class<IClientService> getServiceClass() {

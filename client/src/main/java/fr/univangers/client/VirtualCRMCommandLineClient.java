@@ -1,3 +1,4 @@
+/*
 package fr.univangers.client;
 
 import java.io.BufferedReader;
@@ -9,20 +10,24 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+*/
 /**
  * Client console autonome communiquant directement avec l’API REST via
  * HttpURLConnection.
- */
+ *//*
+
 public class VirtualCRMCommandLineClient {
 
     private static final String BASE_URL = "http://localhost:8080";
 
-    /**
+    */
+/**
      * Méthode principale du client console.
      *
      * @param args Arguments de la ligne de commande.
      * @throws Exception En cas d'erreur.
-     */
+     *//*
+
     public static void main(String[] args) throws Exception {
 
         Scanner sc = new Scanner(System.in);
@@ -111,13 +116,15 @@ public class VirtualCRMCommandLineClient {
         sc.close();
     }
 
-    /**
+    */
+/**
      * Envoie une requête HTTP GET.
      *
      * @param urlStr URL de la requête.
      * @return La réponse du serveur.
      * @throws IOException En cas d'erreur d'entrée/sortie.
-     */
+     *//*
+
     private static String httpGet(String urlStr) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -126,13 +133,15 @@ public class VirtualCRMCommandLineClient {
         return readResponse(con);
     }
 
-    /**
+    */
+/**
      * Envoie une requête HTTP DELETE.
      *
      * @param urlStr URL de la requête.
      * @return La réponse du serveur.
      * @throws IOException En cas d'erreur d'entrée/sortie.
-     */
+     *//*
+
     private static String httpDelete(String urlStr) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -141,14 +150,16 @@ public class VirtualCRMCommandLineClient {
         return readResponse(con);
     }
 
-    /**
+    */
+/**
      * Envoie une requête HTTP POST.
      *
      * @param urlStr URL de la requête.
      * @param params Paramètres de la requête.
      * @return La réponse du serveur.
      * @throws IOException En cas d'erreur d'entrée/sortie.
-     */
+     *//*
+
     private static String httpPost(String urlStr, String params) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -164,13 +175,15 @@ public class VirtualCRMCommandLineClient {
         return readResponse(con);
     }
 
-    /**
+    */
+/**
      * Lit la réponse HTTP.
      *
      * @param con Connexion HTTP.
      * @return Le contenu de la réponse.
      * @throws IOException En cas d'erreur d'entrée/sortie.
-     */
+     *//*
+
     private static String readResponse(HttpURLConnection con) throws IOException {
         int status = con.getResponseCode();
         BufferedReader in;
@@ -239,9 +252,11 @@ public class VirtualCRMCommandLineClient {
         System.out.println(httpGet(BASE_URL + "/countLeads"));
     }
 
-    /**
+    */
+/**
      * Affiche l'aide.
-     */
+     *//*
+
     private static void printUsage() {
         System.out.println("Commandes disponibles :");
         System.out.println("  findLeads low high state");
@@ -253,3 +268,4 @@ public class VirtualCRMCommandLineClient {
         System.out.println("  countLeads");
     }
 }
+*/

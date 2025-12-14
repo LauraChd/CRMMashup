@@ -1,7 +1,7 @@
 package fr.univangers.internalcrm.model;
 
 /**
- * TODO
+ * Type interne des leads
  */
 public class ILead {
     int ID;

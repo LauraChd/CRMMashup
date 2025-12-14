@@ -11,17 +11,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Configuration du serveur Thrift.
+ * Configuration du serveur Thrift
  */
 @Configuration
 public class ThriftServerConfig {
     private static final int PORT = 8090;
 
     /**
-     * Crée le serveur Thrift.
+     * Crée le serveur Thrift
      *
-     * @param processor Le processeur Thrift.
-     * @return Le serveur Thrift.
+     * @param processor Le processeur Thrift
+     * @return Le serveur Thrift
      */
     @Bean
     public TServer thriftServer(InternalCRMService.Processor<InternalCRMServiceImpl> processor) {
@@ -41,10 +41,10 @@ public class ThriftServerConfig {
     }
 
     /**
-     * Crée le processeur Thrift.
+     * Crée le processeur Thrift
      *
-     * @param internalCRMImpl L'implémentation du service.
-     * @return Le processeur Thrift.
+     * @param internalCRMImpl L'implémentation du service
+     * @return Le processeur Thrift
      */
     @Bean
     public InternalCRMService.Processor<InternalCRMServiceImpl> processor(InternalCRMServiceImpl internalCRMImpl) {
@@ -52,9 +52,9 @@ public class ThriftServerConfig {
     }
 
     /**
-     * Crée l'implémentation du service InternalCRM.
+     * Crée l'implémentation du service InternalCRM
      *
-     * @return L'implémentation du service.
+     * @return L'implémentation du service
      */
     @Bean
     public InternalCRMServiceImpl internalCRMImpl() {

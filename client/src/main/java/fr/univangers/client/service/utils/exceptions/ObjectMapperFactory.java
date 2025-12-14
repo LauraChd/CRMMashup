@@ -3,7 +3,7 @@ package fr.univangers.client.service.utils.exceptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Factory pour obtenir une instance unique de ObjectMapper.
+ * Factory pour obtenir une instance unique de ObjectMapper
  */
 public class ObjectMapperFactory {
     private static ObjectMapper mapper = new ObjectMapper();
@@ -12,9 +12,9 @@ public class ObjectMapperFactory {
     }
 
     /**
-     * Retourne l'instance unique de ObjectMapper.
+     * Retourne l'instance unique de ObjectMapper
      *
-     * @return L'instance de ObjectMapper.
+     * @return L'instance de ObjectMapper
      */
     public static ObjectMapper instance() {
         return mapper;

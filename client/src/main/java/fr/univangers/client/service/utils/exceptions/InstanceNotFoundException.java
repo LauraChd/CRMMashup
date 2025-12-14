@@ -1,7 +1,7 @@
 package fr.univangers.client.service.utils.exceptions;
 
 /**
- * Exception levée lorsqu'une instance n'est pas trouvée.
+ * Exception levée lorsqu'une instance n'est pas trouvée
  */
 @SuppressWarnings("serial")
 public class InstanceNotFoundException extends Exception {
@@ -10,10 +10,10 @@ public class InstanceNotFoundException extends Exception {
     private String instanceType;
 
     /**
-     * Constructeur.
+     * Constructeur
      *
-     * @param instanceId   ID de l'instance.
-     * @param instanceType Type de l'instance.
+     * @param instanceId   ID de l'instance
+     * @param instanceType Type de l'instance
      */
     public InstanceNotFoundException(Object instanceId, String instanceType) {
 
@@ -25,18 +25,18 @@ public class InstanceNotFoundException extends Exception {
     }
 
     /**
-     * Retourne l'ID de l'instance.
+     * Retourne l'ID de l'instance
      *
-     * @return L'ID de l'instance.
+     * @return L'ID de l'instance
      */
     public Object getInstanceId() {
         return instanceId;
     }
 
     /**
-     * Retourne le type de l'instance.
+     * Retourne le type de l'instance
      *
-     * @return Le type de l'instance.
+     * @return Le type de l'instance
      */
     public String getInstanceType() {
         return instanceType;

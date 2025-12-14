@@ -13,17 +13,15 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 
 /**
- * TODO
+ * Contient des méthodes de conversion des types de leads
  */
 public class VirtualLeadConverter {
-
-    // TODO : régler problèmes de types et implémentations
 
     /**
      * Permet de convertir un VirtualLeadDto en un InternalLeadDto
      *
-     * @param modelTo Le VirtualLeadDto à convertir.
-     * @return Le InternalLeadDto converti.
+     * @param modelTo Le VirtualLeadDto à convertir
+     * @return Le InternalLeadDto converti
      */
     public static InternalLeadDto toInternalLeadDto(VirtualLeadDto modelTo) {
         InternalLeadDto internalLeadDto = new InternalLeadDto();
@@ -50,8 +48,8 @@ public class VirtualLeadConverter {
      * Permet de convertir une liste de VirtualLeadDto en une liste de
      * InternalLeadDto
      *
-     * @param lsILeads La liste de VirtualLeadDto à convertir.
-     * @return La liste de InternalLeadDto convertie.
+     * @param lsILeads La liste de VirtualLeadDto à convertir
+     * @return La liste de InternalLeadDto convertie
      */
     public static List<InternalLeadDto> toInternalLeadDTOList(List<VirtualLeadDto> lsILeads) {
         List<InternalLeadDto> internalLeadDtoList = new ArrayList<>();
@@ -64,8 +62,8 @@ public class VirtualLeadConverter {
     /**
      * Permet de convertir un InternalLeadDto en un VirtualLeadDto
      *
-     * @param internalLeadDto Le InternalLeadDto à convertir.
-     * @return Le VirtualLeadDto converti.
+     * @param internalLeadDto Le InternalLeadDto à convertir
+     * @return Le VirtualLeadDto converti
      */
     public static VirtualLeadDto toVirtualLeadDto(InternalLeadDto internalLeadDto) {
         VirtualLeadDto modelTo = new VirtualLeadDto();
@@ -95,8 +93,8 @@ public class VirtualLeadConverter {
      * Permet de convertir une liste de InternalLeadDto en une liste de
      * VirtualLeadDto
      *
-     * @param lsInternalLeadDto La liste de InternalLeadDto à convertir.
-     * @return La liste de VirtualLeadDto convertie.
+     * @param lsInternalLeadDto La liste de InternalLeadDto à convertir
+     * @return La liste de VirtualLeadDto convertie
      */
     public static List<VirtualLeadDto> toVirtualLeadDtoList(List<InternalLeadDto> lsInternalLeadDto) {
         List<VirtualLeadDto> iLeadList = new ArrayList<>();
@@ -109,11 +107,11 @@ public class VirtualLeadConverter {
     /**
      * Permet de fusionner deux listes de VirtualLeadDto. Cette méthode est utilisée
      * pour fusionner
-     * la liste des leads de l'Internal CRM et la liste des leads du Virtual CRM.
+     * la liste des leads de l'Internal CRM et la liste des leads du Virtual CRM
      *
-     * @param internalLeadsLs   Liste des leads internes.
-     * @param SalesforceLeadsLs Liste des leads Salesforce.
-     * @return Liste fusionnée.
+     * @param internalLeadsLs   Liste des leads internes
+     * @param SalesforceLeadsLs Liste des leads Salesforce
+     * @return Liste fusionnée
      */
     public static List<VirtualLeadDto> mergeInternalSalesforceLeads(List<VirtualLeadDto> internalLeadsLs,
             List<VirtualLeadDto> SalesforceLeadsLs) {
@@ -127,8 +125,8 @@ public class VirtualLeadConverter {
      * Permet de récupérer le nom et le prénom à partir d'un nom complet (format
      * "Pierre,Balzac")
      *
-     * @param fullName Le nom complet.
-     * @return Tableau contenant le prénom et le nom.
+     * @param fullName Le nom complet
+     * @return Tableau contenant le prénom et le nom
      */
     public static String[] splitFullName(String fullName) {
         if (fullName == null || !fullName.contains(",")) {
@@ -145,10 +143,10 @@ public class VirtualLeadConverter {
     }
 
     /**
-     * Parse une date string en timestamp.
+     * Parse une date string en timestamp
      *
-     * @param dateString La date en string.
-     * @return Le timestamp.
+     * @param dateString La date en string
+     * @return Le timestamp
      */
     long parseDate(String dateString) {
         return LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/yyyy"))

@@ -1,7 +1,7 @@
 package fr.univangers.client.service.dto;
 
 /**
- * DTO représentant un point géographique à l’aide de coordonnées GPS.
+ * DTO représentant un point géographique à l’aide de coordonnées GPS
  */
 public class GeographicPointDto {
     private Double latitude;
@@ -28,5 +28,4 @@ public class GeographicPointDto {
         this.longitude = longitude;
     }
 
-    // TODO to string
 }

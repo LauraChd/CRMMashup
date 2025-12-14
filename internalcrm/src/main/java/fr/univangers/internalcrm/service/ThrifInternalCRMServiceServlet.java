@@ -6,12 +6,12 @@ import org.apache.thrift.protocol.TProtocolFactory;
 import fr.univangers.internalcrm.thrift.InternalCRMService;
 
 /**
- * Servlet exposant le service InternalCRM via Thrift.
+ * Servlet exposant le service InternalCRM via Thrift
  */
 public class ThrifInternalCRMServiceServlet extends ThriftHttpServletTemplate {
 
     /**
-     * Constructeur.
+     * Constructeur
      */
     public ThrifInternalCRMServiceServlet() {
         super(createProcessor(), createProtocolFactory());

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Classe responsable de la fusion des leads provenant de différentes sources.
+ * Classe qui permet de merge les leads kde salesforce et de l'internalcrm
  */
 public class LeadMerger {
 
@@ -17,9 +17,9 @@ public class LeadMerger {
     private final InternalCRMClient internalClient;
 
     /**
-     * Constructeur. Initialise les clients CRM.
+     * Constructeur. Initialise les clients CRM
      *
-     * @throws IOException En cas d'erreur d'initialisation.
+     * @throws IOException En cas d'erreur d'initialisation
      */
     public LeadMerger() throws IOException {
         this.salesforceClient = new SalesforceCRMClient();
@@ -27,10 +27,10 @@ public class LeadMerger {
     }
 
     /**
-     * Fusionne les leads de Salesforce vers InternalCRM en évitant les doublons.
+     * Fusionne les leads de Salesforce vers InternalCRM en évitant les doublons
      *
-     * @throws TException  En cas d'erreur Thrift.
-     * @throws IOException En cas d'erreur d'entrée/sortie.
+     * @throws TException  En cas d'erreur Thrift
+     * @throws IOException En cas d'erreur d'entrée/sortie
      */
     public void merge() throws TException, IOException {
 
@@ -66,11 +66,11 @@ public class LeadMerger {
     }
 
     /**
-     * Vérifie si un lead est un doublon.
+     * Vérifie si un lead est un doublon
      *
-     * @param a    Le lead à vérifier.
-     * @param list La liste des leads existants.
-     * @return Vrai si c'est un doublon, faux sinon.
+     * @param a    Le lead à vérifier
+     * @param list La liste des leads existants
+     * @return Vrai si c'est un doublon, faux sinon
      */
     private boolean isDuplicate(VirtualLeadDto a, List<VirtualLeadDto> list) {
         return list.stream().anyMatch(l -> safeEq(l.getFirstName(), a.getFirstName()) &&
@@ -84,11 +84,11 @@ public class LeadMerger {
     }
 
     /**
-     * Compare deux chaînes de caractères de manière sûre (null-safe).
+     * Compare deux chaînes de caractères de manière sûre (null-safe)
      *
-     * @param a Première chaîne.
-     * @param b Deuxième chaîne.
-     * @return Vrai si les chaînes sont égales, faux sinon.
+     * @param a Première chaîne
+     * @param b Deuxième chaîne
+     * @return Vrai si les chaînes sont égales, faux sinon
      */
     private boolean safeEq(String a, String b) {
         if (a == null)

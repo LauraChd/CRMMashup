@@ -4,7 +4,7 @@ import fr.univangers.client.service.exceptions.LeadNotFoundException;
 import fr.univangers.client.service.rest.VirtualCRMAPI;
 
 /**
- * TODO
+ * Classe qui lit les requêtes du client en ligne de commandes et les envoie via l'API au VirtualCRM
  */
 public class Main {
 

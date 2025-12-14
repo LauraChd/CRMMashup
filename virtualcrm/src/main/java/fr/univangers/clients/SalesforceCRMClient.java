@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Client pour le service Salesforce CRM.
+ * Client pour le service Salesforce CRM
  */
 public class SalesforceCRMClient implements ICRMClient<String> {
 
@@ -33,9 +33,9 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     private String accessToken;
 
     /**
-     * Constructeur. Charge la configuration.
+     * Constructeur. Charge la configuration
      *
-     * @throws IOException En cas d'erreur de lecture de la configuration.
+     * @throws IOException En cas d'erreur de lecture de la configuration
      */
     public SalesforceCRMClient() throws IOException {
         Config config = new Config("config.properties");
@@ -78,9 +78,9 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Vérifie si l'authentification est effectuée, sinon s'authentifie.
+     * Vérifie si l'authentification est effectuée, sinon s'authentifie
      *
-     * @throws IOException En cas d'erreur d'authentification.
+     * @throws IOException En cas d'erreur d'authentification
      */
     private void ensureAuthenticated() throws IOException {
         if (accessToken == null) {
@@ -89,10 +89,10 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Parse les leads JSON en objets VirtualLeadDto.
+     * Parse les leads JSON en objets VirtualLeadDto
      *
-     * @param leadsJson Tableau JSON des leads.
-     * @return Liste des leads.
+     * @param leadsJson Tableau JSON des leads
+     * @return Liste des leads
      */
     private List<VirtualLeadDto> parseLeads(JSONArray leadsJson) {
         List<VirtualLeadDto> leads = new ArrayList<>();
@@ -126,11 +126,11 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Exécute une requête SOQL.
+     * Exécute une requête SOQL
      *
-     * @param soql La requête SOQL.
-     * @return Liste des leads trouvés.
-     * @throws IOException En cas d'erreur d'exécution.
+     * @param soql La requête SOQL
+     * @return Liste des leads trouvés
+     * @throws IOException En cas d'erreur d'exécution
      */
     private List<VirtualLeadDto> executeQuery(String soql) throws IOException {
         ensureAuthenticated();
@@ -157,14 +157,14 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Trouve des leads par revenu.
+     * Trouve des leads par revenu
      *
-     * @param lowAnnualRevenue  Revenu minimum.
-     * @param highAnnualRevenue Revenu maximum.
-     * @param state             État.
-     * @return Liste des leads trouvés.
-     * @throws InvalidRevenueRangeException Si la plage de revenus est invalide.
-     * @throws TException                   En cas d'erreur Thrift.
+     * @param lowAnnualRevenue  Revenu minimum
+     * @param highAnnualRevenue Revenu maximum
+     * @param state             État
+     * @return Liste des leads trouvés
+     * @throws InvalidRevenueRangeException Si la plage de revenus est invalide
+     * @throws TException                   En cas d'erreur Thrift
      */
     @Override
     public List<VirtualLeadDto> findLeads(double lowAnnualRevenue, double highAnnualRevenue, String state)
@@ -184,13 +184,13 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Trouve des leads par date.
+     * Trouve des leads par date
      *
-     * @param startDate Date de début.
-     * @param endDate   Date de fin.
-     * @return Liste des leads trouvés.
-     * @throws InvalidDateException Si la plage de dates est invalide.
-     * @throws TException           En cas d'erreur Thrift.
+     * @param startDate Date de début
+     * @param endDate   Date de fin
+     * @return Liste des leads trouvés
+     * @throws InvalidDateException Si la plage de dates est invalide
+     * @throws TException           En cas d'erreur Thrift
      */
     @Override
     public List<VirtualLeadDto> findLeadsByDate(long startDate, long endDate)
@@ -225,12 +225,12 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Récupère un lead par son ID.
+     * Récupère un lead par son ID
      *
-     * @param id ID du lead.
-     * @return Le lead trouvé.
-     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
-     * @throws TException            En cas d'erreur Thrift.
+     * @param id ID du lead
+     * @return Le lead trouvé
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé
+     * @throws TException            En cas d'erreur Thrift
      */
     public VirtualLeadDto getLeadById(String id) throws LeadNotFoundException, TException {
         try {
@@ -247,10 +247,10 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Récupère tous les leads.
+     * Récupère tous les leads
      *
-     * @return Liste de tous les leads.
-     * @throws TException En cas d'erreur Thrift.
+     * @return Liste de tous les leads
+     * @throws TException En cas d'erreur Thrift
      */
     @Override
     public List<VirtualLeadDto> getLeads() throws TException {
@@ -263,10 +263,10 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Compte le nombre de leads.
+     * Compte le nombre de leads
      *
-     * @return Le nombre de leads.
-     * @throws TException En cas d'erreur Thrift.
+     * @return Le nombre de leads
+     * @throws TException En cas d'erreur Thrift
      */
     @Override
     public int countLeads() throws TException {
@@ -290,21 +290,21 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Ajoute un lead.
+     * Ajoute un lead
      *
-     * @param fullName      Nom complet.
-     * @param annualRevenue Revenu annuel.
-     * @param phone         Téléphone.
-     * @param street        Rue.
-     * @param postalCode    Code postal.
-     * @param city          Ville.
-     * @param country       Pays.
-     * @param company       Entreprise.
-     * @param state         État.
-     * @return L'ID du lead ajouté.
-     * @throws LeadAlreadyExistsException    Si le lead existe déjà.
-     * @throws InvalidLeadParameterException Si les paramètres sont invalides.
-     * @throws TException                    En cas d'erreur Thrift.
+     * @param fullName      Nom complet
+     * @param annualRevenue Revenu annuel
+     * @param phone         Téléphone
+     * @param street        Rue
+     * @param postalCode    Code postal
+     * @param city          Ville
+     * @param country       Pays
+     * @param company       Entreprise
+     * @param state         État
+     * @return L'ID du lead ajouté
+     * @throws LeadAlreadyExistsException    Si le lead existe déjà
+     * @throws InvalidLeadParameterException Si les paramètres sont invalides
+     * @throws TException                    En cas d'erreur Thrift
      */
     public String addLead(String fullName, double annualRevenue, String phone, String street,
             String postalCode, String city, String country, String company, String state)
@@ -363,11 +363,11 @@ public class SalesforceCRMClient implements ICRMClient<String> {
     }
 
     /**
-     * Supprime un lead.
+     * Supprime un lead
      *
-     * @param id ID du lead à supprimer.
-     * @throws LeadNotFoundException Si le lead n'est pas trouvé.
-     * @throws TException            En cas d'erreur Thrift.
+     * @param id ID du lead à supprimer
+     * @throws LeadNotFoundException Si le lead n'est pas trouvé
+     * @throws TException            En cas d'erreur Thrift
      */
     public void deleteLead(String id) throws LeadNotFoundException, TException {
         try {
