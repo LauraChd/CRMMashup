@@ -17,6 +17,8 @@ public class JsonToLeadConversor {
         String jsonText = convertStreamToString(content);
         JSONObject obj = new JSONObject(jsonText);
 
+        String date = getCreationDateFromJSON(obj);
+
         return String.format(
                 "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s, %s, date=%s]",
                 obj.optString("id"),
@@ -30,7 +32,27 @@ public class JsonToLeadConversor {
                 obj.optString("city"),
                 obj.optString("state"),
                 obj.optString("country"),
-                obj.optString("date"));
+                date);
+    }
+
+    private static String getCreationDateFromJSON(JSONObject obj) {
+        String rawDate = obj.optString("creationDate");
+        String date;
+        try {
+            long epoch = Long.parseLong(rawDate);
+            date = Instant.ofEpochMilli(epoch)
+                    .atZone(ZoneId.systemDefault())
+                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        } catch (NumberFormatException e) {
+            if (rawDate.isEmpty()) {
+                date = Instant.ofEpochMilli(0)
+                        .atZone(ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            } else {
+                date = rawDate;
+            }
+        }
+        return date;
     }
 
     // Convertit une liste de Leads en String lisible
@@ -42,22 +64,7 @@ public class JsonToLeadConversor {
         for (int i = 0; i < array.length(); i++) {
             JSONObject obj = array.getJSONObject(i);
 
-            String rawDate = obj.optString("creationDate");
-            String date;
-            try {
-                long epoch = Long.parseLong(rawDate);
-                date = Instant.ofEpochMilli(epoch)
-                        .atZone(ZoneId.systemDefault())
-                        .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            } catch (NumberFormatException e) {
-                if (rawDate.isEmpty()) {
-                    date = Instant.ofEpochMilli(0)
-                            .atZone(ZoneId.systemDefault())
-                            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                } else {
-                    date = rawDate;
-                }
-            }
+            String date = getCreationDateFromJSON(obj);
 
             sb.append(String.format(
                     "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s]%n",
