@@ -16,19 +16,20 @@ public class Main {
         try {
             if (args.length == 0 || args[0].equals("help")) {
                 res = "Usage:\n" +
-                        "    [add]    addLead <fullName (formated like \"first, last\")> <annualRevenue> <street> <postalCode> <city> <country> <company> <state>\n" +
+                        "    [add]    addLead <fullName (formated like \"first, last\")> <annualRevenue> <phone> <street> <postalCode> <city> <country> <company> <state>\n" +
                         "    [remove] deleteLead <leadId>\n" +
                         "    [find by revenue]   findLeads <lowAnnualRevenue> <highAnnualRevenue> <state>\n" +
-                        "    [find by date]   findLeadsByDate <startDate> <endDate> \n" +
+                        "    [find by date]   findLeadsByDate <startDate> <endDate> (dates are formatted like \"YYYY-MM-DD\") \n" +
                         "    [get one]    getLeadById <leadId>\n" +
                         "    [get all]    getLeads\n" +
                         "    [count]    countLeads\n" +
-                        "    [merge leads] merge";
+                        "    [merge leads] merge\n" +
+                        "/!\\ Please make sure to put fields with many words between \" \" /!\\";
 
                 System.out.println(res);
             }
             // ADD
-            if (args[0].equals("addLead")) {
+            else if (args[0].equals("addLead")) {
                 System.out.println("Adding lead...");
                 System.out.println("Lead added, here is his id :");
                 res = virtualCRMAPIService.addLead(args[1], Double.parseDouble(args[2]), args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
