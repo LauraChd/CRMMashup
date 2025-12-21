@@ -1,4 +1,4 @@
-package fr.univangers.client.service.utils.exceptions;
+package fr.univangers.client.service.exceptions;
 
 /**
  * Exception levée lorsqu'une instance n'est pas trouvée

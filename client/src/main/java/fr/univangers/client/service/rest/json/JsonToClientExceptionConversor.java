@@ -3,10 +3,10 @@ package fr.univangers.client.service.rest.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
-import fr.univangers.client.service.utils.exceptions.InputValidationException;
-import fr.univangers.client.service.utils.exceptions.InstanceNotFoundException;
-import fr.univangers.client.service.utils.exceptions.ObjectMapperFactory;
-import fr.univangers.client.service.utils.exceptions.ParsingException;
+import fr.univangers.client.service.exceptions.InputValidationException;
+import fr.univangers.client.service.exceptions.InstanceNotFoundException;
+import fr.univangers.client.service.utils.ObjectMapperFactory;
+import fr.univangers.client.service.exceptions.ParsingException;
 
 import java.io.InputStream;
 

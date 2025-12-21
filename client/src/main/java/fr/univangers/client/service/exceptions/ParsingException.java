@@ -1,4 +1,4 @@
-package fr.univangers.client.service.utils.exceptions;
+package fr.univangers.client.service.exceptions;
 
 /**
  * Exception levée en cas d'erreur de parsing

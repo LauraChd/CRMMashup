@@ -1,4 +1,4 @@
-package fr.univangers.client.service.utils.exceptions;
+package fr.univangers.client.service.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
