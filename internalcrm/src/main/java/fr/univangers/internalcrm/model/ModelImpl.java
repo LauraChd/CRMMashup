@@ -94,8 +94,6 @@ public class ModelImpl {
      */
     public List<ILead> findLeadsByDate(long startDate, long endDate)
             throws InvalidDateException, TException {
-        // TODO : comment client fait pour saisir les dates ? Doit prendre dates format
-        // 10/10/2025 et convertir dans Virtual ou internal ?
 
         if (startDate > endDate) {
             throw new InvalidDateException("Invalid date range", startDate, endDate);
