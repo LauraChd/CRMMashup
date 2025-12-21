@@ -48,26 +48,18 @@ public class LeadMerger {
 
             String fullName = sfLead.getLastName() + ", " + sfLead.getFirstName();
 
+            internalClient.addLead(
+                    fullName,
+                    sfLead.getAnnualRevenue(),
+                    sfLead.getPhone(),
+                    sfLead.getStreet(),
+                    sfLead.getPostalCode(),
+                    sfLead.getCity(),
+                    sfLead.getCountry(),
+                    sfLead.getCompany(),
+                    sfLead.getState());
 
-            try {
-                internalClient.addLead(
-                        fullName,
-                        sfLead.getAnnualRevenue(),
-                        sfLead.getPhone(),
-                        sfLead.getStreet(),
-                        sfLead.getPostalCode(),
-                        sfLead.getCity(),
-                        sfLead.getCountry(),
-                        sfLead.getCompany(),
-                        sfLead.getState());
-
-                added++;
-            } catch (fr.univangers.internalcrm.thrift.LeadAlreadyExistsException e) {
-                skipped++;
-            } catch (Exception e) {
-                skipped++;
-                e.printStackTrace();
-            }
+            added++;
         }
 
         System.out.println("Merge terminé. Ajoutés = " + added + ", ignorés (doublons) = " + skipped);
