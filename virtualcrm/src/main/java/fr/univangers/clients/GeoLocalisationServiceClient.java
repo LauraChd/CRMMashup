@@ -29,34 +29,37 @@ public class GeoLocalisationServiceClient {
     public Optional<GeographicPointDto> lookup(VirtualLeadDto virtualLead) throws IOException {
         GeographicPointDto geographicPoint = null;
 
-        String urlStr = "https://nominatim.openstreetmap.org/search?"
-                + "city=" + URLEncoder.encode(virtualLead.getCity(), StandardCharsets.UTF_8)
-                + "&country=" + URLEncoder.encode(virtualLead.getCountry(), StandardCharsets.UTF_8)
-                + "&postalcode=" + URLEncoder.encode(virtualLead.getPostalCode(), StandardCharsets.UTF_8)
-                + "&street=" + URLEncoder.encode(virtualLead.getStreet(), StandardCharsets.UTF_8)
-                + "&format=json&limit=1";
+        if(!virtualLead.getCity().isEmpty() && !virtualLead.getState().isEmpty() && !virtualLead.getCountry().isEmpty() && !virtualLead.getPostalCode().isEmpty()) {
 
-        URL url = new URL(urlStr);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("User-Agent", "JavaApp");
+            String urlStr = "https://nominatim.openstreetmap.org/search?"
+                    + "city=" + URLEncoder.encode(virtualLead.getCity(), StandardCharsets.UTF_8)
+                    + "&country=" + URLEncoder.encode(virtualLead.getCountry(), StandardCharsets.UTF_8)
+                    + "&postalcode=" + URLEncoder.encode(virtualLead.getPostalCode(), StandardCharsets.UTF_8)
+                    + "&street=" + URLEncoder.encode(virtualLead.getStreet(), StandardCharsets.UTF_8)
+                    + "&format=json&limit=1";
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+            URL url = new URL(urlStr);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("User-Agent", "JavaApp");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            JSONArray jsonArray = new JSONArray(response.toString());
+            if (!jsonArray.isEmpty()) {
+                JSONObject obj = jsonArray.getJSONObject(0);
+                String lat = obj.getString("lat");
+                String lon = obj.getString("lon");
+                geographicPoint = new GeographicPointDto(Double.parseDouble(lat), Double.parseDouble(lon));
+            }
+
         }
-        in.close();
-
-        JSONArray jsonArray = new JSONArray(response.toString());
-        if (!jsonArray.isEmpty()) {
-            JSONObject obj = jsonArray.getJSONObject(0);
-            String lat = obj.getString("lat");
-            String lon = obj.getString("lon");
-            geographicPoint = new GeographicPointDto(Double.parseDouble(lat), Double.parseDouble(lon));
-        }
-
         return Optional.ofNullable(geographicPoint);
     }
 }

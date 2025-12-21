@@ -74,6 +74,7 @@ public class ModelImpl {
         for (ILead l : iLeads) {
             if (l.getAnnualRevenue() >= lowAnnualRevenue &&
                     l.getAnnualRevenue() <= highAnnualRevenue &&
+                    l.getState() != null &&
                     l.getState().equalsIgnoreCase(state)) {
 
                 leadsResult.add(l);

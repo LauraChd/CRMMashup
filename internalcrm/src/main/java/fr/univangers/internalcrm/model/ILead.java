@@ -132,14 +132,22 @@ public class ILead {
         this.ID = ID;
     }
 
+    private boolean safeEqualsIgnoreCase(String s1, String s2) {
+        if (s1 == null && s2 == null)
+            return true;
+        if (s1 == null || s2 == null)
+            return false;
+        return s1.equalsIgnoreCase(s2);
+    }
+
     public boolean sameAs(ILead l){
         return this.getAnnualRevenue() == l.getAnnualRevenue()
-                && this.getFirstName().equalsIgnoreCase(l.getFirstName())
-                && this.getLastName().equalsIgnoreCase(l.getLastName())
-                && this.getStreet().equalsIgnoreCase(l.getStreet())
-                && this.getPostalCode().equalsIgnoreCase(l.getPostalCode())
-                && this.getCountry().equalsIgnoreCase(l.getCountry())
-                && this.getCompany().equalsIgnoreCase(l.getCountry())
-                && this.getState().equalsIgnoreCase(l.getState());
+                && safeEqualsIgnoreCase(this.getFirstName(), l.getFirstName())
+                && safeEqualsIgnoreCase(this.getLastName(), l.getLastName())
+                && safeEqualsIgnoreCase(this.getStreet(), l.getStreet())
+                && safeEqualsIgnoreCase(this.getPostalCode(), l.getPostalCode())
+                && safeEqualsIgnoreCase(this.getCountry(), l.getCountry())
+                && safeEqualsIgnoreCase(this.getCompany(), l.getCompany())
+                && safeEqualsIgnoreCase(this.getState(), l.getState());
     }
 }

@@ -42,10 +42,22 @@ public class JsonToLeadConversor {
         for (int i = 0; i < array.length(); i++) {
             JSONObject obj = array.getJSONObject(i);
 
-            long epoch = obj.optLong("creationDate");
-            String date = Instant.ofEpochMilli(epoch)
-                    .atZone(ZoneId.systemDefault())
-                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            String rawDate = obj.optString("creationDate");
+            String date;
+            try {
+                long epoch = Long.parseLong(rawDate);
+                date = Instant.ofEpochMilli(epoch)
+                        .atZone(ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            } catch (NumberFormatException e) {
+                if (rawDate.isEmpty()) {
+                    date = Instant.ofEpochMilli(0)
+                            .atZone(ZoneId.systemDefault())
+                            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                } else {
+                    date = rawDate;
+                }
+            }
 
             sb.append(String.format(
                     "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s]%n",

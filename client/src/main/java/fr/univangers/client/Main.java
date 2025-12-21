@@ -22,7 +22,8 @@ public class Main {
                         "    [find by date]   findLeadsByDate <startDate> <endDate> \n" +
                         "    [get one]    getLeadById <leadId>\n" +
                         "    [get all]    getLeads\n" +
-                        "    [count]    countLeads\n";
+                        "    [count]    countLeads\n" +
+                        "    [merge leads] merge";
 
                 System.out.println(res);
             }

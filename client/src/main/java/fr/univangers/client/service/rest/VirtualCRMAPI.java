@@ -162,15 +162,22 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
     public String findLeadsByDate(String startDate, String endDate)
     throws InvalidParametersException {
         try {
+            java.time.LocalDate start = java.time.LocalDate.parse(startDate);
+            java.time.LocalDate end = java.time.LocalDate.parse(endDate);
+            long startEpoch = start.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+            long endEpoch = end.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+            String url = api_url + "/findLeadsByDate"
+                    + "?startDate=" + URLEncoder.encode(String.valueOf(startEpoch), StandardCharsets.UTF_8)
+                    + "&endDate=" + URLEncoder.encode(String.valueOf(endEpoch), StandardCharsets.UTF_8);
+
             ClassicHttpResponse response = (ClassicHttpResponse) Request
-                    .get(api_url
-                            + "/leads?startDate=" + URLEncoder.encode(String.valueOf(startDate), "UTF-8")
-                            + "&endDate=" +  URLEncoder.encode(String.valueOf(endDate), "UTF-8"))
+                    .get(url)
                     .execute()
                     .returnResponse();
 
             // Vérif retour HTTP TODO
-//            validateStatusCode(HttpStatus.SC_CREATED, response);
+            // validateStatusCode(HttpStatus.SC_CREATED, response);
 
             return JsonToLeadConversor.toLeadDtos(response.getEntity().getContent());
 
