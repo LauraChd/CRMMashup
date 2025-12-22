@@ -141,7 +141,7 @@ public class ILead {
     }
 
     public boolean sameAs(ILead l){
-        return this.getAnnualRevenue() == l.getAnnualRevenue()
+        return Double.compare(this.getAnnualRevenue(), l.getAnnualRevenue()) == 0
                 && safeEqualsIgnoreCase(this.getFirstName(), l.getFirstName())
                 && safeEqualsIgnoreCase(this.getLastName(), l.getLastName())
                 && safeEqualsIgnoreCase(this.getStreet(), l.getStreet())
