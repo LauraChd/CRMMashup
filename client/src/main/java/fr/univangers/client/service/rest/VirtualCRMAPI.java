@@ -61,7 +61,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .execute()
                     .returnResponse();
 
-            // validateStatusCode(HttpStatus.SC_CREATED, response);
+            validateStatusCode(HttpStatus.SC_CREATED, response);
 
             // On lit juste la réponse brute (l'id renvoyé par le contrôleur)
             return new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8).trim();
@@ -81,17 +81,9 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .execute()
                     .returnResponse();
 
-            int code = response.getCode();
+            validateStatusCode(HttpStatus.SC_NO_CONTENT, response);
 
-            if (code == HttpStatus.SC_NO_CONTENT) {  // 204
-                return "Lead " + id + " deleted";
-            } else if (code == HttpStatus.SC_NOT_FOUND) {
-                // conversion JSON → exception métier
-                throw JsonToClientExceptionConversor.fromNotFoundErrorCode(
-                        response.getEntity().getContent());
-            } else {
-                throw new RuntimeException("HTTP error: " + code);
-            }
+            return "Lead " + id + " deleted";
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -107,8 +99,8 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .execute()
                     .returnResponse();
 
-            // Vérif retour HTTP TODO
-//            validateStatusCode(HttpStatus.SC_CREATED, response);
+            // Vérif retour HTTP
+            validateStatusCode(HttpStatus.SC_SUCCESS, response);
 
             return JsonToLeadConversor.toLeadDtos(response.getEntity().getContent());
 
@@ -120,15 +112,15 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
     @Override
     public String getLeadById(String id)
-    throws LeadNotFoundException {
+            throws LeadNotFoundException {
         try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
                     .get(api_url + "/leads/" + id)
                     .execute()
                     .returnResponse();
 
-            // Vérif retour HTTP TODO
-//            validateStatusCode(HttpStatus.SC_CREATED, response);
+            // Vérif retour HTTP
+            validateStatusCode(HttpStatus.SC_SUCCESS, response);
 
             return JsonToLeadConversor.toLeadDto(response.getEntity().getContent()).toString();
 
@@ -151,6 +143,9 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .execute()
                     .returnResponse();
 
+            // Vérif retour HTTP
+            validateStatusCode(HttpStatus.SC_SUCCESS, response);
+
             return JsonToLeadConversor.toLeadDtos(response.getEntity().getContent());
 
         } catch (Exception e) {
@@ -160,7 +155,7 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
     @Override
     public String findLeadsByDate(String startDate, String endDate)
-    throws InvalidParametersException {
+            throws InvalidParametersException {
         try {
             java.time.LocalDate start = java.time.LocalDate.parse(startDate);
             java.time.LocalDate end = java.time.LocalDate.parse(endDate);
@@ -176,8 +171,8 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .execute()
                     .returnResponse();
 
-            // Vérif retour HTTP TODO
-            // validateStatusCode(HttpStatus.SC_CREATED, response);
+            // Vérif retour HTTP
+             validateStatusCode(HttpStatus.SC_SUCCESS, response);
 
             return JsonToLeadConversor.toLeadDtos(response.getEntity().getContent());
 
@@ -194,6 +189,9 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                     .execute()
                     .returnResponse();
 
+            // Vérif retour HTTP
+            validateStatusCode(HttpStatus.SC_SUCCESS, response);
+
             // Le contrôleur renvoie juste un int dans le body
             return new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8).trim();
 
@@ -204,13 +202,17 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
 
     @Override
     public String merge() {
-        try{
+        try {
             ClassicHttpResponse response = (ClassicHttpResponse) Request
                     .get(api_url + "/merge")
                     .execute()
                     .returnResponse();
 
-            return new String (response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8).trim();
+
+            // Vérif retour HTTP
+            validateStatusCode(HttpStatus.SC_SUCCESS, response);
+
+            return new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8).trim();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -234,6 +236,9 @@ public class VirtualCRMAPI implements IVirtualCRMAPI {
                         response.getEntity().getContent());
                 case HttpStatus.SC_BAD_REQUEST -> throw JsonToClientExceptionConversor.fromBadRequestErrorCode(
                         response.getEntity().getContent());
+                case HttpStatus.SC_INTERNAL_SERVER_ERROR ->
+                        throw JsonToClientExceptionConversor.fromInternalServerErrorCode(
+                                response.getEntity().getContent());
                 default -> throw new RuntimeException("HTTP error; status code = "
                         + statusCode);
             }
