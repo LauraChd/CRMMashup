@@ -120,7 +120,7 @@ public class VirtualLeadDto {
 
     public LocalDate getCreationDate() {
         return creationDate;
-    } // TODO : régler problème de retour entre long et String
+    }
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
@@ -165,7 +165,7 @@ public class VirtualLeadDto {
                 ", creationDate='" + creationDate + '\'' +
                 ", company='" + company + '\'' +
                 ", state='" + state + '\'' +
-                // ", geographicPointDto=" + geographicPointDto + TODO
+                // ", geographicPointDto=" + geographicPointDto +
                 '}' + '\n';
     }
 }

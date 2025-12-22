@@ -146,18 +146,15 @@ public class VirtualCRMServiceImpl implements IVirtualCRMService {
     @Override
     public boolean deleteLead(String id) throws LeadNotFoundException, TException, IOException {
 
-        //TODO : try catch
-        // si le premier marche pas, faire celui d'apres, sinon lancer exception
-
         // Essai InternalCRM
         try {
             int internalId = Integer.parseInt(id);
             internalCRMClient.deleteLead(internalId);
             return true;
         } catch (NumberFormatException e) {
-            // Dans le cas où l'ID n'est pas un entier parce que c'est un ID Salesforce
+            // Cas où l'ID n'est pas un entier parce que c'est un ID Salesforce
         } catch (LeadNotFoundException e) {
-            // pas trouvé dans InternalCRM donc on continue vers Salesforce
+            // Pas trouvé dans InternalCRM donc on continue vers Salesforce
         }
 
         if(!isMerged()) {
