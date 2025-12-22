@@ -29,7 +29,7 @@ public class GeoLocalisationServiceClient {
     public Optional<GeographicPointDto> lookup(VirtualLeadDto virtualLead) throws IOException {
         GeographicPointDto geographicPoint = null;
 
-        if(!virtualLead.getCity().isEmpty() && !virtualLead.getState().isEmpty() && !virtualLead.getCountry().isEmpty() && !virtualLead.getPostalCode().isEmpty()) {
+        if(!virtualLead.getCity().isEmpty() || !virtualLead.getState().isEmpty() || !virtualLead.getCountry().isEmpty()) {
 
             String urlStr = "https://nominatim.openstreetmap.org/search?"
                     + "city=" + URLEncoder.encode(virtualLead.getCity(), StandardCharsets.UTF_8)

@@ -20,7 +20,7 @@ public class JsonToLeadConversor {
         String date = getCreationDateFromJSON(obj);
 
         return String.format(
-                "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s, %s, date=%s]",
+                "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s, %s, date=%s, geoLoc=%s]",
                 obj.optString("id"),
                 obj.optString("firstName"),
                 obj.optString("lastName"),
@@ -32,7 +32,8 @@ public class JsonToLeadConversor {
                 obj.optString("city"),
                 obj.optString("state"),
                 obj.optString("country"),
-                date);
+                date,
+                obj.optString("geographicPointDto"));
     }
 
     private static String getCreationDateFromJSON(JSONObject obj) {
@@ -67,7 +68,7 @@ public class JsonToLeadConversor {
             String date = getCreationDateFromJSON(obj);
 
             sb.append(String.format(
-                    "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s]%n",
+                    "Lead[id=%s, %s %s, company=%s, revenue=%.2f, phone=%s, address=%s, %s %s, %s %s, date=%s, geoLoc=%s]%n",
                     obj.optString("id"),
                     obj.optString("firstName"),
                     obj.optString("lastName"),
@@ -79,7 +80,8 @@ public class JsonToLeadConversor {
                     obj.optString("city"),
                     obj.optString("state"),
                     obj.optString("country"),
-                    date
+                    date,
+                    obj.optString("geographicPointDto")
             ));
         }
         return sb.toString();
