@@ -38,28 +38,30 @@ public class LeadMerger {
         List<VirtualLeadDto> internalLeads = internalClient.getLeads();
 
         int added = 0;
+        int skipped = 0;
 
         for (VirtualLeadDto sfLead : sfLeads) {
+            try {
 
                 String fullName = sfLead.getLastName() + ", " + sfLead.getFirstName();
 
-                try {
-                    internalClient.addLead(
-                            fullName,
-                            sfLead.getAnnualRevenue(),
-                            sfLead.getPhone(),
-                            sfLead.getStreet(),
-                            sfLead.getPostalCode(),
-                            sfLead.getCity(),
-                            sfLead.getCountry(),
-                            sfLead.getCompany(),
-                            sfLead.getState());
-                } catch (Exception ignored) {}
+                internalClient.addLead(
+                        fullName,
+                        sfLead.getAnnualRevenue(),
+                        sfLead.getPhone(),
+                        sfLead.getStreet(),
+                        sfLead.getPostalCode(),
+                        sfLead.getCity(),
+                        sfLead.getCountry(),
+                        sfLead.getCompany(),
+                        sfLead.getState());
 
                 added++;
+            } catch (Exception e) {
+            }
         }
 
-        System.out.println("Merge terminé. Ajoutés = " + added);
+        System.out.println("Merge terminé. Ajoutés = " + added + ", ignorés (doublons) = " + skipped);
     }
 
     /**
@@ -70,17 +72,14 @@ public class LeadMerger {
      * @return Vrai si c'est un doublon, faux sinon
      */
     private boolean isDuplicate(VirtualLeadDto a, List<VirtualLeadDto> list) {
-        return list.stream().anyMatch(l ->
-                safeEq(l.getFirstName(), a.getFirstName()) &&
-                        safeEq(l.getLastName(), a.getLastName()) &&
-                        safeEq(l.getCompany(), a.getCompany()) &&
-                        safeEq(l.getPhone(), a.getPhone()) &&
-                        safeEq(l.getStreet(), a.getStreet()) &&
-                        safeEq(l.getCity(), a.getCity()) &&
-                        safeEq(l.getCountry(), a.getCountry()) &&
-                        safeEq(l.getState(), a.getState())
-
-        );
+        return list.stream().anyMatch(l -> safeEq(l.getFirstName(), a.getFirstName()) &&
+                safeEq(l.getLastName(), a.getLastName()) &&
+                safeEq(l.getCompany(), a.getCompany()) &&
+                safeEq(l.getPhone(), a.getPhone()) &&
+                safeEq(l.getStreet(), a.getStreet()) &&
+                safeEq(l.getCity(), a.getCity()) &&
+                safeEq(l.getCountry(), a.getCountry()) &&
+                safeEq(l.getState(), a.getState()));
     }
 
     /**
@@ -91,7 +90,6 @@ public class LeadMerger {
      * @return Vrai si les chaînes sont égales, faux sinon
      */
     private boolean safeEq(String a, String b) {
-        System.out.println("Les leads a merger : " + a + " " + b);
         if (a == null)
             return b == null;
         return a.equals(b);
