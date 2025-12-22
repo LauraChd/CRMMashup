@@ -63,35 +63,4 @@ public class LeadMerger {
 
         System.out.println("Merge terminé. Ajoutés = " + added + ", ignorés (doublons) = " + skipped);
     }
-
-    /**
-     * Vérifie si un lead est un doublon
-     *
-     * @param a    Le lead à vérifier
-     * @param list La liste des leads existants
-     * @return Vrai si c'est un doublon, faux sinon
-     */
-    private boolean isDuplicate(VirtualLeadDto a, List<VirtualLeadDto> list) {
-        return list.stream().anyMatch(l -> safeEq(l.getFirstName(), a.getFirstName()) &&
-                safeEq(l.getLastName(), a.getLastName()) &&
-                safeEq(l.getCompany(), a.getCompany()) &&
-                safeEq(l.getPhone(), a.getPhone()) &&
-                safeEq(l.getStreet(), a.getStreet()) &&
-                safeEq(l.getCity(), a.getCity()) &&
-                safeEq(l.getCountry(), a.getCountry()) &&
-                safeEq(l.getState(), a.getState()));
-    }
-
-    /**
-     * Compare deux chaînes de caractères de manière sûre (null-safe)
-     *
-     * @param a Première chaîne
-     * @param b Deuxième chaîne
-     * @return Vrai si les chaînes sont égales, faux sinon
-     */
-    private boolean safeEq(String a, String b) {
-        if (a == null)
-            return b == null;
-        return a.equals(b);
-    }
 }
